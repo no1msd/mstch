@@ -1,0 +1,8 @@
+
+inverted empty string
+
+inverted empty array
+
+inverted zero
+
+inverted null

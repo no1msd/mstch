@@ -1,0 +1,4 @@
+inverted emptyString
+inverted emptyArray
+inverted zero
+inverted null
