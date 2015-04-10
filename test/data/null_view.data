@@ -1,4 +1,4 @@
-auto data = mstch::object{
+mstch::object{
   {"name", std::string{"Joe"}},
   {"friends", mstch::node{}}
-};
+}

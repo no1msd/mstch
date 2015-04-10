@@ -1,4 +1,4 @@
-auto data = mstch::object{
+mstch::object{
   {"grand_parent_id", std::string{"grand_parent1"}},
   {"parent_contexts", mstch::array{
     mstch::object{
@@ -16,4 +16,4 @@ auto data = mstch::object{
       }}
     }
   }}
-};
+}

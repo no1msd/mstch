@@ -59,16 +59,20 @@ int main(int argc, char* argv[]) {
     if(vm.count("namespace"))
         output << "namespace " << vm["namespace"].as<std::string>() << " {" << std::endl;
 
-    for(auto& string_filename: vm["input-string"].as<std::vector<std::string>>()) {
-        std::ifstream input(string_filename, std::ios::in);
-        wrap_string(input, output, boost::replace_all_copy(string_filename, ".", "_"));
-        input.close();
+    if(vm.count("input-string")) {
+        for (auto &string_filename: vm["input-string"].as<std::vector<std::string>>()) {
+            std::ifstream input(string_filename, std::ios::in);
+            wrap_string(input, output, boost::replace_all_copy(string_filename, ".", "_"));
+            input.close();
+        }
     }
 
-    for(auto& data_filename: vm["input-data"].as<std::vector<std::string>>()) {
-        std::ifstream input(data_filename, std::ios::in);
-        wrap_data(input, output, boost::replace_all_copy(data_filename, ".", "_"));
-        input.close();
+    if(vm.count("input-data")) {
+        for(auto& data_filename: vm["input-data"].as<std::vector<std::string>>()) {
+            std::ifstream input(data_filename, std::ios::in);
+            wrap_data(input, output, boost::replace_all_copy(data_filename, ".", "_"));
+            input.close();
+        }
     }
 
     if(vm.count("namespace"))

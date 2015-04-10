@@ -1,4 +1,4 @@
-auto data = mstch::object{
+mstch::object{
   {"a_object", mstch::object{
     {"title", std::string{"this is an object"}},
     {"description", std::string{"one of its attributes is a list"}},
@@ -7,4 +7,4 @@ auto data = mstch::object{
       mstch::object{{"label", std::string{"listitem2"}}}
     }}
   }}
-};
+}

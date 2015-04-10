@@ -1,4 +1,4 @@
-auto data = mstch::object{
+mstch::object{
     {"name", std::string{"David"}},
     {"twitter", std::string{"@dasilvacontin"}},
     {"fobject", mstch::array{
@@ -11,4 +11,4 @@ auto data = mstch::object{
 	        {"twitter", mstch::node{}}
 		}
     }}
-};
+}
