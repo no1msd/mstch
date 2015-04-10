@@ -1,11 +1,10 @@
 #define CATCH_CONFIG_MAIN
+
 #include "catch.hpp"
-
-#include <mstch.h>
-
+#include "mstch.h"
 #include "test_data.h"
 
-#define MSTCH_TEST(x,y) TEST_CASE(x) { REQUIRE(y ## _txt == mstch::render(y ## _mustache, y ## _h)); }
+#define MSTCH_TEST(x,y) TEST_CASE(x) { REQUIRE(y ## _txt == mstch::render(y ## _mustache, y ## _data)); }
 
 MSTCH_TEST("Ampersand escape", mstchtest::ampersand_escape)
 MSTCH_TEST("Apostrophe", mstchtest::apostrophe)
@@ -22,111 +21,6 @@ MSTCH_TEST("Empty string", mstchtest::empty_string)
 MSTCH_TEST("Empty template", mstchtest::empty_template)
 MSTCH_TEST("Error not found", mstchtest::error_not_found)
 MSTCH_TEST("Falsy", mstchtest::falsy)
-
-/*TEST_CASE("Ampersand escape") {
-    #include "data/ampersand_escape.h"
-    auto tpl = file_to_string("data/ampersand_escape.mustache");
-    auto exp = file_to_string("data/ampersand_escape.txt");
-    REQUIRE(exp == mstch::render(tpl, data));
-}
-
-TEST_CASE("Apostrophe") {
-    #include "data/apostrophe.h"
-    auto tpl = file_to_string("data/apostrophe.mustache");
-    auto exp = file_to_string("data/apostrophe.txt");
-    REQUIRE(exp == mstch::render(tpl, data));
-}
-
-TEST_CASE("Array of strings") {
-    #include "data/array_of_strings.h"
-    auto tpl = file_to_string("data/array_of_strings.mustache");
-    auto exp = file_to_string("data/array_of_strings.txt");
-    REQUIRE(exp == mstch::render(tpl, data));
-}
-
-TEST_CASE("Backslashes") {
-    #include "data/backslashes.h"
-    auto tpl = file_to_string("data/backslashes.mustache");
-    auto exp = file_to_string("data/backslashes.txt");
-    REQUIRE(exp == mstch::render(tpl, data));
-}
-
-TEST_CASE("Bug 11 eating whitespace") {
-    #include "data/bug_11_eating_whitespace.h"
-    auto tpl = file_to_string("data/bug_11_eating_whitespace.mustache");
-    auto exp = file_to_string("data/bug_11_eating_whitespace.txt");
-    REQUIRE(exp == mstch::render(tpl, data));
-}
-
-TEST_CASE("Bug length property") {
-    #include "data/bug_length_property.h"
-    auto tpl = file_to_string("data/bug_length_property.mustache");
-    auto exp = file_to_string("data/bug_length_property.txt");
-    REQUIRE(exp == mstch::render(tpl, data));
-}
-
-TEST_CASE("Context lookup") {
-    #include "data/context_lookup.h"
-    auto tpl = file_to_string("data/context_lookup.mustache");
-    auto exp = file_to_string("data/context_lookup.txt");
-    REQUIRE(exp == mstch::render(tpl, data));
-}
-
-TEST_CASE("Disappearing whitespace") {
-    #include "data/disappearing_whitespace.h"
-    auto tpl = file_to_string("data/disappearing_whitespace.mustache");
-    auto exp = file_to_string("data/disappearing_whitespace.txt");
-    REQUIRE(exp == mstch::render(tpl, data));
-}
-
-TEST_CASE("Double render") {
-    #include "data/double_render.h"
-    auto tpl = file_to_string("data/double_render.mustache");
-    auto exp = file_to_string("data/double_render.txt");
-    REQUIRE(exp == mstch::render(tpl, data));
-}
-
-TEST_CASE("Empty list") {
-    #include "data/empty_list.h"
-    auto tpl = file_to_string("data/empty_list.mustache");
-    auto exp = file_to_string("data/empty_list.txt");
-    REQUIRE(exp == mstch::render(tpl, data));
-}
-
-TEST_CASE("Empty sections") {
-    #include "data/empty_sections.h"
-    auto tpl = file_to_string("data/empty_sections.mustache");
-    auto exp = file_to_string("data/empty_sections.txt");
-    REQUIRE(exp == mstch::render(tpl, data));
-}
-
-TEST_CASE("Empty string") {
-    #include "data/empty_string.h"
-    auto tpl = file_to_string("data/empty_string.mustache");
-    auto exp = file_to_string("data/empty_string.txt");
-    REQUIRE(exp == mstch::render(tpl, data));
-}
-
-TEST_CASE("Empty template") {
-    #include "data/empty_template.h"
-    auto tpl = file_to_string("data/empty_template.mustache");
-    auto exp = file_to_string("data/empty_template.txt");
-    REQUIRE(exp == mstch::render(tpl, data));
-}
-
-TEST_CASE("Error not found") {
-    #include "data/error_not_found.h"
-    auto tpl = file_to_string("data/error_not_found.mustache");
-    auto exp = file_to_string("data/error_not_found.txt");
-    REQUIRE(exp == mstch::render(tpl, data));
-}
-
-TEST_CASE("Falsy") {
-    #include "data/falsy.h"
-    auto tpl = file_to_string("data/falsy.mustache");
-    auto exp = file_to_string("data/falsy.txt");
-    REQUIRE(exp == mstch::render(tpl, data));
-}*/
 
 /*TEST_CASE("Falsy array") {
     #include "data/falsy_array.h"
