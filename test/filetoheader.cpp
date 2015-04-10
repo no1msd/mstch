@@ -22,8 +22,9 @@ void wrap_string(std::istream& input, std::ostream& output, const std::string& v
     while (std::getline(input, line)) {
         boost::replace_all(line, "\\", "\\\\");
         boost::replace_all(line, "\"", "\\\"");
-        output << "    \"" << line << "\\n\"";
-        if(!input.eof()) output << std::endl;
+        output << "    \"" << line;
+        if(!input.eof()) output << "\\n";
+        output << "\"" << std::endl;
     }
     output << "};" << std::endl;
 }

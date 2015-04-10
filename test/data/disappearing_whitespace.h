@@ -1,4 +1,4 @@
-auto data = mstch::object{
+mstch::object{
   {"bedrooms", true},
   {"total", 1}
-};
+}

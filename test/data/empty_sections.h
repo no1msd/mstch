@@ -1,1 +1,1 @@
-auto data = mstch::object{};
+mstch::object{}

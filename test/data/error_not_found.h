@@ -1,3 +1,3 @@
-auto data = mstch::object{
+mstch::object{
   {"bar", 2}
-};
+}

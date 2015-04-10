@@ -11,6 +11,17 @@ MSTCH_TEST("Ampersand escape", mstchtest::ampersand_escape)
 MSTCH_TEST("Apostrophe", mstchtest::apostrophe)
 MSTCH_TEST("Array of strings", mstchtest::array_of_strings)
 MSTCH_TEST("Backslashes", mstchtest::backslashes)
+MSTCH_TEST("Eating whitespace", mstchtest::bug_11_eating_whitespace)
+MSTCH_TEST("Length property", mstchtest::bug_length_property)
+MSTCH_TEST("Context lookup", mstchtest::context_lookup)
+MSTCH_TEST("Disappearing whitespace", mstchtest::disappearing_whitespace)
+MSTCH_TEST("Double render", mstchtest::double_render)
+MSTCH_TEST("Empty list", mstchtest::empty_list)
+MSTCH_TEST("Empty sections", mstchtest::empty_sections)
+MSTCH_TEST("Empty string", mstchtest::empty_string)
+MSTCH_TEST("Empty template", mstchtest::empty_template)
+MSTCH_TEST("Error not found", mstchtest::error_not_found)
+MSTCH_TEST("Falsy", mstchtest::falsy)
 
 /*TEST_CASE("Ampersand escape") {
     #include "data/ampersand_escape.h"

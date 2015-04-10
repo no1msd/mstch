@@ -34,6 +34,17 @@ add_custom_command(
 		-Dapostrophe.h -Sapostrophe.mustache -Sapostrophe.txt
 		-Darray_of_strings.h -Sarray_of_strings.mustache -Sarray_of_strings.txt
 		-Dbackslashes.h -Sbackslashes.mustache -Sbackslashes.txt
+		-Dbug_11_eating_whitespace.h -Sbug_11_eating_whitespace.mustache -Sbug_11_eating_whitespace.txt
+		-Dbug_length_property.h -Sbug_length_property.mustache -Sbug_length_property.txt
+		-Dcontext_lookup.h -Scontext_lookup.mustache -Scontext_lookup.txt
+		-Ddisappearing_whitespace.h -Sdisappearing_whitespace.mustache -Sdisappearing_whitespace.txt
+		-Ddouble_render.h -Sdouble_render.mustache -Sdouble_render.txt
+		-Dempty_list.h -Sempty_list.mustache -Sempty_list.txt
+		-Dempty_sections.h -Sempty_sections.mustache -Sempty_sections.txt
+		-Dempty_string.h -Sempty_string.mustache -Sempty_string.txt
+		-Dempty_template.h -Sempty_template.mustache -Sempty_template.txt
+		-Derror_not_found.h -Serror_not_found.mustache -Serror_not_found.txt
+		-Dfalsy.h -Sfalsy.mustache -Sfalsy.txt
 	DEPENDS ${CMAKE_BINARY_DIR}/filetoheader
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/test/data/)
 set_source_files_properties(${CMAKE_BINARY_DIR}/test_data.h PROPERTIES GENERATED TRUE)

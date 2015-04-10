@@ -18,11 +18,8 @@ std::string state::in_inverted_section::render(render_context& context, const to
         case token_type::section_close:
             if(token.content() == section_name && skipped_openings == 0) {
                 std::ostringstream out;
-                out << boost::apply_visitor(visitor::to_json(), context.get_node(section_name));
                 if(boost::apply_visitor(visitor::is_node_empty(), context.get_node(section_name)))
-                    out << "ÜRES: " + section_name + " " + section_text.str();//render_context(mstch::object{}, context).render(section_text.str());
-                else
-                    out << "NEMÜRES: " + section_name + " " + section_text.str();
+                    out << render_context(mstch::object{}, context).render(section_text.str());
                 context.set_state<outside_section>();
                 return out.str();
             } else {
