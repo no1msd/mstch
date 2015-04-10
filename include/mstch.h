@@ -7,7 +7,8 @@ namespace mstch {
     std::string render(
             const std::string& tmplt,
             const object& context,
-            const std::map<std::string,std::string>& partials = std::map<std::string,std::string>());
+            const std::map<std::string,std::string>& partials =
+                    std::map<std::string,std::string>());
 }
 
 #endif // _MSTCH_H_

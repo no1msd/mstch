@@ -3,7 +3,9 @@
 
 using namespace mstch;
 
-visitor::render_node::render_node(bool html_escaped): html_escaped(html_escaped) {
+visitor::render_node::render_node(bool html_escaped):
+        html_escaped(html_escaped)
+{
 }
 
 std::string visitor::render_node::operator()(const boost::blank& blank) const {

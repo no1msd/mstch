@@ -6,7 +6,8 @@
 using namespace mstch;
 
 token::token(const std::string& raw_token): raw_val(raw_token) {
-    if(std::regex_match(raw_token, std::regex("\\{{2}[^\\}]*\\}{2}|\\{{3}[^\\}]*\\}{3}"))) {
+    std::regex token_match("\\{{2}[^\\}]*\\}{2}|\\{{3}[^\\}]*\\}{3}");
+    if(std::regex_match(raw_token, token_match)) {
         std::string inside = raw_token.substr(2, raw_token.size() - 4);
         inside = trim(inside);
         if (inside.size() > 0 && inside.at(0) == '#') {
@@ -24,7 +25,9 @@ token::token(const std::string& raw_token): raw_val(raw_token) {
         } else if (inside.size() > 0 && inside.at(0) == '&') {
             type_val = token_type::unescaped_variable;
             content_val = inside.substr(1);
-        } else if (inside.size() > 0 && inside.at(0) == '{' && inside.at(inside.size() - 1) == '}') {
+        } else if (inside.size() > 0 && inside.at(0) == '{' &&
+                inside.at(inside.size() - 1) == '}')
+        {
             type_val = token_type::unescaped_variable;
             content_val = inside.substr(1, inside.size() - 2);
         } else if (inside.size() > 0 && inside.at(0) == '!') {

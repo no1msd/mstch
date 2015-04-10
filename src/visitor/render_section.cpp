@@ -3,13 +3,17 @@
 
 using namespace mstch;
 
-visitor::render_section::render_section(render_context& context, const std::string& section):
+visitor::render_section::render_section(
+        render_context& context,
+        const std::string& section):
         context(context),
         section(section)
 {
 }
 
-std::string visitor::render_section::operator()(const boost::blank& blank) const {
+std::string visitor::render_section::operator()(
+        const boost::blank& blank) const
+{
     return "";
 }
 

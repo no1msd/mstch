@@ -3,12 +3,18 @@
 #include <algorithm>
 
 std::string& mstch::ltrim(std::string& s) {
-    s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+    s.erase(s.begin(), std::find_if(
+            s.begin(),
+            s.end(),
+            std::not1(std::ptr_fun<int, int>(std::isspace))));
     return s;
 }
 
 std::string& mstch::rtrim(std::string& s) {
-    s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+    s.erase(std::find_if(
+            s.rbegin(),
+            s.rend(),
+            std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
     return s;
 }
 
@@ -16,7 +22,11 @@ std::string& mstch::trim(std::string& s) {
     return ltrim(rtrim(s));
 }
 
-std::string mstch::replace_all(std::string str, const std::string& from, const std::string& to) {
+std::string mstch::replace_all(
+        std::string str,
+        const std::string& from,
+        const std::string& to)
+{
     size_t start_pos = 0;
     while((start_pos = str.find(from, start_pos)) != std::string::npos) {
         str.replace(start_pos, from.length(), to);

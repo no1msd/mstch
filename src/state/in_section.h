@@ -13,7 +13,9 @@ namespace mstch {
             int skipped_openings;
         public:
             in_section(const std::string& section_name);
-            std::string render(render_context& context, const token& token) override;
+            std::string render(
+                    render_context& context,
+                    const token& token) override;
         };
     }
 }

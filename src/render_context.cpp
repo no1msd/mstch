@@ -8,14 +8,18 @@ using namespace mstch;
 
 const mstch::node render_context::null_node;
 
-render_context::render_context(const mstch::object &object, const std::map<std::string,std::string>& partials):
+render_context::render_context(
+        const mstch::object &object,
+        const std::map<std::string,std::string>& partials):
         partials(partials),
         objects{object},
         state(new state::outside_section)
 {
 }
 
-render_context::render_context(const mstch::object& object, const render_context& context):
+render_context::render_context(
+        const mstch::object& object,
+        const render_context& context):
         partials(context.partials),
         objects(context.objects),
         state(new state::outside_section)
@@ -23,10 +27,16 @@ render_context::render_context(const mstch::object& object, const render_context
     objects.push_front(object);
 }
 
-const mstch::node& render_context::find_node(const std::string &token, const std::deque<object> &current_objects) {
+const mstch::node& render_context::find_node(
+        const std::string &token,
+        const std::deque<object> &current_objects)
+{
     if(token != "." && token.find('.') != std::string::npos) {
-        return find_node(token.substr(token.rfind('.') + 1),
-                {boost::get<object>(find_node(token.substr(0, token.rfind('.')), current_objects))});
+        return find_node(
+                token.substr(token.rfind('.') + 1),
+                {boost::get<object>(find_node(
+                        token.substr(0, token.rfind('.')),
+                        current_objects))});
     } else {
         for (auto& object: current_objects)
             if (object.count(token) != 0)

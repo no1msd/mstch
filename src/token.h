@@ -5,7 +5,8 @@
 
 namespace mstch {
     enum class token_type {
-        text, variable, section_open, section_close, inverted_section_open, unescaped_variable, comment, partial
+        text, variable, section_open, section_close, inverted_section_open,
+        unescaped_variable, comment, partial
     };
 
     class token {
