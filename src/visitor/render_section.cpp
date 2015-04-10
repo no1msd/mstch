@@ -32,8 +32,7 @@ std::string visitor::render_section::operator()(const std::string& str) const {
 std::string visitor::render_section::operator()(const array& arr) const {
     std::ostringstream out;
     for (auto& item: arr)
-        if (!boost::apply_visitor(visitor::is_node_empty(), item))
-            out << boost::apply_visitor(*this, item);
+        out << boost::apply_visitor(*this, item);
     return out.str();
 }
 

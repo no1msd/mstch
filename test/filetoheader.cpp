@@ -39,7 +39,6 @@ int main(int argc, char* argv[]) {
             ("namespace", po::value<std::string>(), "namespace to use")
             ("input-string,S", po::value<std::vector<std::string>>(), "files to parse as strings")
             ("input-data,D", po::value<std::vector<std::string>>(), "files to parse as data");
-
     po::variables_map vm;
     po::store(po::parse_command_line(argc, argv, desc), vm);
     po::notify(vm);
