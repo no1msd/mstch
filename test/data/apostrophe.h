@@ -1,4 +1,4 @@
-auto data = mstch::object{
+mstch::object{
   {"apos", std::string{"'"}},
   {"control", std::string{"X"}}
-};
+}

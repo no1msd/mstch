@@ -3,16 +3,14 @@
 
 #include <mstch.h>
 
-#include <string>
-#include <fstream>
-#include <streambuf>
+#include "test_data.h"
 
-std::string file_to_string(const std::string& filename) {
-    std::ifstream t(filename);
-    std::string str((std::istreambuf_iterator<char>(t)),
-            std::istreambuf_iterator<char>());
-    return str;
-}
+#define MSTCH_TEST(x,y) TEST_CASE(x) { REQUIRE(y ## _txt == mstch::render(y ## _mustache, y ## _h)); }
+
+MSTCH_TEST("Ampersand escape", mstchtest::ampersand_escape)
+MSTCH_TEST("Apostrophe", mstchtest::apostrophe)
+MSTCH_TEST("Array of strings", mstchtest::array_of_strings)
+MSTCH_TEST("Backslashes", mstchtest::backslashes)
 
 /*TEST_CASE("Ampersand escape") {
     #include "data/ampersand_escape.h"
@@ -119,12 +117,12 @@ TEST_CASE("Falsy") {
     REQUIRE(exp == mstch::render(tpl, data));
 }*/
 
-TEST_CASE("Falsy array") {
+/*TEST_CASE("Falsy array") {
     #include "data/falsy_array.h"
     auto tpl = file_to_string("data/falsy_array.mustache");
     auto exp = file_to_string("data/falsy_array.txt");
     REQUIRE(exp == mstch::render(tpl, data));
-}
+}*/
 
 /*TEST_CASE("Grandparent context") {
     #include "data/grandparent_context.h"

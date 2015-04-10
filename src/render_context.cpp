@@ -9,30 +9,30 @@ using namespace mstch;
 const mstch::node render_context::null_node;
 
 render_context::render_context(const mstch::object &object, const std::map<std::string,std::string>& partials):
-        objects{object},
         partials(partials),
+        objects{object},
         state(new state::outside_section)
 {
 }
 
 render_context::render_context(const mstch::object& object, const render_context& context):
-    objects(context.objects),
-    partials(context.partials),
-    state(new state::outside_section)
+        partials(context.partials),
+        objects(context.objects),
+        state(new state::outside_section)
 {
     objects.push_front(object);
 }
 
 const mstch::node& render_context::find_node(const std::string &token, const std::deque<object> &current_objects) {
-    /*if(token != "." && token.find('.') != std::string::npos) {
+    if(token != "." && token.find('.') != std::string::npos) {
         return find_node(token.substr(token.rfind('.') + 1),
                 {boost::get<object>(find_node(token.substr(0, token.rfind('.')), current_objects))});
-    } else {*/
+    } else {
         for (auto& object: current_objects)
             if (object.count(token) != 0)
                 return object.at(token);
         return null_node;
-    //}
+    }
 }
 
 const mstch::node& render_context::get_node(const std::string& token) {
