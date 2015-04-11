@@ -27,7 +27,8 @@ std::string strip_whitespace(std::string tmplt) {
 }
 
 std::string mstch::render(
-        const std::string& tmplt, const object& root_object,
+        const std::string& tmplt,
+        const object& root_object,
         const std::map<std::string,std::string>& partials)
 {
     return render_context(root_object, partials)
