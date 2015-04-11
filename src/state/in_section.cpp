@@ -20,8 +20,9 @@ std::string state::in_section::render(
             auto section_node = ctx.get_node(section_name);
             std::string out("");
             if (!boost::apply_visitor(visitor::is_node_empty(), section_node))
-                out = boost::apply_visitor(visitor::render_section(
-                        ctx, section_text.str()), section_node);
+                out = boost::apply_visitor(
+                        visitor::render_section(ctx, section_text.str()),
+                        section_node);
             ctx.set_state<outside_section>();
             return out;
         } else {

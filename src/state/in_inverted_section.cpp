@@ -23,10 +23,9 @@ std::string state::in_inverted_section::render(
         if(token.content() == section_name && skipped_openings == 0) {
             std::ostringstream out;
             auto& section_node = ctx.get_node(section_name);
-            if(boost::apply_visitor(visitor::is_node_empty(), section_node)) {
-                auto empty = mstch::object{};
-                out << render_context(empty, ctx).render(section_text.str());
-            }
+            if(boost::apply_visitor(visitor::is_node_empty(), section_node))
+                out << render_context(mstch::object{}, ctx)
+                               .render(section_text.str());
             ctx.set_state<outside_section>();
             return out.str();
         } else {

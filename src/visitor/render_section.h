@@ -4,17 +4,24 @@
 #include <boost/variant/static_visitor.hpp>
 #include <boost/blank.hpp>
 #include <render_context.h>
+#include <set>
 
 #include "types.h"
 
 namespace mstch {
     namespace visitor {
         class render_section: public boost::static_visitor<std::string> {
+        public:
+            enum class flag { keep_array };
         private:
             render_context& context;
             std::string section;
+            std::set<flag> flags;
         public:
-            render_section(render_context& context, const std::string& section);
+            render_section(
+                    render_context& context,
+                    const std::string& section,
+                    std::set<flag> flags = {});
             std::string operator()(const boost::blank& blank) const;
             std::string operator()(const int& i) const;
             std::string operator()(const bool& b) const;
