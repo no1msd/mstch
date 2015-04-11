@@ -32,7 +32,8 @@ std::string visitor::render_section::operator()(const std::string& str) const {
 std::string visitor::render_section::operator()(const array& arr) const {
     std::ostringstream out;
     for (auto& item: arr)
-        out << boost::apply_visitor(*this, item);
+        out << render_context(mstch::object{{".", item}}, context)
+                       .render(section);
     return out.str();
 }
 
