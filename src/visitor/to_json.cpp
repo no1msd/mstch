@@ -24,7 +24,7 @@ std::string visitor::to_json::operator()(const array& arr) const {
     out << "[";
     for(auto& item: arr) {
         first?(first = false):(out << ", ");
-        boost::apply_visitor(*this, item);
+        out << boost::apply_visitor(*this, item);
     }
     out << "]";
     return out.str();
@@ -36,8 +36,7 @@ std::string visitor::to_json::operator()(const object& obj) const {
     out << "{";
     for(auto& item: obj) {
         first?(first = false):(out << ", ");
-        out << item.first << ": ";
-        boost::apply_visitor(*this, item.second);
+        out << item.first << ": " << boost::apply_visitor(*this, item.second);
     }
     out << "}";
     return out.str();
