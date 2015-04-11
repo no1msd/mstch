@@ -5,14 +5,17 @@
 #include <boost/blank.hpp>
 
 #include "types.h"
+#include <set>
 
 namespace mstch {
     namespace visitor {
         class render_node: public boost::static_visitor<std::string> {
-        private:
-            bool html_escaped;
         public:
-            render_node(bool html_escaped);
+            enum class flag { escape_html };
+        private:
+            std::set<flag> flags;
+        public:
+            render_node(std::set<flag> flags = {});
             std::string operator()(const boost::blank& blank) const;
             std::string operator()(const int& i) const;
             std::string operator()(const bool& b) const;

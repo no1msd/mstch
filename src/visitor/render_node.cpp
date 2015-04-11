@@ -3,8 +3,8 @@
 
 using namespace mstch;
 
-visitor::render_node::render_node(bool html_escaped):
-        html_escaped(html_escaped)
+visitor::render_node::render_node(std::set<flag> flags):
+        flags(flags)
 {
 }
 
@@ -21,7 +21,7 @@ std::string visitor::render_node::operator()(const bool& b) const {
 }
 
 std::string visitor::render_node::operator()(const std::string& str) const {
-    return html_escaped?html_escape(str):str;
+    return (flags.find(flag::escape_html) != flags.end())?html_escape(str):str;
 }
 
 std::string visitor::render_node::operator()(const array& arr) const {
