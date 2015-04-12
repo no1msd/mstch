@@ -28,6 +28,8 @@ namespace mstch {
             std::string operator()(const std::string& str) const;
             std::string operator()(const array& arr) const;
             std::string operator()(const object& obj) const;
+            std::string operator()(const string_lambda& lambda) const;
+            std::string operator()(const renderer_lambda& lambda) const;
         };
     }
 }

@@ -16,6 +16,8 @@ namespace mstch {
             bool operator()(const std::string& str) const;
             bool operator()(const array& arr) const;
             bool operator()(const object& obj) const;
+            bool operator()(const string_lambda& lambda) const;
+            bool operator()(const renderer_lambda& lambda) const;
         };
     }
 }

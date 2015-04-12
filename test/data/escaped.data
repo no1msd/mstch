@@ -1,0 +1,6 @@
+mstch::object{
+  {"title", []() {
+    return "Bear > Shark";
+  }},
+  {"entities", std::string{"&quot; \"'<>/"}}
+}

@@ -31,3 +31,17 @@ std::string visitor::render_node::operator()(const array& arr) const {
 std::string visitor::render_node::operator()(const object& obj) const {
     return "";
 }
+
+std::string visitor::render_node::operator()(
+        const string_lambda& lambda) const
+{
+    return this->operator()(lambda());
+}
+
+std::string visitor::render_node::operator()(
+        const renderer_lambda& lambda) const
+{
+    return this->operator()((lambda())("", [](const std::string& text) {
+        return std::string{""};
+    }));
+}

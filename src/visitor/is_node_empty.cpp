@@ -25,3 +25,11 @@ bool visitor::is_node_empty::operator()(const array& arr) const {
 bool visitor::is_node_empty::operator()(const object& obj) const {
     return false;
 }
+
+bool visitor::is_node_empty::operator()(const string_lambda& lambda) const {
+    return false; // TODO
+}
+
+bool visitor::is_node_empty::operator()(const renderer_lambda& lambda) const {
+    return false; // TODO
+}

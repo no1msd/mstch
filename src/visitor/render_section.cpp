@@ -46,3 +46,17 @@ std::string visitor::render_section::operator()(const array& a) const {
                     render_section(context, section, {flag::keep_array}), item);
     return out.str();
 }
+
+std::string visitor::render_section::operator()(
+        const string_lambda& lambda) const
+{
+    return lambda();
+}
+
+std::string visitor::render_section::operator()(
+        const renderer_lambda& lambda) const
+{
+    return (lambda())(section, [&](const std::string& text) {
+        return render_context(mstch::object{}, context).render(text);
+    });
+}

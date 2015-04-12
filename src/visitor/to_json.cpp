@@ -41,3 +41,11 @@ std::string visitor::to_json::operator()(const object& obj) const {
     out << "}";
     return out.str();
 }
+
+std::string visitor::to_json::operator()(const string_lambda& lambda) const {
+    return ""; // TODO
+}
+
+std::string visitor::to_json::operator()(const renderer_lambda& lambda) const {
+    return ""; // TODO
+}
