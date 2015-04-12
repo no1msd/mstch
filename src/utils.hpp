@@ -4,6 +4,7 @@
 #include <string>
 
 namespace mstch {
+    std::string strip_whitespace(std::string tmplt);
     std::string html_escape(std::string str);
 }
 
