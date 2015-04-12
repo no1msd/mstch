@@ -1,10 +1,9 @@
-cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8)
 project(mstch)
-
+option (WITH_UNIT_TESTS "enable building unit test executable" OFF)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
-
 add_subdirectory(src)
-add_subdirectory(test)
-
-enable_testing()
-add_test(NAME mstch_tests COMMAND mstch_test)
+if(WITH_UNIT_TESTS)
+    enable_testing()
+    add_subdirectory(test)
+endif()
