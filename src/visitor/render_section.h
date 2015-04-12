@@ -6,7 +6,7 @@
 #include <render_context.h>
 #include <set>
 
-#include "types.h"
+#include "mstch/mstch.h"
 
 namespace mstch {
     namespace visitor {

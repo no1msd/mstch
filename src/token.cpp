@@ -1,6 +1,7 @@
 #include "token.h"
 
 #include "utils.h"
+#include <boost/algorithm/string/trim.hpp>
 #include <regex>
 
 using namespace mstch;
@@ -9,7 +10,7 @@ token::token(const std::string& raw_token): raw_val(raw_token) {
     std::regex token_match("\\{{2}[^\\}]*\\}{2}|\\{{3}[^\\}]*\\}{3}");
     if(std::regex_match(raw_token, token_match)) {
         std::string inside = raw_token.substr(2, raw_token.size() - 4);
-        inside = trim(inside);
+        boost::trim(inside);
         if (inside.size() > 0 && inside.at(0) == '#') {
             type_val = token_type::section_open;
             content_val = inside.substr(1);
@@ -37,7 +38,7 @@ token::token(const std::string& raw_token): raw_val(raw_token) {
             type_val = token_type::variable;
             content_val = inside;
         }
-        content_val = trim(content_val);
+        boost::trim(content_val);
     } else {
         type_val = token_type::text;
         content_val = raw_token;

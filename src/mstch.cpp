@@ -1,7 +1,7 @@
 #include <regex>
 #include <iostream>
 
-#include "mstch.h"
+#include "mstch/mstch.h"
 #include "render_context.h"
 
 using namespace mstch;
@@ -16,7 +16,7 @@ std::string strip_whitespace(std::string tmplt) {
     std::regex whitespace_match("^\\s*$");
     while (std::getline(in, line)) {
         std::string no_tags = std::regex_replace(line, tag_match, "");
-        if(no_tags != line && std::regex_match(no_tags, whitespace_match)) {
+        if (no_tags != line && std::regex_match(no_tags, whitespace_match)) {
             out << std::regex_replace(line, std::regex("\\s"), "");
         } else {
             out << line;

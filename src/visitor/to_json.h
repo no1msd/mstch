@@ -5,7 +5,7 @@
 #include <boost/blank.hpp>
 #include <render_context.h>
 
-#include "types.h"
+#include "mstch/mstch.h"
 
 namespace mstch {
     namespace visitor {

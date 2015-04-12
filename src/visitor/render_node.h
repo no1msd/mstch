@@ -4,7 +4,7 @@
 #include <boost/variant/static_visitor.hpp>
 #include <boost/blank.hpp>
 
-#include "types.h"
+#include "mstch/mstch.h"
 #include <set>
 
 namespace mstch {

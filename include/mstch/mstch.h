@@ -1,5 +1,5 @@
-#ifndef _MSTCH_TYPES_H_
-#define _MSTCH_TYPES_H_
+#ifndef _MSTCH_H_
+#define _MSTCH_H_
 
 #include <vector>
 #include <map>
@@ -14,6 +14,12 @@ namespace mstch {
             std::vector<boost::recursive_variant_>>::type;
     using object = std::map<const std::string,node>;
     using array = std::vector<node>;
+
+    std::string render(
+            const std::string& tmplt,
+            const object& context,
+            const std::map<std::string,std::string>& partials =
+                    std::map<std::string,std::string>());
 }
 
-#endif //_MSTCH_TYPES_H_
+#endif // _MSTCH_H_

@@ -5,7 +5,7 @@
 #include <sstream>
 #include <string>
 
-#include "types.h"
+#include "mstch/mstch.h"
 #include "state/render_state.h"
 
 namespace mstch {
