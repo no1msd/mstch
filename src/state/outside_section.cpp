@@ -1,8 +1,8 @@
-#include <visitor/render_node.h>
-#include "outside_section.h"
-#include "in_section.h"
-#include "in_inverted_section.h"
-#include "render_context.h"
+#include "visitor/render_node.hpp"
+#include "outside_section.hpp"
+#include "in_section.hpp"
+#include "in_inverted_section.hpp"
+#include "render_context.hpp"
 
 using namespace mstch;
 

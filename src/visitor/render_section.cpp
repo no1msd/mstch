@@ -1,5 +1,5 @@
-#include "render_section.h"
-#include "is_node_empty.h"
+#include "render_section.hpp"
+#include "is_node_empty.hpp"
 
 using namespace mstch;
 

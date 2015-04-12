@@ -2,7 +2,7 @@
 #define _MSTCH_RENDER_STATE_H_
 
 #include <memory>
-#include <token.h>
+#include "token.hpp"
 
 namespace mstch {
     class render_context;

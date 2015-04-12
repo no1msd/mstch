@@ -1,6 +1,6 @@
-#include "token.h"
+#include "token.hpp"
 
-#include "utils.h"
+#include "utils.hpp"
 #include <boost/algorithm/string/trim.hpp>
 #include <regex>
 

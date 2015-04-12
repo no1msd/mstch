@@ -5,8 +5,8 @@
 #include <sstream>
 #include <string>
 
-#include "mstch/mstch.h"
-#include "state/render_state.h"
+#include "mstch/mstch.hpp"
+#include "state/render_state.hpp"
 
 namespace mstch {
     class render_context {

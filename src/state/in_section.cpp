@@ -1,7 +1,7 @@
-#include "visitor/is_node_empty.h"
-#include "visitor/render_section.h"
-#include "in_section.h"
-#include "outside_section.h"
+#include "visitor/is_node_empty.hpp"
+#include "visitor/render_section.hpp"
+#include "in_section.hpp"
+#include "outside_section.hpp"
 
 using namespace mstch;
 

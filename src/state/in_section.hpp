@@ -1,7 +1,7 @@
 #ifndef _MSTCH_IN_SECTION_H_
 #define _MSTCH_IN_SECTION_H_
 
-#include "render_state.h"
+#include "render_state.hpp"
 #include <sstream>
 
 namespace mstch {

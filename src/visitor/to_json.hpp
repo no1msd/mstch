@@ -3,9 +3,9 @@
 
 #include <boost/variant/static_visitor.hpp>
 #include <boost/blank.hpp>
-#include <render_context.h>
+#include "render_context.hpp"
 
-#include "mstch/mstch.h"
+#include "mstch/mstch.hpp"
 
 namespace mstch {
     namespace visitor {

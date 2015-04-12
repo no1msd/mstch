@@ -1,5 +1,5 @@
-#include "render_context.h"
-#include "state/outside_section.h"
+#include "render_context.hpp"
+#include "state/outside_section.hpp"
 
 #include <regex>
 

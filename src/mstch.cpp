@@ -1,8 +1,8 @@
 #include <regex>
 #include <iostream>
 
-#include "mstch/mstch.h"
-#include "render_context.h"
+#include "mstch/mstch.hpp"
+#include "render_context.hpp"
 
 using namespace mstch;
 

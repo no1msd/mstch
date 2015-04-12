@@ -2,7 +2,7 @@
 #define _MSTCH_IN_INVERTED_SECTION_H_
 
 #include <sstream>
-#include "render_state.h"
+#include "render_state.hpp"
 
 namespace mstch {
     namespace state {

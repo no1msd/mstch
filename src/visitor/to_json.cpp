@@ -1,4 +1,4 @@
-#include "to_json.h"
+#include "to_json.hpp"
 
 using namespace mstch;
 

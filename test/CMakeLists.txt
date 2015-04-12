@@ -27,13 +27,13 @@ foreach(string_file ${string_files})
 endforeach(string_file)
 
 add_custom_command(
-	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/test_data.h
-	COMMAND ${CMAKE_CURRENT_BINARY_DIR}/filetoheader --output ${CMAKE_CURRENT_BINARY_DIR}/test_data.h --namespace mstchtest ${genargs}
+	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/test_data.hpp
+	COMMAND ${CMAKE_CURRENT_BINARY_DIR}/filetoheader --output ${CMAKE_CURRENT_BINARY_DIR}/test_data.hpp --namespace mstchtest ${genargs}
 	DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/filetoheader
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/test/data/)
-set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/test_data.h PROPERTIES GENERATED TRUE)
-add_custom_target(test_data_h DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/test_data.h)
+set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/test_data.hpp PROPERTIES GENERATED TRUE)
+add_custom_target(test_data_hpp DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/test_data.hpp)
 
 add_executable(mstch_test test_main.cpp)
 target_link_libraries(mstch_test mstch)
-add_dependencies(mstch_test test_data_h)
+add_dependencies(mstch_test test_data_hpp)

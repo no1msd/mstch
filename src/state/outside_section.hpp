@@ -1,7 +1,7 @@
 #ifndef _MSTCH_OUTSIDE_SECTION_H_
 #define _MSTCH_OUTSIDE_SECTION_H_
 
-#include "render_state.h"
+#include "render_state.hpp"
 
 namespace mstch {
     namespace state {

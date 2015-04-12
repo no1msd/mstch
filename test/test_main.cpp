@@ -1,9 +1,9 @@
 #define CATCH_CONFIG_MAIN
 
 #include <catch.hpp>
-#include <mstch/mstch.h>
+#include "mstch/mstch.hpp"
 
-#include "test_data.h"
+#include "test_data.hpp"
 
 #define MSTCH_TEST(x,y) TEST_CASE(x) { REQUIRE(y ## _txt == mstch::render(y ## _mustache, y ## _data)); }
 

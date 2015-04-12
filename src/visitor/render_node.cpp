@@ -1,5 +1,5 @@
-#include <utils.h>
-#include "render_node.h"
+#include "utils.hpp"
+#include "render_node.hpp"
 
 using namespace mstch;
 

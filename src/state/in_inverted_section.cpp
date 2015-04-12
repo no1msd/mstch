@@ -1,9 +1,9 @@
-#include <visitor/render_section.h>
-#include <visitor/to_json.h>
-#include "visitor/is_node_empty.h"
-#include "in_inverted_section.h"
-#include "outside_section.h"
-#include "render_context.h"
+#include "visitor/render_section.hpp"
+#include "visitor/to_json.hpp"
+#include "visitor/is_node_empty.hpp"
+#include "in_inverted_section.hpp"
+#include "outside_section.hpp"
+#include "render_context.hpp"
 
 using namespace mstch;
 

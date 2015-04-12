@@ -1,27 +1,21 @@
-#ifndef _MSTCH_RENDER_SECTION_H_
-#define _MSTCH_RENDER_SECTION_H_
+#ifndef _MSTCH_RENDER_NODE_H_
+#define _MSTCH_RENDER_NODE_H_
 
 #include <boost/variant/static_visitor.hpp>
 #include <boost/blank.hpp>
-#include <render_context.h>
-#include <set>
 
-#include "mstch/mstch.h"
+#include "mstch/mstch.hpp"
+#include <set>
 
 namespace mstch {
     namespace visitor {
-        class render_section: public boost::static_visitor<std::string> {
+        class render_node: public boost::static_visitor<std::string> {
         public:
-            enum class flag { keep_array };
+            enum class flag { escape_html };
         private:
-            render_context& context;
-            std::string section;
             std::set<flag> flags;
         public:
-            render_section(
-                    render_context& context,
-                    const std::string& section,
-                    std::set<flag> flags = {});
+            render_node(std::set<flag> flags = {});
             std::string operator()(const boost::blank& blank) const;
             std::string operator()(const int& i) const;
             std::string operator()(const bool& b) const;
@@ -32,4 +26,4 @@ namespace mstch {
     }
 }
 
-#endif //_MSTCH_RENDER_SECTION_H_
+#endif //_MSTCH_RENDER_NODE_H_
