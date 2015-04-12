@@ -1,5 +1,6 @@
 #include "render_context.hpp"
 #include "state/outside_section.hpp"
+#include "utils.hpp"
 
 #include <regex>
 
@@ -14,6 +15,8 @@ render_context::render_context(
         objects{object},
         state(new state::outside_section)
 {
+    for(auto& partial: this->partials)
+        partial.second = strip_whitespace(partial.second);
 }
 
 render_context::render_context(
@@ -54,4 +57,8 @@ std::string render_context::render(const std::string& t) {
     for (; it != std::sregex_token_iterator(); ++it)
         output << state->render(*this, token(it->str()));
     return output.str();
+}
+
+std::string render_context::render_partial(const std::string& partial_name) {
+    return (partials.count(partial_name))?render(partials.at(partial_name)):"";
 }

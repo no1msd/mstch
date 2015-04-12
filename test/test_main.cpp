@@ -6,6 +6,10 @@
 
 using namespace mstchtest;
 
+#define MSTCH_PARTIAL_TEST(x) TEST_CASE(#x) { \
+    REQUIRE(x ## _txt == mstch::render(x ## _mustache, x ## _data, {{"partial", x ## _partial}})); \
+}
+
 #define MSTCH_TEST(x) TEST_CASE(#x) { \
     REQUIRE(x ## _txt == mstch::render(x ## _mustache, x ## _data)); \
 }
@@ -39,6 +43,10 @@ MSTCH_TEST(nesting_same_name)
 MSTCH_TEST(null_lookup_array)
 MSTCH_TEST(null_lookup_object)
 MSTCH_TEST(null_view)
+MSTCH_PARTIAL_TEST(partial_array)
+MSTCH_PARTIAL_TEST(partial_array_of_partials)
+MSTCH_PARTIAL_TEST(partial_array_of_partials_implicit)
+MSTCH_PARTIAL_TEST(partial_empty)
 MSTCH_TEST(recursion_with_same_names)
 MSTCH_TEST(reuse_of_enumerables)
 MSTCH_TEST(section_as_context)

@@ -29,7 +29,7 @@ std::string state::outside_section::render(
     case token_type::text:
         return token.raw();
     case token_type::partial:
-        break;//render_context(mstch::object{{".", i}}, ctx).render(section);
+        return ctx.render_partial(token.content());
     case token_type::section_close:
         // TODO ERROR
         break;

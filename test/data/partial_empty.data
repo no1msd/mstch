@@ -1,0 +1,3 @@
+mstch::object{
+  {"foo", 1}
+}

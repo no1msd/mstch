@@ -1,0 +1,8 @@
+mstch::object{
+  {"numbers", mstch::array{
+    mstch::object{{"i", std::string{"1"}}},
+    mstch::object{{"i", std::string{"2"}}},
+    mstch::object{{"i", std::string{"3"}}},
+    mstch::object{{"i", std::string{"4"}}}
+  }}
+}

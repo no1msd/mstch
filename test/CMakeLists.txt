@@ -23,7 +23,9 @@ endforeach(data_file)
 file(GLOB string_files RELATIVE
 	"${CMAKE_SOURCE_DIR}/test/data"
 	"${CMAKE_SOURCE_DIR}/test/data/*.mustache"
-	"${CMAKE_SOURCE_DIR}/test/data/*.txt")
+	"${CMAKE_SOURCE_DIR}/test/data/*.txt"
+	"${CMAKE_SOURCE_DIR}/test/data/*.partial"
+	)
 
 foreach(string_file ${string_files})
 	list(APPEND genargs "-S${string_file}")

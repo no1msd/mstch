@@ -9,7 +9,7 @@ std::string mstch::strip_whitespace(std::string tmplt) {
     std::ostringstream out;
     std::istringstream in(tmplt);
     std::string line;
-    std::regex tag_match("\\{{2}[ ]*[#|/|^|!]{1}[^\\}]*\\}{2}");
+    std::regex tag_match("\\{{2}[ ]*[#|/|^|!|>]{1}[^\\}]*\\}{2}");
     std::regex whitespace_match("^\\s*$");
     while (std::getline(in, line)) {
         std::string no_tags = std::regex_replace(line, tag_match, "");
