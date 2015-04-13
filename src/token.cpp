@@ -1,6 +1,6 @@
 #include "token.hpp"
 #include <boost/algorithm/string/trim.hpp>
-#include <regex>
+#include <boost/regex.hpp>
 
 using namespace mstch;
 
@@ -20,8 +20,8 @@ std::tuple<int,int,token::type> token::token_info(const std::string& inside) {
 }
 
 token::token(const std::string& raw_token): raw_val(raw_token) {
-    std::regex token_match("\\{{2}[^\\}]*\\}{2}|\\{{3}[^\\}]*\\}{3}");
-    if(std::regex_match(raw_token, token_match)) {
+    boost::regex token_match("\\{{2}[^\\}]*\\}{2}|\\{{3}[^\\}]*\\}{3}");
+    if(boost::regex_match(raw_token, token_match)) {
         std::string inside{raw_token.substr(2, raw_token.size() - 4)};
         boost::trim(inside);
         if (inside.size() > 0) {

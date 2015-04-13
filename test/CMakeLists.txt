@@ -6,6 +6,9 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${Boost_INCLUDE_DIR})
 
+add_executable(benchmark benchmark_main.cpp)
+target_link_libraries(benchmark mstch)
+
 add_executable(filetoheader filetoheader.cpp)
 target_link_libraries(filetoheader ${Boost_PROGRAM_OPTIONS_LIBRARY})
 set(filetoheader_exe ${CMAKE_CURRENT_BINARY_DIR}/filetoheader${CMAKE_EXECUTABLE_SUFFIX})

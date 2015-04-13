@@ -1,7 +1,7 @@
 #include "render_context.hpp"
 #include "utils.hpp"
 #include "state/outside_section.hpp"
-#include <regex>
+#include <boost/regex.hpp>
 
 using namespace mstch;
 
@@ -57,9 +57,9 @@ const mstch::node& render_context::get_node(const std::string& token) {
 
 std::string render_context::render(const std::string& t) {
     std::ostringstream output;
-    auto re = std::regex("\\{{2}[^\\}]*\\}{2}|\\{{3}[^\\}]*\\}{3}");
-    std::sregex_token_iterator it(t.begin(), t.end(), re, {-1, 0});
-    for (; it != std::sregex_token_iterator(); ++it)
+    auto re = boost::regex("\\{{2}[^\\}]*\\}{2}|\\{{3}[^\\}]*\\}{3}");
+    boost::sregex_token_iterator it(t.begin(), t.end(), re, {-1, 0});
+    for (; it != boost::sregex_token_iterator(); ++it)
         output << state.top()->render(*this, token(it->str()));
     return output.str();
 }

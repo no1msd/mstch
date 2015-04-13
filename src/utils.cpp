@@ -1,18 +1,18 @@
 #include "utils.hpp"
 
-#include <regex>
+#include <boost/regex.hpp>
 #include <boost/algorithm/string/replace.hpp>
 
 std::string mstch::strip_whitespace(const std::string& tmplt) {
-    std::regex comment_match("\\{\\{![^\\}]*\\}\\}");
-    std::regex tag_match("\\{{2}[ ]*[#|/|^|!|>]{1}[^\\}]*\\}{2}");
-    std::regex whitespace_match("^\\s*$");
+    boost::regex comment_match("\\{\\{![^\\}]*\\}\\}");
+    boost::regex tag_match("\\{{2}[ ]*[#|/|^|!|>]{1}[^\\}]*\\}{2}");
+    boost::regex whitespace_match("^\\s*$");
     std::ostringstream out;
-    std::istringstream in(std::regex_replace(tmplt, comment_match, "{{!}}"));
+    std::istringstream in(boost::regex_replace(tmplt, comment_match, "{{!}}"));
     for(std::string line; std::getline(in, line);) {
-        std::string no_tags = std::regex_replace(line, tag_match, "");
-        if (no_tags != line && std::regex_match(no_tags, whitespace_match))
-            out << std::regex_replace(line, std::regex("\\s"), "");
+        std::string no_tags = boost::regex_replace(line, tag_match, "");
+        if (no_tags != line && boost::regex_match(no_tags, whitespace_match))
+            out << boost::regex_replace(line, boost::regex("\\s"), "");
         else
             out << line << (in.eof()?"":"\n");
     }
