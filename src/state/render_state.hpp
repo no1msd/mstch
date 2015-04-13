@@ -11,8 +11,7 @@ namespace mstch {
         public:
             virtual ~render_state() {}
             virtual std::string render(
-                    render_context& context,
-                    const token& token) = 0;
+                    render_context& context, const token& token) = 0;
         };
     }
 }

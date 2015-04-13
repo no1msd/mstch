@@ -14,8 +14,7 @@ namespace mstch {
         public:
             in_section(const std::string& section_name);
             std::string render(
-                    render_context& context,
-                    const token& token) override;
+                    render_context& context, const token& token) override;
         };
     }
 }

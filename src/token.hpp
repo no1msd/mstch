@@ -4,20 +4,20 @@
 #include <string>
 
 namespace mstch {
-    enum class token_type {
-        text, variable, section_open, section_close, inverted_section_open,
-        unescaped_variable, comment, partial
-    };
-
     class token {
+    public:
+        enum class type {
+            text, variable, section_open, section_close, inverted_section_open,
+            unescaped_variable, comment, partial
+        };
     private:
-        token_type type_val;
+        type type_val;
         std::string content_val;
         std::string raw_val;
-
+        std::tuple<int,int,type> token_info(const std::string& inside);
     public:
         token(const std::string& raw_token);
-        token_type type() const;
+        type token_type() const;
         std::string content() const;
         std::string raw() const;
     };

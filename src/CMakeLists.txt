@@ -15,7 +15,6 @@ set(SRC
 	state/outside_section.cpp
 	visitor/is_node_empty.cpp
 	visitor/render_node.cpp
-	visitor/render_section.cpp
-	visitor/to_json.cpp)
+	visitor/render_section.cpp)
 
 add_library(mstch STATIC ${SRC})

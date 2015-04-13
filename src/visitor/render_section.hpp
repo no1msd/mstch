@@ -14,12 +14,12 @@ namespace mstch {
         public:
             enum class flag { keep_array };
         private:
-            render_context& context;
+            render_context& ctx;
             std::string section;
             std::set<flag> flags;
         public:
             render_section(
-                    render_context& context,
+                    render_context& ctx,
                     const std::string& section,
                     std::set<flag> flags = {});
             std::string operator()(const boost::blank& blank) const;

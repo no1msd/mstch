@@ -7,32 +7,29 @@
 using namespace mstch;
 
 std::string state::outside_section::render(
-        render_context& ctx,
-        const token& token)
+        render_context& ctx, const token& token)
 {
-    switch(token.type()) {
-    case token_type::section_open:
+    switch(token.token_type()) {
+    case token::type::section_open:
         ctx.set_state<in_section>(token.content());
         break;
-    case token_type::inverted_section_open:
+    case token::type::inverted_section_open:
         ctx.set_state<in_inverted_section>(token.content());
         break;
-    case token_type::variable:
-    case token_type::unescaped_variable: {
+    case token::type::variable:
+    case token::type::unescaped_variable: {
         std::set<visitor::render_node::flag> flags{};
-        if (token.type() == token_type::variable)
+        if (token.token_type() == token::type::variable)
             flags.insert(visitor::render_node::flag::escape_html);
         return boost::apply_visitor(
                 visitor::render_node(flags), ctx.get_node(token.content()));
     }
-    case token_type::comment: break;
-    case token_type::text:
+    case token::type::comment: break;
+    case token::type::text:
         return token.raw();
-    case token_type::partial:
+    case token::type::partial:
         return ctx.render_partial(token.content());
-    case token_type::section_close:
-        // TODO ERROR
-        break;
+    case token::type::section_close: break;
     }
     return "";
 }

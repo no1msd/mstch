@@ -3,9 +3,7 @@
 
 using namespace mstch;
 
-visitor::render_node::render_node(std::set<flag> flags):
-        flags(flags)
-{
+visitor::render_node::render_node(std::set<flag> flags): flags(flags) {
 }
 
 std::string visitor::render_node::operator()(const boost::blank& blank) const {
