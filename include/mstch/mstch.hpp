@@ -13,7 +13,7 @@ namespace mstch {
     // to a bool.
     class boolean {
     private:
-        bool state;
+        const bool state;
     public:
         boolean(bool b): state(b) {}
         operator bool() const { return state; }
@@ -21,9 +21,11 @@ namespace mstch {
 
     using renderer = std::function<std::string(const std::string&)>;
     using string_lambda = std::function<std::string()>;
-    using renderer_lambda = std::function<std::function<std::string(const std::string&,renderer)>()>;
+    using renderer_lambda = std::function<
+            std::function<std::string(const std::string&,renderer)>()>;
     using node = boost::make_recursive_variant<
-            boost::blank, std::string, int, boolean, string_lambda, renderer_lambda,
+            boost::blank, std::string, int, boolean,
+            string_lambda, renderer_lambda,
             std::map<const std::string,boost::recursive_variant_>,
             std::vector<boost::recursive_variant_>>::type;
     using object = std::map<const std::string,node>;
@@ -31,7 +33,7 @@ namespace mstch {
 
     std::string render(
             const std::string& tmplt,
-            const object& context,
+            const object& root,
             const std::map<std::string,std::string>& partials =
                     std::map<std::string,std::string>());
 }

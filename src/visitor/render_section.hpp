@@ -13,11 +13,6 @@ namespace mstch {
         class render_section: public boost::static_visitor<std::string> {
         public:
             enum class flag { keep_array };
-        private:
-            render_context& ctx;
-            std::string section;
-            std::set<flag> flags;
-        public:
             render_section(
                     render_context& ctx,
                     const std::string& section,
@@ -30,6 +25,10 @@ namespace mstch {
             std::string operator()(const object& obj) const;
             std::string operator()(const string_lambda& lambda) const;
             std::string operator()(const renderer_lambda& lambda) const;
+        private:
+            render_context& ctx;
+            std::string section;
+            std::set<flag> flags;
         };
     }
 }

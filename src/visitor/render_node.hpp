@@ -12,9 +12,6 @@ namespace mstch {
         class render_node: public boost::static_visitor<std::string> {
         public:
             enum class flag { escape_html };
-        private:
-            std::set<flag> flags;
-        public:
             render_node(std::set<flag> flags = {});
             std::string operator()(const boost::blank& blank) const;
             std::string operator()(const int& i) const;
@@ -24,6 +21,8 @@ namespace mstch {
             std::string operator()(const object& obj) const;
             std::string operator()(const string_lambda& lambda) const;
             std::string operator()(const renderer_lambda& lambda) const;
+        private:
+            std::set<flag> flags;
         };
     }
 }

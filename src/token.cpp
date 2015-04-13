@@ -1,6 +1,4 @@
 #include "token.hpp"
-
-#include "utils.hpp"
 #include <boost/algorithm/string/trim.hpp>
 #include <regex>
 
@@ -13,12 +11,10 @@ std::tuple<int,int,token::type> token::token_info(const std::string& inside) {
     case '/': return std::make_tuple(1, 0, type::section_close);
     case '&': return std::make_tuple(1, 0, type::unescaped_variable);
     case '#': return std::make_tuple(1, 0, type::section_open);
+    case '!': return std::make_tuple(1, 0, type::comment);
     case '{':
         if (inside.at(inside.size() - 1) == '}')
             return std::make_tuple(1, 1, type::unescaped_variable);
-        else
-            return std::make_tuple(0, 0, type::variable);
-    case '!': return std::make_tuple(1, 0, type::comment);
     default: return std::make_tuple(0, 0, type::variable);
     }
 }
