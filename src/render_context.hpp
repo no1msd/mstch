@@ -16,7 +16,7 @@ namespace mstch {
         public:
             push(render_context& context, const mstch::object& obj = {});
             ~push();
-            std::string render(const std::string& tmplt);
+            std::string render(const std::vector<token>& tokens);
         private:
             render_context& context;
         };
@@ -31,19 +31,20 @@ namespace mstch {
             state.top() = std::unique_ptr<state::render_state>(
                     new T(std::forward<Args>(args)...));
         }
-    private:
-        static const mstch::node null_node;
-        const mstch::node& find_node(
-                const std::string& token,
-                const std::deque<object>& current_objects);
-        std::map<std::string,std::string> partials;
-        std::deque<mstch::object> objects;
-        std::stack<std::unique_ptr<state::render_state>> state;
         template<class T, class... Args>
         void push_state(Args&&... args) {
             state.push(std::unique_ptr<state::render_state>(
                     new T(std::forward<Args>(args)...)));
         }
+    private:
+        static const mstch::node null_node;
+        const mstch::node& find_node(
+                const std::string& token,
+                const std::deque<object>& current_objects);
+        std::string render(const std::vector<token>& tokens);
+        std::map<std::string,std::string> partials;
+        std::deque<mstch::object> objects;
+        std::stack<std::unique_ptr<state::render_state>> state;
     };
 }
 

@@ -17,6 +17,7 @@ std::string mstch::strip_whitespace(const std::string& tmplt) {
             out << line << (in.eof()?"":"\n");
     }
     return out.str();
+    return tmplt;
 }
 
 std::string mstch::html_escape(std::string str) {

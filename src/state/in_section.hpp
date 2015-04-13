@@ -3,6 +3,7 @@
 
 #include "render_state.hpp"
 #include <sstream>
+#include <vector>
 
 namespace mstch {
     namespace state {
@@ -13,7 +14,7 @@ namespace mstch {
                     render_context& context, const token& token) override;
         private:
             const std::string section_name;
-            std::ostringstream section_text;
+            std::vector<token> section_tokens;
             int skipped_openings;
         };
     }

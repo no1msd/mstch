@@ -1,6 +1,6 @@
 #include "token.hpp"
 #include <boost/algorithm/string/trim.hpp>
-#include <boost/regex.hpp>
+#include <boost/algorithm/string/predicate.hpp>
 
 using namespace mstch;
 
@@ -19,10 +19,11 @@ std::tuple<int,int,token::type> token::token_info(const std::string& inside) {
     }
 }
 
-token::token(const std::string& raw_token): raw_val(raw_token) {
-    boost::regex token_match("\\{{2}[^\\}]*\\}{2}|\\{{3}[^\\}]*\\}{3}");
-    if(boost::regex_match(raw_token, token_match)) {
-        std::string inside{raw_token.substr(2, raw_token.size() - 4)};
+token::token(bool is_tag_val, const std::string& raw_val):
+        raw_val(raw_val), is_tag_val(is_tag_val)
+{
+    if(is_tag_val) {
+        std::string inside{raw_val.substr(2, raw_val.size() - 4)};
         boost::trim(inside);
         if (inside.size() > 0) {
             int lpad, rpad;
@@ -32,7 +33,7 @@ token::token(const std::string& raw_token): raw_val(raw_token) {
         }
     } else {
         type_val = type::text;
-        content_val = raw_token;
+        content_val = raw_val;
     }
 }
 
@@ -46,4 +47,8 @@ std::string token::content() const {
 
 std::string token::raw() const {
     return raw_val;
+}
+
+bool token::is_tag() const {
+    return is_tag_val;
 }

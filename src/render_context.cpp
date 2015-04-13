@@ -1,7 +1,6 @@
 #include "render_context.hpp"
 #include "utils.hpp"
 #include "state/outside_section.hpp"
-#include <boost/regex.hpp>
 
 using namespace mstch;
 
@@ -19,8 +18,8 @@ render_context::push::~push() {
     context.state.pop();
 }
 
-std::string render_context::push::render(const std::string& tmplt) {
-    return context.render(tmplt);
+std::string render_context::push::render(const std::vector<token>& tokens) {
+    return context.render(tokens);
 }
 
 render_context::render_context(
@@ -55,13 +54,61 @@ const mstch::node& render_context::get_node(const std::string& token) {
     return find_node(token, objects);
 }
 
+enum class parse_state {
+    start, in_del_start, in_del, in_content, in_escaped_content, in_del_end
+};
+
 std::string render_context::render(const std::string& t) {
-    std::ostringstream output;
-    auto re = boost::regex("\\{{2}[^\\}]*\\}{2}|\\{{3}[^\\}]*\\}{3}");
-    boost::sregex_token_iterator it(t.begin(), t.end(), re, {-1, 0});
-    for (; it != boost::sregex_token_iterator(); ++it)
-        output << state.top()->render(*this, token(it->str()));
-    return output.str();
+    const std::string delim_start{"{{"};
+    const std::string delim_end{"}}"};
+    std::string out;
+    std::string::const_iterator tok_end, tok_start = t.begin();
+    parse_state pstate = parse_state::start;
+    unsigned int delim_p = 0;
+    for (std::string::const_iterator it = t.begin(); it != t.end(); ++it) {
+        if(pstate == parse_state::start && *it == delim_start[0]) {
+            pstate = parse_state::in_del_start;
+            tok_end = it;
+            delim_p = 1;
+        } else if(pstate == parse_state::in_del_start) {
+            if (*it == delim_start[delim_p] && ++delim_p == delim_start.size())
+                pstate = parse_state::in_del;
+            else
+                pstate = parse_state::start;
+        } else if(pstate == parse_state::in_del) {
+            if (*it== '{') {
+                pstate = parse_state::in_escaped_content;
+            } else if (*it == delim_end[0]) {
+                pstate = parse_state::in_del_end;
+                delim_p = 1;
+            } else {
+                pstate = parse_state::in_content;
+            }
+        } else if(pstate == parse_state::in_escaped_content && *it == '}') {
+            pstate = parse_state::in_content;
+        } else if(pstate == parse_state::in_content && *it == delim_end[0]) {
+            pstate = parse_state::in_del_end;
+            delim_p = 1;
+        } else if(pstate == parse_state::in_del_end) {
+            if (*it == delim_end[delim_p] && ++delim_p == delim_end.size()) {
+                pstate = parse_state::start;
+                out += state.top()->render(*this, {false, {tok_start,tok_end}});
+                out += state.top()->render(*this, {true, {tok_end, it + 1}});
+                tok_start = it + 1;
+            } else {
+                pstate = parse_state::start;
+            }
+        }
+    }
+    out += state.top()->render(*this, {false, {tok_start, t.end()}});
+    return out;
+}
+
+std::string render_context::render(const std::vector<token>& tokens) {
+    std::string output;
+    for(auto& token: tokens)
+        output += state.top()->render(*this, token);
+    return output;
 }
 
 std::string render_context::render_partial(const std::string& partial_name) {

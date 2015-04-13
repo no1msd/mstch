@@ -18,13 +18,13 @@ std::string state::in_section::render(render_context& ctx, const token& token) {
             std::string out;
             if (!boost::apply_visitor(visitor::is_node_empty(), section_node))
                 out = boost::apply_visitor(
-                        visitor::render_section(ctx, section_text.str()),
+                        visitor::render_section(ctx, section_tokens),
                         section_node);
             ctx.set_state<outside_section>();
             return out;
         } else {
             skipped_openings--;
-            section_text << token.raw();
+            section_tokens.push_back(token);
         }
         break;
     case token::type::inverted_section_open:
@@ -35,7 +35,7 @@ std::string state::in_section::render(render_context& ctx, const token& token) {
     case token::type::unescaped_variable:
     case token::type::comment:
     case token::type::partial:
-        section_text << token.raw();
+        section_tokens.push_back(token);
         break;
     }
     return "";
