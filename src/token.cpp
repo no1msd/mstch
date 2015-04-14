@@ -19,10 +19,10 @@ std::tuple<int,int,token::type> token::token_info(const std::string& inside) {
     }
 }
 
-token::token(bool is_tag_val, const std::string& raw_val):
-        raw_val(raw_val), is_tag_val(is_tag_val)
+token::token(bool is_tag, bool eol, bool ws_only, const std::string& raw_val):
+        raw_val(raw_val), eol(eol), ws_only(ws_only), marked(false)
 {
-    if(is_tag_val) {
+    if(is_tag) {
         std::string inside{raw_val.substr(2, raw_val.size() - 4)};
         boost::trim(inside);
         if (inside.size() > 0) {
@@ -35,20 +35,4 @@ token::token(bool is_tag_val, const std::string& raw_val):
         type_val = type::text;
         content_val = raw_val;
     }
-}
-
-token::type token::token_type() const {
-    return type_val;
-}
-
-std::string token::content() const {
-    return content_val;
-}
-
-std::string token::raw() const {
-    return raw_val;
-}
-
-bool token::is_tag() const {
-    return is_tag_val;
 }

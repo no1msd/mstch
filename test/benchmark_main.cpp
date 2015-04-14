@@ -4,30 +4,6 @@
 #include <iostream>
 
 int main() {
-    std::string complex_html{
-        "<h1>{{header}}</h1>\n"
-        "{{#list}}\n"
-        "  <ul>\n"
-        "  {{#item}}\n"
-        "    {{#current}}\n"
-        "      <li><strong>{{name}}</strong></li>\n"
-        "    {{/current}}\n"
-        "    {{#link}}\n"
-        "      <li><a href=\"{{url}}\">{{name}}</a></li>\n"
-        "    {{/link}}\n"
-        "  {{/item}}\n"
-        "  </ul>\n"
-        "{{/list}}\n"
-        "{{#empty}}\n"
-        "  <p>The list is empty.</p>\n"
-        "{{/empty}}\n"
-        "{{^empty}}\n"
-        "  <p>The list is not empty.</p>\n"
-        "{{/empty}}"
-    };
-
-
-
     std::string comment_tmp{
         "<div class=\"comments\"><h3>{{header}}</h3><ul>"
         "{{#comments}}<li class=\"comment\"><h5>{{name}}</h5>"

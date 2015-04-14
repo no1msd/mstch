@@ -11,5 +11,5 @@ std::string mstch::render(
         const object& root,
         const std::map<std::string,std::string>& partials)
 {
-    return render_context(root, partials).render(strip_whitespace(tmplt));
+    return render_context(root, partials).render(tmplt);
 }

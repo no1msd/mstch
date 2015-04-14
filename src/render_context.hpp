@@ -31,20 +31,22 @@ namespace mstch {
             state.top() = std::unique_ptr<state::render_state>(
                     new T(std::forward<Args>(args)...));
         }
-        template<class T, class... Args>
-        void push_state(Args&&... args) {
-            state.push(std::unique_ptr<state::render_state>(
-                    new T(std::forward<Args>(args)...)));
-        }
     private:
+        enum class parse_state {
+            start, in_del_start, in_del, in_content, in_esccontent, in_del_end
+        };
         static const mstch::node null_node;
         const mstch::node& find_node(
                 const std::string& token,
                 const std::deque<object>& current_objects);
+        void tokenize(const std::string& tmplt, std::vector<token>& tokens);
+        void strip_whitespace(std::vector<token>& tokens);
         std::string render(const std::vector<token>& tokens);
         std::map<std::string,std::string> partials;
         std::deque<mstch::object> objects;
         std::stack<std::unique_ptr<state::render_state>> state;
+        std::string delim_start;
+        std::string delim_end;
     };
 }
 

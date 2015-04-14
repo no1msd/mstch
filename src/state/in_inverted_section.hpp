@@ -9,9 +9,9 @@ namespace mstch {
     namespace state {
         class in_inverted_section: public render_state {
         public:
-            in_inverted_section(const std::string &section_name);
+            in_inverted_section(const std::string& section_name);
             std::string render(
-                    render_context &context, const token &token) override;
+                    render_context& context, const token& token) override;
         private:
             const std::string section_name;
             std::vector<token> section_tokens;

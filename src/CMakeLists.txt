@@ -1,4 +1,4 @@
-find_package(Boost 1.54 COMPONENTS regex REQUIRED)
+find_package(Boost 1.54 REQUIRED)
 
 include_directories(
 	${CMAKE_SOURCE_DIR}/include
@@ -18,4 +18,3 @@ set(SRC
 	visitor/render_section.cpp)
 
 add_library(mstch STATIC ${SRC})
-target_link_libraries(mstch ${Boost_REGEX_LIBRARY})
