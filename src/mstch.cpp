@@ -11,5 +11,8 @@ std::string mstch::render(
         const object& root,
         const std::map<std::string,std::string>& partials)
 {
-    return render_context(root, partials).render(tmplt);
+    std::map<std::string,template_type> partial_templts;
+    for(auto& partial: partials)
+        partial_templts.insert({partial.first, {partial.second}});
+    return render_context(root, partial_templts).render(tmplt);
 }

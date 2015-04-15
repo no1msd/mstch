@@ -6,15 +6,16 @@ include_directories(
 	${Boost_INCLUDE_DIR})
 
 set(SRC
-	mstch.cpp
-	utils.cpp
-	token.cpp
-	render_context.cpp
-	state/in_section.cpp
 	state/in_inverted_section.cpp
+	state/in_section.cpp
 	state/outside_section.cpp
 	visitor/is_node_empty.cpp
 	visitor/render_node.cpp
-	visitor/render_section.cpp)
+	visitor/render_section.cpp
+	mstch.cpp
+	render_context.cpp
+	template_type.cpp
+	token.cpp
+	utils.cpp)
 
 add_library(mstch STATIC ${SRC})

@@ -3,6 +3,7 @@
 #include "render_state.hpp"
 #include <sstream>
 #include <vector>
+#include "template_type.hpp"
 
 namespace mstch {
     namespace state {
@@ -13,7 +14,7 @@ namespace mstch {
                     render_context& context, const token& token) override;
         private:
             const std::string section_name;
-            std::vector<token> section_tokens;
+            template_type section;
             int skipped_openings;
         };
     }

@@ -14,7 +14,7 @@ namespace mstch {
             enum class flag { keep_array };
             render_section(
                     render_context& ctx,
-                    const std::vector<token>& section_tokens,
+                    const template_type& section,
                     std::set<flag> flags = {});
             std::string operator()(const boost::blank& blank) const;
             std::string operator()(const int& i) const;
@@ -26,7 +26,7 @@ namespace mstch {
             std::string operator()(const renderer_lambda& lambda) const;
         private:
             render_context& ctx;
-            const std::vector<token>& section_tokens;
+            const template_type& section;
             std::set<flag> flags;
         };
     }
