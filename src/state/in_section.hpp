@@ -1,5 +1,4 @@
-#ifndef _MSTCH_IN_SECTION_H_
-#define _MSTCH_IN_SECTION_H_
+#pragma once
 
 #include "render_state.hpp"
 #include <sstream>
@@ -19,5 +18,3 @@ namespace mstch {
         };
     }
 }
-
-#endif //_MSTCH_IN_SECTION_H_

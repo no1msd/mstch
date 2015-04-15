@@ -1,5 +1,4 @@
-#ifndef _MSTCH_UTILS_H_
-#define _MSTCH_UTILS_H_
+#pragma once
 
 #include <string>
 
@@ -10,5 +9,3 @@ namespace mstch {
     citer first_not_ws(criter begin, criter end);
     std::string html_escape(std::string str);
 }
-
-#endif //_MSTCH_UTILS_H_

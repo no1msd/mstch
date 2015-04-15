@@ -1,5 +1,4 @@
-#ifndef _MSTCH_RENDER_NODE_H_
-#define _MSTCH_RENDER_NODE_H_
+#pragma once
 
 #include <boost/variant/static_visitor.hpp>
 #include <boost/blank.hpp>
@@ -26,5 +25,3 @@ namespace mstch {
         };
     }
 }
-
-#endif //_MSTCH_RENDER_NODE_H_

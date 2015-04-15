@@ -1,5 +1,4 @@
-#ifndef _MSTCH_TOKEN_H_
-#define _MSTCH_TOKEN_H_
+#pragma once
 
 #include <string>
 
@@ -26,5 +25,3 @@ namespace mstch {
         type token_info(char c);
     };
 }
-
-#endif //_MSTCH_TOKEN_H_

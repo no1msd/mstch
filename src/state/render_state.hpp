@@ -1,5 +1,4 @@
-#ifndef _MSTCH_RENDER_STATE_H_
-#define _MSTCH_RENDER_STATE_H_
+#pragma once
 
 #include <memory>
 #include "token.hpp"
@@ -15,5 +14,3 @@ namespace mstch {
         };
     }
 }
-
-#endif //_MSTCH_RENDER_STATE_H_

@@ -1,5 +1,4 @@
-#ifndef _MSTCH_IS_NODE_EMPTY_H_
-#define _MSTCH_IS_NODE_EMPTY_H_
+#pragma once
 
 #include <boost/variant/static_visitor.hpp>
 #include <boost/blank.hpp>
@@ -21,5 +20,3 @@ namespace mstch {
         };
     }
 }
-
-#endif //_MSTCH_IS_NODE_EMPTY_H_

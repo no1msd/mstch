@@ -1,5 +1,4 @@
-#ifndef _MSTCH_H_
-#define _MSTCH_H_
+#pragma once
 
 #include <vector>
 #include <map>
@@ -37,5 +36,3 @@ namespace mstch {
             const std::map<std::string,std::string>& partials =
                     std::map<std::string,std::string>());
 }
-
-#endif // _MSTCH_H_

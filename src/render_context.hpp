@@ -1,5 +1,4 @@
-#ifndef _MSTCH_RENDER_CONTEXT_H_
-#define _MSTCH_RENDER_CONTEXT_H_
+#pragma once
 
 #include <deque>
 #include <sstream>
@@ -49,5 +48,3 @@ namespace mstch {
         std::string delim_end;
     };
 }
-
-#endif //_MSTCH_RENDER_CONTEXT_H_
