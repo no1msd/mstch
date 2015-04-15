@@ -31,7 +31,8 @@ render_context::render_context(
         delim_start{"{{"},
         delim_end{"}}"}
 {
-    state.push(std::unique_ptr<state::render_state>(new state::outside_section));
+    state.push(std::unique_ptr<state::render_state>(
+            new state::outside_section));
 }
 
 const mstch::node& render_context::find_node(
@@ -79,7 +80,7 @@ void render_context::tokenize(const std::string& t, std::vector<token>& toks) {
             else
                 pstate = parse_state::start;
         } else if(pstate == parse_state::in_del) {
-            if (*it== '{') {
+            if (*it == '{') {
                 pstate = parse_state::in_esccontent;
             } else if (*it == delim_end[0]) {
                 pstate = parse_state::in_del_end;
@@ -97,7 +98,7 @@ void render_context::tokenize(const std::string& t, std::vector<token>& toks) {
                 pstate = parse_state::start;
                 toks.push_back({false, false, ws_only, {tok_start, tok_end}});
                 toks.push_back({true, false, false,
-                      {tok_end +delim_start.size(), it - delim_end.size() +1}});
+                      {tok_end+delim_start.size(), it-delim_end.size()+1}});
                 ws_only = true;
                 tok_start = it + 1;
             } else {
@@ -116,19 +117,18 @@ void render_context::strip_whitespace(std::vector<token>& tokens) {
         if (type != token::type::text && type != token::type::variable &&
                 type != token::type::unescaped_variable)
             has_tag = true;
-        else if (!(*it).is_ws_only())
+        else if (!(*it).ws_only())
             non_space = true;
-        if ((*it).is_eol()) {
+        if ((*it).eol()) {
             if (has_tag && !non_space)
                 for (auto line_it = line_begin; line_it != it + 1; ++line_it)
-                    if ((*line_it).is_ws_only())
-                        (*line_it).mark();
+                    if ((*line_it).ws_only()) (*line_it).mark();
             non_space = has_tag = false;
             line_begin = it + 1;
         }
     }
     for (auto it = tokens.begin(); it != tokens.end();)
-        ((*it).is_marked())?(it = tokens.erase(it)):(++it);
+        ((*it).marked())?(it = tokens.erase(it)):(++it);
 }
 
 std::string render_context::render(const std::string& tmplt) {

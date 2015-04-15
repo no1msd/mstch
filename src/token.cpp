@@ -1,4 +1,5 @@
 #include "token.hpp"
+#include "utils.hpp"
 
 using namespace mstch;
 
@@ -14,37 +15,23 @@ token::type token::token_info(char c) {
     }
 }
 
-token::token(bool is_tag, bool eol, bool ws_only, const std::string& raw_val):
-        eol(eol), ws_only(ws_only), marked(false)
+token::token(bool is_tag, bool eol, bool ws_only, const std::string& str):
+        m_eol(eol), m_ws_only(ws_only), m_marked(false)
 {
     if(is_tag) {
-        auto content_begin = raw_val.begin(), content_end = raw_val.end();
-        parse_state state = parse_state::prews;
-        if(*content_begin == '{' && *(content_end - 1) == '}') {
-            state = parse_state::postws;
-            type_val = type::unescaped_variable;
-            ++content_begin;
-            --content_end;
+        if(str[0] == '{' && str[str.size() - 1] == '}') {
+            m_type = type::unescaped_variable;
+            m_content = {first_not_ws(str.begin() + 1, str.end()),
+                    first_not_ws(str.rbegin() + 1, str.rend()) + 1};
+        } else {
+            auto first = first_not_ws(str.begin(), str.end());
+            m_type = token_info(*first);
+            if(m_type != type::variable)
+                first = first_not_ws(first + 1, str.end());
+            m_content = {first, first_not_ws(str.rbegin(), str.rend()) + 1};
         }
-        for(auto it = content_begin; it != content_end;) {
-            if(state == parse_state::prews && *it != ' ') {
-                state = parse_state::postws;
-                if((type_val = token_info(*it++)) == type::variable) {
-                    state = parse_state::content;
-                    content_begin = it -1;
-                }
-            } else if(state == parse_state::postws && *it != ' ') {
-                content_begin = it++;
-                state = parse_state::content;
-            } else if(state == parse_state::content && *it == ' ') {
-                content_end = it;
-            } else {
-                ++it;
-            }
-        }
-        content_val = {content_begin, content_end};
     } else {
-        type_val = type::text;
-        content_val = raw_val;
+        m_type = type::text;
+        m_content = str;
     }
 }
