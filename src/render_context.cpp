@@ -61,8 +61,8 @@ void render_context::tokenize(const std::string& t, std::vector<token>& toks) {
     unsigned int del_pos = 0;
     bool ws_only = true;
     for (std::string::const_iterator it = t.begin(); it != t.end(); ++it) {
-        if(pstate == parse_state::start) {
-            if(*it == delim_start[0]) {
+        if (pstate == parse_state::start) {
+            if (*it == delim_start[0]) {
                 pstate = parse_state::in_del_start;
                 tok_end = it;
                 del_pos = 1;
@@ -96,7 +96,8 @@ void render_context::tokenize(const std::string& t, std::vector<token>& toks) {
             if (*it == delim_end[del_pos] && ++del_pos == delim_end.size()) {
                 pstate = parse_state::start;
                 toks.push_back({false, false, ws_only, {tok_start, tok_end}});
-                toks.push_back({true, false, false, {tok_end, it + 1}});
+                toks.push_back({true, false, false,
+                      {tok_end +delim_start.size(), it - delim_end.size() +1}});
                 ws_only = true;
                 tok_start = it + 1;
             } else {
@@ -110,15 +111,15 @@ void render_context::tokenize(const std::string& t, std::vector<token>& toks) {
 void render_context::strip_whitespace(std::vector<token>& tokens) {
     auto line_begin = tokens.begin();
     bool has_tag = false, non_space = false;
-    for(auto it = tokens.begin(); it != tokens.end(); ++it) {
+    for (auto it = tokens.begin(); it != tokens.end(); ++it) {
         auto type = (*it).token_type();
-        if(type != token::type::text && type != token::type::variable &&
+        if (type != token::type::text && type != token::type::variable &&
                 type != token::type::unescaped_variable)
             has_tag = true;
-        else if(!(*it).is_ws_only())
+        else if (!(*it).is_ws_only())
             non_space = true;
-        if((*it).is_eol()) {
-            if(has_tag && !non_space)
+        if ((*it).is_eol()) {
+            if (has_tag && !non_space)
                 for (auto line_it = line_begin; line_it != it + 1; ++line_it)
                     if ((*line_it).is_ws_only())
                         (*line_it).mark();
@@ -126,7 +127,7 @@ void render_context::strip_whitespace(std::vector<token>& tokens) {
             line_begin = it + 1;
         }
     }
-    for(auto it = tokens.begin(); it != tokens.end();)
+    for (auto it = tokens.begin(); it != tokens.end();)
         ((*it).is_marked())?(it = tokens.erase(it)):(++it);
 }
 
@@ -139,7 +140,7 @@ std::string render_context::render(const std::string& tmplt) {
 
 std::string render_context::render(const std::vector<token>& tokens) {
     std::string output;
-    for(auto& token: tokens)
+    for (auto& token: tokens)
         output += state.top()->render(*this, token);
     return output;
 }

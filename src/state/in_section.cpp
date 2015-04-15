@@ -14,7 +14,7 @@ std::string state::in_section::render(render_context& ctx, const token& token) {
     switch(token.token_type()) {
     case token::type::section_close:
         if(token.content() == section_name && skipped_openings == 0) {
-            auto section_node = ctx.get_node(section_name);
+            auto& section_node = ctx.get_node(section_name);
             std::string out;
             if (!boost::apply_visitor(visitor::is_node_empty(), section_node))
                 out = boost::apply_visitor(

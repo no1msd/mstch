@@ -26,7 +26,7 @@ std::string state::outside_section::render(
     }
     case token::type::comment: break;
     case token::type::text:
-        return token.raw();
+        return token.content();
     case token::type::partial:
         return ctx.render_partial(token.content());
     case token::type::section_close: break;
