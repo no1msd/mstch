@@ -5,6 +5,7 @@
 #include "render_context.hpp"
 
 using namespace mstch;
+using flag = visitor::render_node::flag;
 
 std::string state::outside_section::render(
         render_context& ctx, const token& token)
@@ -17,13 +18,10 @@ std::string state::outside_section::render(
         ctx.set_state<in_inverted_section>(token.content());
         break;
     case token::type::variable:
-    case token::type::unescaped_variable: {
-        std::set<visitor::render_node::flag> flags{};
-        if (token.token_type() == token::type::variable)
-            flags.insert(visitor::render_node::flag::escape_html);
-        return boost::apply_visitor(
-                visitor::render_node(flags), ctx.get_node(token.content()));
-    }
+    case token::type::unescaped_variable:
+        return boost::apply_visitor(visitor::render_node((token.token_type() ==
+                token::type::variable)?flag::escape_html:flag::none),
+                ctx.get_node(token.content()));
     case token::type::comment: break;
     case token::type::text:
         return token.content();

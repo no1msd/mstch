@@ -33,14 +33,12 @@ void template_type::tokenize(const std::string& t) {
             else
                 pstate = parse_state::start;
         } else if(pstate == parse_state::in_del) {
-            if (*it == '{') {
+            if (*it == '{')
                 pstate = parse_state::in_esccontent;
-            } else if (*it == delim_end[0]) {
+            else if (*it == delim_end[0] && (del_pos = 1))
                 pstate = parse_state::in_del_end;
-                del_pos = 1;
-            } else {
+            else
                 pstate = parse_state::in_content;
-            }
         } else if(pstate == parse_state::in_esccontent && *it == '}') {
             pstate = parse_state::in_content;
         } else if(pstate == parse_state::in_content && *it == delim_end[0]) {

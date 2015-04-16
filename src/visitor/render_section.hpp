@@ -11,11 +11,11 @@ namespace mstch {
     namespace visitor {
         class render_section: public boost::static_visitor<std::string> {
         public:
-            enum class flag { keep_array };
+            enum class flag { none, keep_array };
             render_section(
                     render_context& ctx,
                     const template_type& section,
-                    std::set<flag> flags = {});
+                    flag p_flag = flag::none);
             std::string operator()(const boost::blank& blank) const;
             std::string operator()(const int& i) const;
             std::string operator()(const bool& b) const;
@@ -27,7 +27,7 @@ namespace mstch {
         private:
             render_context& ctx;
             const template_type& section;
-            std::set<flag> flags;
+            flag m_flag;
         };
     }
 }

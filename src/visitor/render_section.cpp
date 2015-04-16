@@ -3,8 +3,8 @@
 using namespace mstch;
 
 visitor::render_section::render_section(
-        render_context& ctx, const template_type& section,std::set<flag> flags):
-        ctx(ctx), section(section), flags(flags)
+        render_context& ctx, const template_type& section, flag p_flag):
+        ctx(ctx), section(section), m_flag(p_flag)
 {
 }
 
@@ -32,12 +32,12 @@ std::string visitor::render_section::operator()(const object& obj) const {
 
 std::string visitor::render_section::operator()(const array& a) const {
     std::string out;
-    if(flags.find(flag::keep_array) != flags.end())
+    if(m_flag == flag::keep_array)
         out += render_context::push(ctx, {{".", a}}).render(section);
     else
         for (auto& item: a)
             out += boost::apply_visitor(
-                    render_section(ctx, section, {flag::keep_array}), item);
+                    render_section(ctx, section, flag::keep_array), item);
     return out;
 }
 

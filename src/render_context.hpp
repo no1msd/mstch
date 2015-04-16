@@ -20,6 +20,7 @@ namespace mstch {
         private:
             render_context& context;
         };
+
         render_context(
                 const mstch::object& object,
                 const std::map<std::string,template_type>& partials);

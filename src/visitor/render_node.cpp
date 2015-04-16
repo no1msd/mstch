@@ -3,7 +3,7 @@
 
 using namespace mstch;
 
-visitor::render_node::render_node(std::set<flag> flags): flags(flags) {
+visitor::render_node::render_node(flag p_flag): m_flag(p_flag) {
 }
 
 std::string visitor::render_node::operator()(const boost::blank& blank) const {
@@ -19,7 +19,7 @@ std::string visitor::render_node::operator()(const bool& b) const {
 }
 
 std::string visitor::render_node::operator()(const std::string& str) const {
-    return (flags.find(flag::escape_html) != flags.end())?html_escape(str):str;
+    return (m_flag == flag::escape_html)?html_escape(str):str;
 }
 
 std::string visitor::render_node::operator()(const array& arr) const {
