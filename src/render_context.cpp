@@ -1,21 +1,23 @@
 #include "render_context.hpp"
 #include "utils.hpp"
 #include "state/outside_section.hpp"
+#include "visitor/has_token.hpp"
+#include "visitor/get_token.hpp"
 
 using namespace mstch;
 
 const mstch::node render_context::null_node;
 
-render_context::push::push(render_context& context, const mstch::object& obj):
+render_context::push::push(render_context& context, const mstch::node& node):
         context(context)
 {
-    context.objects.emplace_front(obj);
+    context.nodes.emplace_front(node);
     context.state.push(std::unique_ptr<state::render_state>(
             new state::outside_section));
 }
 
 render_context::push::~push() {
-    context.objects.pop_front();
+    context.nodes.pop_front();
     context.state.pop();
 }
 
@@ -24,34 +26,32 @@ std::string render_context::push::render(const template_type& templt) {
 }
 
 render_context::render_context(
-        const mstch::object& object,
+        const mstch::node& node,
         const std::map<std::string,template_type>& partials):
         partials{partials},
-        objects{object}
+        nodes{node}
 {
     state.push(std::unique_ptr<state::render_state>(
             new state::outside_section));
 }
 
-const mstch::node& render_context::find_node(
+mstch::node render_context::find_node(
         const std::string& token,
-        const std::deque<object>& current_objects)
+        const std::deque<node>& current_nodes)
 {
     if (token != "." && token.find('.') != std::string::npos)
         return find_node(
                 token.substr(token.rfind('.') + 1),
-                {boost::get<object>(find_node(
-                        token.substr(0, token.rfind('.')),
-                        current_objects))});
+                {find_node(token.substr(0, token.rfind('.')), current_nodes)});
     else
-        for (auto& object: current_objects)
-            if (object.count(token))
-                return object.at(token);
+        for (auto& node: current_nodes)
+            if (boost::apply_visitor(visitor::has_token(token), node))
+                return boost::apply_visitor(visitor::get_token(token, node), node);
     return null_node;
 }
 
-const mstch::node& render_context::get_node(const std::string& token) {
-    return find_node(token, objects);
+mstch::node render_context::get_node(const std::string& token) {
+    return find_node(token, nodes);
 }
 
 std::string render_context::render(const template_type& templt) {

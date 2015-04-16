@@ -6,14 +6,12 @@
 #include <boost/program_options/variables_map.hpp>
 #include <boost/program_options/parsers.hpp>
 
-void wrap_data(std::istream& input, std::ostream& output, const std::string& variable_name) {
-    output << "const auto " << variable_name << " = ";
+void wrap_code(std::istream& input, std::ostream& output) {
     std::string line;
     while (std::getline(input, line)) {
         output << line;
         if(!input.eof()) output << std::endl;
     }
-    output << ";" << std::endl;
 }
 
 void wrap_string(std::istream& input, std::ostream& output, const std::string& variable_name) {
@@ -38,7 +36,7 @@ int main(int argc, char* argv[]) {
             ("output", po::value<std::string>(), "output file")
             ("namespace", po::value<std::string>(), "namespace to use")
             ("input-string,S", po::value<std::vector<std::string>>(), "files to parse as strings")
-            ("input-data,D", po::value<std::vector<std::string>>(), "files to parse as data");
+            ("input-code,C", po::value<std::vector<std::string>>(), "files to parse as code");
     po::variables_map vm;
     po::store(po::parse_command_line(argc, argv, desc), vm);
     po::notify(vm);
@@ -66,10 +64,10 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    if(vm.count("input-data")) {
-        for(auto& data_filename: vm["input-data"].as<std::vector<std::string>>()) {
+    if(vm.count("input-code")) {
+        for(auto& data_filename: vm["input-code"].as<std::vector<std::string>>()) {
             std::ifstream input(data_filename, std::ios::in);
-            wrap_data(input, output, boost::replace_all_copy(data_filename, ".", "_"));
+            wrap_code(input, output);
             input.close();
         }
     }

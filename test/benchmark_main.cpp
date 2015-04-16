@@ -9,14 +9,14 @@ int main() {
         "{{#comments}}<li class=\"comment\"><h5>{{name}}</h5>"
         "<p>{{body}}</p></li>{{/comments}}</ul></div>"
     };
-    auto comment_view = mstch::object{
+    auto comment_view = mstch::map{
         {"header", std::string{"My Post Comments"}},
         {"comments", mstch::array{
-          mstch::object{{"name", std::string{"Joe"}}, {"body", std::string{"Thanks for this post!"}}},
-          mstch::object{{"name", std::string{"Sam"}}, {"body", std::string{"Thanks for this post!"}}},
-          mstch::object{{"name", std::string{"Heather"}}, {"body", std::string{"Thanks for this post!"}}},
-          mstch::object{{"name", std::string{"Kathy"}}, {"body", std::string{"Thanks for this post!"}}},
-          mstch::object{{"name", std::string{"George"}}, {"body", std::string{"Thanks for this post!"}}}
+          mstch::map{{"name", std::string{"Joe"}}, {"body", std::string{"Thanks for this post!"}}},
+          mstch::map{{"name", std::string{"Sam"}}, {"body", std::string{"Thanks for this post!"}}},
+          mstch::map{{"name", std::string{"Heather"}}, {"body", std::string{"Thanks for this post!"}}},
+          mstch::map{{"name", std::string{"Kathy"}}, {"body", std::string{"Thanks for this post!"}}},
+          mstch::map{{"name", std::string{"George"}}, {"body", std::string{"Thanks for this post!"}}}
         }}
     };
 

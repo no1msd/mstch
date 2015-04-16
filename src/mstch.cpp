@@ -8,7 +8,7 @@ using namespace mstch;
 
 std::string mstch::render(
         const std::string& tmplt,
-        const object& root,
+        const node& root,
         const std::map<std::string,std::string>& partials)
 {
     std::map<std::string,template_type> partial_templts;

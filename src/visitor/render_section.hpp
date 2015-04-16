@@ -3,8 +3,6 @@
 #include <boost/variant/static_visitor.hpp>
 #include <boost/blank.hpp>
 #include "render_context.hpp"
-#include <set>
-
 #include "mstch/mstch.hpp"
 
 namespace mstch {
@@ -21,9 +19,8 @@ namespace mstch {
             std::string operator()(const bool& b) const;
             std::string operator()(const std::string& str) const;
             std::string operator()(const array& arr) const;
-            std::string operator()(const object& obj) const;
-            std::string operator()(const string_lambda& lambda) const;
-            std::string operator()(const renderer_lambda& lambda) const;
+            std::string operator()(const map& map) const;
+            std::string operator()(const std::shared_ptr<object>& obj) const;
         private:
             render_context& ctx;
             const template_type& section;

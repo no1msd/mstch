@@ -3,36 +3,45 @@
 #include <vector>
 #include <map>
 #include <string>
-#include <functional>
+#include <memory>
 
 #include <boost/variant.hpp>
 
 namespace mstch {
-    // booleans must be wrapped, because std::function is implicitly convertible
-    // to a bool.
-    class boolean {
-    private:
-        const bool state;
-    public:
-        boolean(bool b): state(b) {}
-        operator bool() const { return state; }
-    };
+    namespace internal {
+        template<class N>
+        class object_t {
+        public:
+            N at(const std::string &name) const {
+                return (methods.at(name))();
+            }
 
-    using renderer = std::function<std::string(const std::string&)>;
-    using string_lambda = std::function<std::string()>;
-    using renderer_lambda = std::function<
-            std::function<std::string(const std::string&,renderer)>()>;
+            bool has(const std::string name) const {
+                return methods.count(name);
+            }
+        protected:
+            template<class S>
+            void register_methods(S* sub, std::map<std::string,N(S::*)()> methods) {
+                for(auto& m: methods)
+                    this->methods.insert(m.first, std::bind(m.second, sub));
+            }
+        private:
+            const std::map<std::string, std::function<N()>> methods;
+        };
+    }
+
     using node = boost::make_recursive_variant<
-            boost::blank, std::string, int, boolean,
-            string_lambda, renderer_lambda,
+            boost::blank, std::string, int, bool,
+            std::shared_ptr<internal::object_t<boost::recursive_variant_>>,
             std::map<const std::string,boost::recursive_variant_>,
             std::vector<boost::recursive_variant_>>::type;
-    using object = std::map<const std::string,node>;
+    using object = internal::object_t<node>;
+    using map = std::map<const std::string,node>;
     using array = std::vector<node>;
 
     std::string render(
             const std::string& tmplt,
-            const object& root,
+            const node& root,
             const std::map<std::string,std::string>& partials =
                     std::map<std::string,std::string>());
 }

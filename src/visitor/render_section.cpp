@@ -1,39 +1,40 @@
 #include "render_section.hpp"
 
 using namespace mstch;
+using namespace mstch::visitor;
 
-visitor::render_section::render_section(
+render_section::render_section(
         render_context& ctx, const template_type& section, flag p_flag):
         ctx(ctx), section(section), m_flag(p_flag)
 {
 }
 
-std::string visitor::render_section::operator()(
+std::string render_section::operator()(
         const boost::blank& blank) const
 {
-    return render_context::push(ctx, {{".", {}}}).render(section);
+    return render_context::push(ctx, mstch::node{}).render(section);
 }
 
-std::string visitor::render_section::operator()(const int& i) const {
-    return render_context::push(ctx, {{".", i}}).render(section);
+std::string render_section::operator()(const int& i) const {
+    return render_context::push(ctx, i).render(section);
 }
 
-std::string visitor::render_section::operator()(const bool& b) const {
-    return render_context::push(ctx, {{".", b}}).render(section);
+std::string render_section::operator()(const bool& b) const {
+    return render_context::push(ctx, b).render(section);
 }
 
-std::string visitor::render_section::operator()(const std::string& str) const {
-    return render_context::push(ctx, {{".", str}}).render(section);
+std::string render_section::operator()(const std::string& str) const {
+    return render_context::push(ctx, str).render(section);
 }
 
-std::string visitor::render_section::operator()(const object& obj) const {
-    return render_context::push(ctx, obj).render(section);
+std::string render_section::operator()(const map& map) const {
+    return render_context::push(ctx, map).render(section);
 }
 
-std::string visitor::render_section::operator()(const array& a) const {
+std::string render_section::operator()(const array& a) const {
     std::string out;
     if(m_flag == flag::keep_array)
-        out += render_context::push(ctx, {{".", a}}).render(section);
+        out += render_context::push(ctx, a).render(section);
     else
         for (auto& item: a)
             out += boost::apply_visitor(
@@ -41,17 +42,6 @@ std::string visitor::render_section::operator()(const array& a) const {
     return out;
 }
 
-std::string visitor::render_section::operator()(
-        const string_lambda& lambda) const
-{
-    return lambda();
-}
-
-std::string visitor::render_section::operator()(
-        const renderer_lambda& lambda) const
-{
-    return "";
-    /*return (lambda())(section, [&](const std::string& text) {
-        return render_context::push(ctx).render(text);
-    }); TODO ! */
+std::string render_section::operator()(const std::shared_ptr<object>& obj) const {
+    return render_context::push(ctx, obj).render(section);
 }

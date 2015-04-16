@@ -1,0 +1,1 @@
+const auto multiline_comment_data = mstch::map{};

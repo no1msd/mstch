@@ -15,11 +15,11 @@ set(filetoheader_exe ${CMAKE_CURRENT_BINARY_DIR}/filetoheader${CMAKE_EXECUTABLE_
 
 file(GLOB data_files RELATIVE
 	"${CMAKE_SOURCE_DIR}/test/data"
-	"${CMAKE_SOURCE_DIR}/test/data/*.data")
+	"${CMAKE_SOURCE_DIR}/test/data/*.hpp")
 
 foreach(data_file ${data_files})
-	list(APPEND genargs "-D${data_file}")
-	string(REGEX REPLACE "\\.data" "" test_name "${data_file}")
+	list(APPEND genargs "-C${data_file}")
+	string(REGEX REPLACE "\\.hpp" "" test_name "${data_file}")
 	list(APPEND tests "${test_name}")
 endforeach(data_file)
 

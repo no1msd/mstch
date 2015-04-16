@@ -1,3 +1,0 @@
-mstch::object{
-  {"repos", mstch::array{}}
-}

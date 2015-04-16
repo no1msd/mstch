@@ -9,6 +9,8 @@ set(SRC
 	state/in_inverted_section.cpp
 	state/in_section.cpp
 	state/outside_section.cpp
+	visitor/get_token.cpp
+	visitor/has_token.cpp
 	visitor/is_node_empty.cpp
 	visitor/render_node.cpp
 	visitor/render_section.cpp

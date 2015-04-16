@@ -1,6 +1,0 @@
-mstch::object{
-  {"title", []() {
-    return std::string{"Welcome"};
-  }},
-  {"again", std::string{"Goodbye"}}
-}

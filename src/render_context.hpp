@@ -14,7 +14,7 @@ namespace mstch {
     public:
         class push {
         public:
-            push(render_context& context, const mstch::object& obj = {});
+            push(render_context& context, const mstch::node& node = {});
             ~push();
             std::string render(const template_type& templt);
         private:
@@ -22,9 +22,9 @@ namespace mstch {
         };
 
         render_context(
-                const mstch::object& object,
+                const mstch::node& node,
                 const std::map<std::string,template_type>& partials);
-        const mstch::node& get_node(const std::string& token);
+        mstch::node get_node(const std::string& token);
         std::string render(const template_type& templt);
         std::string render_partial(const std::string& partial_name);
         template<class T, class... Args>
@@ -34,11 +34,11 @@ namespace mstch {
         }
     private:
         static const mstch::node null_node;
-        const mstch::node& find_node(
+        mstch::node find_node(
                 const std::string& token,
-                const std::deque<object>& current_objects);
+                const std::deque<node>& current_nodes);
         const std::map<std::string,template_type>& partials;
-        std::deque<mstch::object> objects;
+        std::deque<mstch::node> nodes;
         std::stack<std::unique_ptr<state::render_state>> state;
     };
 }

@@ -1,5 +1,0 @@
-mstch::object{
-  {"title", []() {
-    return std::string{"A Comedy of Errors"};
-  }}
-};
