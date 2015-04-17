@@ -1,7 +1,6 @@
 #include "render_context.hpp"
 #include "utils.hpp"
 #include "state/outside_section.hpp"
-#include "visitor/has_token.hpp"
 #include "visitor/get_token.hpp"
 
 using namespace mstch;
@@ -44,9 +43,10 @@ mstch::node render_context::find_node(
                 token.substr(token.rfind('.') + 1),
                 {find_node(token.substr(0, token.rfind('.')), current_nodes)});
     else
-        for (auto& node: current_nodes)
-            if (boost::apply_visitor(visitor::has_token(token), node))
-                return boost::apply_visitor(visitor::get_token(token, node), node);
+        for (auto& node: current_nodes) {
+            auto ret = boost::apply_visitor(visitor::get_token(token, node), node);
+            if(ret.first) return ret.second;
+        }
     return null_node;
 }
 

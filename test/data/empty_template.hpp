@@ -1,1 +1,1 @@
-const auto empty_sections_data = mstch::map{};
+const auto empty_template_data = mstch::map{};

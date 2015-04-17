@@ -19,9 +19,10 @@ std::string state::outside_section::render(
         break;
     case token::type::variable:
     case token::type::unescaped_variable: {
-        return boost::apply_visitor(visitor::render_node((token.token_type() ==
-                token::type::variable)?flag::escape_html:flag::none),
-                ctx.get_node(token.content()));
+        auto visitor = visitor::render_node((token.token_type() ==
+            token::type::variable)?flag::escape_html:flag::none);
+        auto node = ctx.get_node(token.content());
+        return boost::apply_visitor(visitor, node);
     }
     case token::type::comment: break;
     case token::type::text:

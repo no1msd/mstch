@@ -1,7 +1,7 @@
 class comments: public mstch::object {
 public:
   comments() {
-    register_methods(this, {{"title", &title}});
+    register_method("title", this, &comments::title);
   }
 
   mstch::node title() {

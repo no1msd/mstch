@@ -3,12 +3,15 @@
 #include <boost/variant/static_visitor.hpp>
 #include <boost/blank.hpp>
 #include "mstch/mstch.hpp"
+#include "utils.hpp"
 
 namespace mstch {
     namespace visitor {
-        class render_node: public boost::static_visitor<std::string> {
+        class render_node : public boost::static_visitor<std::string> {
         public:
-            enum class flag { none, escape_html };
+            enum class flag {
+                none, escape_html
+            };
             render_node(flag p_flag = flag::none);
             std::string operator()(const boost::blank& blank) const;
             std::string operator()(const int& i) const;

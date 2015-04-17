@@ -21,12 +21,14 @@ namespace mstch {
             }
         protected:
             template<class S>
-            void register_methods(S* sub, std::map<std::string,N(S::*)()> methods) {
-                for(auto& m: methods)
-                    this->methods.insert(m.first, std::bind(m.second, sub));
+            void register_method(std::string name, S* sub, N(S::*method)()) {
+                this->methods.insert({name, std::bind(method, sub)});
+            }
+            void register_method(std::string name, const N& node) {
+                this->methods.insert({name, [node](){return node;}});
             }
         private:
-            const std::map<std::string, std::function<N()>> methods;
+            std::map<std::string, std::function<N()>> methods;
         };
     }
 

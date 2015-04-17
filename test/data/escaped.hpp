@@ -1,7 +1,8 @@
 class escaped: public mstch::object {
 public:
   escaped() {
-    register_methods(this, {{"title", &title}, {"entities", &entities}});
+    register_method("title", this, &escaped::title);
+    register_method("entities", this, &escaped::entities);
   }
 
   mstch::node title() {

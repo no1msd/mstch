@@ -12,6 +12,7 @@ void wrap_code(std::istream& input, std::ostream& output) {
         output << line;
         if(!input.eof()) output << std::endl;
     }
+    output << std::endl;
 }
 
 void wrap_string(std::istream& input, std::ostream& output, const std::string& variable_name) {
