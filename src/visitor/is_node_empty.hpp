@@ -8,13 +8,39 @@ namespace mstch {
     namespace visitor {
         class is_node_empty: public boost::static_visitor<bool> {
         public:
-            bool operator()(const boost::blank& blank) const;
-            bool operator()(const int& i) const;
-            bool operator()(const bool& b) const;
-            bool operator()(const std::string& str) const;
-            bool operator()(const array& arr) const;
-            bool operator()(const map& map) const;
-            bool operator()(const std::shared_ptr<object>& obj) const;
+            template<class T> inline
+            bool operator()(const T& t) const {
+                return false;
+            }
         };
+
+        template<> inline
+        bool is_node_empty::operator()<boost::blank>(
+                const boost::blank& blank) const
+        {
+            return true;
+        }
+
+        template<> inline
+        bool is_node_empty::operator()<int>(const int& i) const {
+            return i == 0;
+        }
+
+        template<> inline
+        bool is_node_empty::operator()<bool>(const bool& b) const {
+            return !b;
+        }
+
+        template<> inline
+        bool is_node_empty::operator()<std::string>(
+                const std::string& str) const
+        {
+            return str == "";
+        }
+
+        template<> inline
+        bool is_node_empty::operator()<array>(const array& arr) const {
+            return arr.size() == 0;
+        }
     }
 }

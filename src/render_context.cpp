@@ -44,9 +44,9 @@ const mstch::node& render_context::find_node(
                 token.substr(token.rfind('.') + 1),
                 {find_node(token.substr(0, token.rfind('.')), current_nodes)});
     else
-        for (auto& n: current_nodes)
-            if (boost::apply_visitor(visitor::has_token(token), n))
-                return boost::apply_visitor(visitor::get_token(token, n), n);
+        for (auto& node: current_nodes)
+            if (boost::apply_visitor(visitor::has_token(token), node))
+                return boost::apply_visitor(visitor::get_token(token, node), node);
     return null_node;
 }
 

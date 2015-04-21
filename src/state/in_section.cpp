@@ -5,37 +5,34 @@
 
 using namespace mstch;
 
-state::in_section::in_section(const std::string& section_name):
-        section_name(section_name), skipped_openings(0)
+state::in_section::in_section(type type, const std::string& section_name):
+        m_type(type), section_name(section_name), skipped_openings(0)
 {
 }
 
 std::string state::in_section::render(render_context& ctx, const token& token) {
-    switch(token.token_type()) {
-    case token::type::section_close:
+    if(token.token_type() == token::type::section_close) {
         if(token.content() == section_name && skipped_openings == 0) {
-            auto& section_node = ctx.get_node(section_name);
+            auto& node = ctx.get_node(section_name);
             std::string out;
-            if (!boost::apply_visitor(visitor::is_node_empty(), section_node))
-                out = boost::apply_visitor(
-                        visitor::render_section(ctx, section), section_node);
+            if(m_type == type::normal) {
+                if (!boost::apply_visitor(visitor::is_node_empty(), node))
+                    out = boost::apply_visitor(
+                            visitor::render_section(ctx, section), node);
+            } else if(m_type == type::inverted) {
+                if (boost::apply_visitor(visitor::is_node_empty(), node))
+                    out = render_context::push(ctx).render(section);
+            }
             ctx.set_state<outside_section>();
             return out;
         } else {
             skipped_openings--;
-            section << token;
         }
-        break;
-    case token::type::inverted_section_open:
-    case token::type::section_open:
+    } else if(token.token_type() == token::type::inverted_section_open ||
+            token.token_type() == token::type::section_open)
+    {
         skipped_openings++;
-    case token::type::text:
-    case token::type::variable:
-    case token::type::unescaped_variable:
-    case token::type::comment:
-    case token::type::partial:
-        section << token;
-        break;
     }
+    section << token;
     return "";
 }
