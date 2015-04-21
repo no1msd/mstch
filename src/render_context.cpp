@@ -2,6 +2,7 @@
 #include "utils.hpp"
 #include "state/outside_section.hpp"
 #include "visitor/get_token.hpp"
+#include "visitor/has_token.hpp"
 
 using namespace mstch;
 
@@ -34,7 +35,7 @@ render_context::render_context(
             new state::outside_section));
 }
 
-mstch::node render_context::find_node(
+const mstch::node& render_context::find_node(
         const std::string& token,
         const std::deque<node>& current_nodes)
 {
@@ -43,14 +44,13 @@ mstch::node render_context::find_node(
                 token.substr(token.rfind('.') + 1),
                 {find_node(token.substr(0, token.rfind('.')), current_nodes)});
     else
-        for (auto& node: current_nodes) {
-            auto ret = boost::apply_visitor(visitor::get_token(token, node), node);
-            if(ret.first) return ret.second;
-        }
+        for (auto& n: current_nodes)
+            if (boost::apply_visitor(visitor::has_token(token), n))
+                return boost::apply_visitor(visitor::get_token(token, n), n);
     return null_node;
 }
 
-mstch::node render_context::get_node(const std::string& token) {
+const mstch::node& render_context::get_node(const std::string& token) {
     return find_node(token, nodes);
 }
 

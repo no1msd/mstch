@@ -1,7 +1,7 @@
 class section_functions_in_partials: public mstch::object {
 public:
   section_functions_in_partials() {
-    register_method("bold", this, &section_functions_in_partials::bold);
+    register_methods(this, {{"bold", &section_functions_in_partials::bold}});
   }
 
   mstch::node bold() {

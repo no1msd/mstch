@@ -1,8 +1,9 @@
 class partial_template: public mstch::object {
 public:
   partial_template() {
-    register_method("title", this, &partial_template::title);
-    register_method("again", this, &partial_template::again);
+    register_methods(this, {
+      {"title", &partial_template::title},
+      {"again", &partial_template::again}});
   }
 
   mstch::node title() {

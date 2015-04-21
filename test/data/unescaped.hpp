@@ -1,7 +1,7 @@
 class unescaped: public mstch::object {
 public:
   unescaped() {
-    register_method("title", this, &unescaped::title);
+    register_methods(this, {{"title", &unescaped::title}});
   }
 
   mstch::node title() {

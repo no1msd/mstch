@@ -6,19 +6,19 @@
 
 namespace mstch {
     namespace visitor {
-        class get_token: public boost::static_visitor<std::pair<bool,mstch::node>> {
+        class get_token: public boost::static_visitor<const mstch::node&> {
         public:
             get_token(const std::string& token, const mstch::node& node);
-            std::pair<bool,mstch::node> operator()(const boost::blank& blank) const;
-            std::pair<bool,mstch::node> operator()(const int& i) const;
-            std::pair<bool,mstch::node> operator()(const bool& b) const;
-            std::pair<bool,mstch::node> operator()(const std::string& str) const;
-            std::pair<bool,mstch::node> operator()(const array& arr) const;
-            std::pair<bool,mstch::node> operator()(const map& map) const;
-            std::pair<bool,mstch::node> operator()(const std::shared_ptr<object>& obj) const;
+            const mstch::node& operator()(const boost::blank& blank) const;
+            const mstch::node& operator()(const int& i) const;
+            const mstch::node& operator()(const bool& b) const;
+            const mstch::node& operator()(const std::string& str) const;
+            const mstch::node& operator()(const array& arr) const;
+            const mstch::node& operator()(const map& map) const;
+            const mstch::node& operator()(const std::shared_ptr<object>& obj) const;
         private:
             const std::string& token;
-            mstch::node node;
+            const mstch::node& node;
         };
     }
 }

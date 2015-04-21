@@ -24,7 +24,7 @@ namespace mstch {
         render_context(
                 const mstch::node& node,
                 const std::map<std::string,template_type>& partials);
-        mstch::node get_node(const std::string& token);
+        const mstch::node& get_node(const std::string& token);
         std::string render(const template_type& templt);
         std::string render_partial(const std::string& partial_name);
         template<class T, class... Args>
@@ -34,7 +34,7 @@ namespace mstch {
         }
     private:
         static const mstch::node null_node;
-        mstch::node find_node(
+        const mstch::node& find_node(
                 const std::string& token,
                 const std::deque<node>& current_nodes);
         const std::map<std::string,template_type>& partials;

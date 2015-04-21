@@ -12,8 +12,9 @@ namespace mstch {
         template<class N>
         class object_t {
         public:
-            N at(const std::string &name) const {
-                return (methods.at(name))();
+            const N& at(const std::string& name) const {
+                cache[name] = (methods.at(name))();
+                return cache[name];
             }
 
             bool has(const std::string name) const {
@@ -21,14 +22,13 @@ namespace mstch {
             }
         protected:
             template<class S>
-            void register_method(std::string name, S* sub, N(S::*method)()) {
-                this->methods.insert({name, std::bind(method, sub)});
-            }
-            void register_method(std::string name, const N& node) {
-                this->methods.insert({name, [node](){return node;}});
+            void register_methods(S* sub, std::map<std::string,N(S::*)()> methods) {
+                for(auto& item: methods)
+                    this->methods.insert({item.first, std::bind(item.second, sub)});
             }
         private:
             std::map<std::string, std::function<N()>> methods;
+            mutable std::map<std::string, N> cache;
         };
     }
 

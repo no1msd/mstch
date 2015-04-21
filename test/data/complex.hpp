@@ -1,48 +1,68 @@
 class complex_item: public mstch::object {
 private:
-  const std::string name;
-  const bool current;
-  const std::string url;
+  std::string m_name;
+  bool m_current;
+  std::string m_url;
 public:
   complex_item(const std::string& name, bool current, const std::string& url):
-      name{name}, current{current}, url{url}
+      m_name{name}, m_current{current}, m_url{url}
   {
-    register_method("name", {name});
-    register_method("current", {current});
-    register_method("url", {url});
-    register_method("link", this, &complex_item::link);
+    register_methods(this, {
+      {"name", &complex_item::name}, {"current", &complex_item::current},
+      {"url", &complex_item::url},   {"link", &complex_item::link}
+    });
+  }
+
+  mstch::node current() {
+    return m_current;
+  }
+
+  mstch::node url() {
+    return m_url;
+  }
+
+  mstch::node name() {
+    return m_name;
   }
 
   mstch::node link() {
-    return !current;
+    return !m_current;
   }
 };
 
 class complex: public mstch::object {
 private:
-  const std::string header;
-  const mstch::array item;
+  std::string m_header;
+  mstch::array m_item;
 public:
   complex():
-      header{"Colors"},
-      item{
+      m_header{"Colors"},
+      m_item{
         std::make_shared<complex_item>("red", true, "#Red"),
         std::make_shared<complex_item>("green", false, "#Green"),
         std::make_shared<complex_item>("blue", false, "#Blue")
       }
   {
-    register_method("header", {header});
-    register_method("item", {item});
-    register_method("list", this, &complex::list);
-    register_method("empty", this, &complex::empty);
+    register_methods(this, {
+      {"header", &complex::header}, {"item", &complex::item},
+      {"list", &complex::list}, {"empty", &complex::empty}
+    });
+  }
+
+  mstch::node header() {
+    return m_header;
+  }
+
+  mstch::node item() {
+    return m_item;
   }
 
   mstch::node list() {
-    return item.size() != 0;
+    return m_item.size() != 0;
   }
 
   mstch::node empty() {
-    return item.size() == 0;
+    return m_item.size() == 0;
   }
 };
 

@@ -1,18 +1,27 @@
 class dot_notation_price: public mstch::object {
 private:
-  const int value;
-  const mstch::map currency;
+  int m_value;
+  mstch::map m_currency;
 public:
   dot_notation_price():
-    value{200}, currency{{"symbol", std::string{"$"}}, {"name", std::string{"USD"}}}
+    m_value{200}, m_currency{{"symbol", std::string{"$"}}, {"name", std::string{"USD"}}}
   {
-    register_method("value", {value});
-    register_method("vat", this, &dot_notation_price::vat);
-    register_method("currency", {currency});
+    register_methods(this, {
+      {"value", &dot_notation_price::value},
+      {"vat", &dot_notation_price::vat},
+      {"currency", &dot_notation_price::currency}});
+  }
+
+  mstch::node value() {
+    return m_value;
   }
 
   mstch::node vat() {
-    return static_cast<int>(value * 0.2);
+    return static_cast<int>(m_value * 0.2);
+  }
+
+  mstch::node currency() {
+    return m_currency;
   }
 };
 

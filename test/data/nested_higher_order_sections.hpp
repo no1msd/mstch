@@ -1,8 +1,10 @@
 class nested_higher_order_sections: public mstch::object {
 public:
   nested_higher_order_sections() {
-    register_method("bold", this, &nested_higher_order_sections::bold);
-    register_method("person", this, &nested_higher_order_sections::person);
+    register_methods(this, {
+      {"bold", &nested_higher_order_sections::bold},
+      {"person", &nested_higher_order_sections::person}
+    });
   }
 
   mstch::node bold() {
