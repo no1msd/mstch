@@ -22,9 +22,9 @@ namespace mstch {
             }
         protected:
             template<class S>
-            void register_methods(S* sub, std::map<std::string,N(S::*)()> methods) {
-                for(auto& item: methods)
-                    this->methods.insert({item.first, std::bind(item.second, sub)});
+            void register_methods(S* s, std::map<std::string,N(S::*)()> methods) {
+                for(auto& i: methods)
+                    this->methods.insert({i.first, std::bind(i.second, s)});
             }
         private:
             std::map<std::string, std::function<N()>> methods;
