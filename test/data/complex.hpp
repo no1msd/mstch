@@ -45,8 +45,7 @@ public:
   {
     register_methods(this, {
       {"header", &complex::header}, {"item", &complex::item},
-      {"list", &complex::list}, {"empty", &complex::empty}
-    });
+      {"list", &complex::list}, {"empty", &complex::empty}});
   }
 
   mstch::node header() {
