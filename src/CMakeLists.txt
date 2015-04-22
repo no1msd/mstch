@@ -1,4 +1,4 @@
-find_package(Boost 1.46 REQUIRED)
+find_package(Boost 1.54 REQUIRED)
 
 include_directories(
 	${CMAKE_SOURCE_DIR}/include
