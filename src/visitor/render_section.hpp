@@ -30,14 +30,13 @@ namespace mstch {
 
         template<> inline
         std::string render_section::operator()<lambda>(const lambda& lam) const {
-            std::string section_str;
+            return "";
+            /*std::string section_str;
             for(auto& token: section)
                 section_str += token.raw();
             return lam(section_str, [this](const std::string& str) {
-                std::cout << str << std::endl;
-                std::cout << ctx.render(template_type{str}) << std::endl;
                 return ctx.render(template_type{str});
-            });
+            });*/
         }
 
         template<> inline
