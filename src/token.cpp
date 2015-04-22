@@ -16,7 +16,7 @@ token::type token::token_info(char c) {
 }
 
 token::token(const std::string& str, std::size_t skip_left, std::size_t skip_right):
-        m_eol(false), m_ws_only(false), m_raw(str)
+        m_raw(str), m_eol(false), m_ws_only(false)
 {
     if(skip_left != 0 && skip_right != 0) {
         if(str[skip_left] == '{' && str[str.size() - skip_right - 1] == '}') {
