@@ -6,8 +6,8 @@ before_install:
  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
  - sudo add-apt-repository ppa:boost-latest/ppa -y
  - sudo apt-get update -qq
- - sudo apt-get install -qq cmake libboost1.54-dev libboost-program-options1.54-dev g++-4.8
- - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
+ - sudo apt-get install -qq cmake libboost1.54-dev libboost-program-options1.54-dev g++-4.9
+ - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 90
 
 before_script:
  - mkdir build
@@ -16,4 +16,4 @@ before_script:
 
 script: make
 
-after_script: ctest
+after_script: make test
