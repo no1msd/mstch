@@ -10,23 +10,23 @@ std::string state::outside_section::render(
 {
     switch(token.token_type()) {
     case token::type::section_open:
-        ctx.set_state<in_section>(in_section::type::normal, token.content());
+        ctx.set_state<in_section>(in_section::type::normal, token.name());
         break;
     case token::type::inverted_section_open:
-        ctx.set_state<in_section>(in_section::type::inverted, token.content());
+        ctx.set_state<in_section>(in_section::type::inverted, token.name());
         break;
     case token::type::variable:
         return boost::apply_visitor(
                 visitor::render_node(visitor::render_node::flag::escape_html),
-                ctx.get_node(token.content()));
+                ctx.get_node(token.name()));
     case token::type::unescaped_variable:
         return boost::apply_visitor(
                 visitor::render_node(visitor::render_node::flag::none),
-                ctx.get_node(token.content()));
+                ctx.get_node(token.name()));
     case token::type::text:
-        return token.content();
+        return token.raw();
     case token::type::partial:
-        return ctx.render_partial(token.content());
+        return ctx.render_partial(token.name());
     default: break;
     }
     return "";

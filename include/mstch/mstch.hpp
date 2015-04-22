@@ -32,8 +32,21 @@ namespace mstch {
         };
     }
 
+    using renderer = std::function<std::string(const std::string&)>;
+    class lambda {
+    public:
+        lambda(std::function<std::string(const std::string&,renderer)> fun): fun(fun) {
+        }
+
+        std::string operator()(const std::string& text, renderer renderer) const  {
+            return fun(text, renderer);
+        }
+    private:
+        std::function<std::string(const std::string&,renderer)> fun;
+    };
+
     using node = boost::make_recursive_variant<
-            boost::blank, std::string, int, bool,
+            boost::blank, std::string, int, bool, lambda,
             std::shared_ptr<internal::object_t<boost::recursive_variant_>>,
             std::map<const std::string,boost::recursive_variant_>,
             std::vector<boost::recursive_variant_>>::type;

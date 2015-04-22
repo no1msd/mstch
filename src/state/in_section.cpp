@@ -12,7 +12,7 @@ state::in_section::in_section(type type, const std::string& section_name):
 
 std::string state::in_section::render(render_context& ctx, const token& token) {
     if(token.token_type() == token::type::section_close) {
-        if(token.content() == section_name && skipped_openings == 0) {
+        if(token.name() == section_name && skipped_openings == 0) {
             auto& node = ctx.get_node(section_name);
             std::string out;
             if(m_type == type::normal) {

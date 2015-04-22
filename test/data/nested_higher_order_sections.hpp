@@ -8,10 +8,9 @@ public:
   }
 
   mstch::node bold() {
-    return std::string{""};
-    /*return [](const std::string& text, mstch::renderer render) {
+    return mstch::lambda{[](const std::string& text, mstch::renderer render) {
       return std::string{"<b>"} + render(text) + std::string{"</b>"};
-    };*/
+    }};
   };
 
   mstch::node person() {

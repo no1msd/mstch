@@ -9,19 +9,18 @@ namespace mstch {
             text, variable, section_open, section_close, inverted_section_open,
             unescaped_variable, comment, partial
         };
-        token(bool is_tag, bool eol, bool ws_only, const std::string& str);
+        token(const std::string& str, std::size_t skip_left = 0, std::size_t skip_right = 0);
         type token_type() const { return m_type; };
-        const std::string& content() const { return m_content; };
+        const std::string& raw() const { return m_raw; };
+        const std::string& name() const { return m_name; };
         bool eol() const { return m_eol; }
         bool ws_only() const { return m_ws_only; }
-        bool marked() const { return m_marked; }
-        void mark() { m_marked = true; };
     private:
         type m_type;
-        std::string m_content;
+        std::string m_name;
+        std::string m_raw;
         bool m_eol;
         bool m_ws_only;
-        bool m_marked;
         type token_info(char c);
     };
 }

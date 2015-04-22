@@ -1,4 +1,4 @@
-find_package(Boost 1.54 COMPONENTS program_options REQUIRED)
+find_package(Boost 1.46 COMPONENTS program_options REQUIRED)
 
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
