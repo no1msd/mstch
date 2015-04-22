@@ -9,6 +9,8 @@ before_install:
 before_script:
  - mkdir build
  - cd build
- - cmake ..
+ - cmake -DWITH_UNIT_TESTS=ON ..
 
 script: make
+
+after_script: ctest
