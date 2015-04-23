@@ -44,7 +44,10 @@ void template_type::tokenize(const std::string& t) {
             if (*it == delim_end[del_pos] && ++del_pos == delim_end.size()) {
                 pstate = parse_state::start;
                 tokens.push_back({{tok_start, tok_end}});
-                tokens.push_back({{tok_end, it + 1}, delim_start.size(), delim_end.size()});
+                tokens.push_back(
+                        {{tok_end, it + 1},
+                        delim_start.size(),
+                        delim_end.size()});
                 tok_start = it + 1;
             } else {
                 pstate = parse_state::start;

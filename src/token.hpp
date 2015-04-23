@@ -9,7 +9,7 @@ namespace mstch {
             text, variable, section_open, section_close, inverted_section_open,
             unescaped_variable, comment, partial
         };
-        token(const std::string& str, std::size_t skip_left = 0, std::size_t skip_right = 0);
+        token(const std::string& str, std::size_t left = 0, std::size_t right = 0);
         type token_type() const { return m_type; };
         const std::string& raw() const { return m_raw; };
         const std::string& name() const { return m_name; };

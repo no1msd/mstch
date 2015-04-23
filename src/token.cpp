@@ -15,20 +15,20 @@ token::type token::token_info(char c) {
     }
 }
 
-token::token(const std::string& str, std::size_t skip_left, std::size_t skip_right):
+token::token(const std::string& str, std::size_t left, std::size_t right):
         m_raw(str), m_eol(false), m_ws_only(false)
 {
-    if(skip_left != 0 && skip_right != 0) {
-        if(str[skip_left] == '{' && str[str.size() - skip_right - 1] == '}') {
+    if(left != 0 && right != 0) {
+        if(str[left] == '{' && str[str.size() - right - 1] == '}') {
             m_type = type::unescaped_variable;
-            m_name = {first_not_ws(str.begin() + skip_left + 1, str.end() - skip_right),
-                    first_not_ws(str.rbegin() + 1 + skip_right, str.rend() - skip_left) + 1};
+            m_name = {first_not_ws(str.begin() + left + 1, str.end() - right),
+                    first_not_ws(str.rbegin() + 1 + right, str.rend() - left) + 1};
         } else {
-            auto first = first_not_ws(str.begin() + skip_left, str.end() - skip_right);
+            auto first = first_not_ws(str.begin() + left, str.end() - right);
             m_type = token_info(*first);
             if(m_type != type::variable)
-                first = first_not_ws(first + 1, str.end() - skip_right);
-            m_name = {first, first_not_ws(str.rbegin() + skip_right, str.rend() - skip_left) + 1};
+                first = first_not_ws(first + 1, str.end() - right);
+            m_name = {first, first_not_ws(str.rbegin() + right, str.rend() - left) + 1};
         }
     } else {
         m_type = type::text;
