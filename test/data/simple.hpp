@@ -1,21 +1,19 @@
 class simple: public mstch::object {
 private:
-  std::string m_name;
   int m_value;
-  bool m_in_ca;
 public:
   simple():
-    m_name{"Chris"},
-    m_value{10000},
-    m_in_ca{true}
+    m_value{10000}
   {
     register_methods(this, {
-      {"name", &simple::name}, {"value", &simple::value},
-      {"taxed_value", &simple::taxed_value}, {"in_ca", &simple::in_ca}});
+      {"name", &simple::name},
+      {"value", &simple::value},
+      {"taxed_value", &simple::taxed_value},
+      {"in_ca", &simple::in_ca}});
   }
   
   mstch::node name() {
-    return m_name;
+    return std::string{"Chris"};
   }
 
   mstch::node value() {
@@ -27,7 +25,7 @@ public:
   }
 
   mstch::node in_ca() {
-    return m_in_ca;
+    return true;
   }
 };
 

@@ -5,7 +5,6 @@
 #include "visitor/has_token.hpp"
 
 using namespace mstch;
-using namespace mstch::visitor;
 
 const mstch::node render_context::null_node;
 
@@ -13,8 +12,7 @@ render_context::push::push(render_context& context, const mstch::node& node):
     context(context)
 {
   context.nodes.emplace_front(node);
-  context.state.push(std::unique_ptr<state::render_state>(
-      new state::outside_section));
+  context.state.push(std::unique_ptr<render_state>(new outside_section));
 }
 
 render_context::push::~push() {
@@ -29,11 +27,9 @@ std::string render_context::push::render(const template_type& templt) {
 render_context::render_context(
     const mstch::node& node,
     const std::map<std::string, template_type>& partials):
-    partials{partials},
-    nodes{node}
+    partials{partials}, nodes{node}
 {
-  state.push(std::unique_ptr<state::render_state>(
-      new state::outside_section));
+  state.push(std::unique_ptr<render_state>(new outside_section));
 }
 
 const mstch::node& render_context::find_node(
@@ -41,8 +37,7 @@ const mstch::node& render_context::find_node(
     const std::deque<node>& current_nodes)
 {
   if (token != "." && token.find('.') != std::string::npos)
-    return find_node(
-        token.substr(token.rfind('.') + 1),
+    return find_node(token.substr(token.rfind('.') + 1),
         {find_node(token.substr(0, token.rfind('.')), current_nodes)});
   else
     for (auto& node: current_nodes)

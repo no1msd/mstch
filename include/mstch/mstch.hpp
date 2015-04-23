@@ -40,17 +40,25 @@ using renderer = std::function<std::string(const std::string&)>;
 
 class lambda {
  public:
-  lambda(std::function<std::string(const std::string&,renderer)> fun):
+  lambda(std::function<std::string()> fun):
+      fun([fun](const std::string&, renderer){return fun();})
+  {
+  }
+
+  lambda(std::function<std::string(const std::string&, renderer)> fun):
       fun(fun)
   {
   }
 
-  std::string operator()(const std::string& text, renderer renderer) const {
+  std::string operator()(
+      const std::string& text = "",
+      renderer renderer = renderer()) const
+  {
     return fun(text, renderer);
   }
 
  private:
-  std::function<std::string(const std::string&,renderer)> fun;
+  std::function<std::string(const std::string&, renderer)> fun;
 };
 
 using node = boost::make_recursive_variant<

@@ -13,7 +13,7 @@ citer first_not_ws(criter begin, criter end);
 std::string html_escape(std::string str);
 
 template<class... Args>
-auto visit(Args&& ... args) -> decltype(boost::apply_visitor(
+auto visit(Args&&... args) -> decltype(boost::apply_visitor(
     std::forward<Args>(args)...))
 {
   return boost::apply_visitor(std::forward<Args>(args)...);

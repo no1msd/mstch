@@ -8,7 +8,6 @@
 #include "utils.hpp"
 
 namespace mstch {
-namespace visitor {
 
 class render_section: public boost::static_visitor<std::string> {
  public:
@@ -26,7 +25,7 @@ class render_section: public boost::static_visitor<std::string> {
     return render_context::push(ctx, t).render(section);
   }
 
-private:
+ private:
   render_context& ctx;
   const template_type& section;
   flag m_flag;
@@ -34,13 +33,12 @@ private:
 
 template<>
 inline std::string render_section::operator()<lambda>(const lambda& fun) const {
-  return "";
-  /*std::string section_str;
+  std::string section_str;
   for(auto& token: section)
     section_str += token.raw();
-  return lam(section_str, [this](const std::string& str) {
-    return ctx.render(template_type{str});
-  });*/
+  return fun(section_str, [this](const std::string& str) {
+    return render_context::push(ctx).render(template_type{str});
+  });
 }
 
 template<>
@@ -54,5 +52,4 @@ inline std::string render_section::operator()<array>(const array& array) const {
   return out;
 }
 
-}
 }

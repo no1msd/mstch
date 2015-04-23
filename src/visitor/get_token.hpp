@@ -4,9 +4,9 @@
 #include <boost/blank.hpp>
 
 #include "mstch/mstch.hpp"
+#include "has_token.hpp"
 
 namespace mstch {
-namespace visitor {
 
 class get_token: public boost::static_visitor<const mstch::node&> {
  public:
@@ -37,5 +37,4 @@ inline const mstch::node& get_token::operator()<std::shared_ptr<object>>(
   return object->at(token);
 }
 
-}
 }

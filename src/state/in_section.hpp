@@ -7,7 +7,6 @@
 #include "template_type.hpp"
 
 namespace mstch {
-namespace state {
 
 class in_section: public render_state {
  public:
@@ -24,5 +23,4 @@ class in_section: public render_state {
   int skipped_openings;
 };
 
-}
 }

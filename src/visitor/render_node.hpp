@@ -7,7 +7,6 @@
 #include "utils.hpp"
 
 namespace mstch {
-namespace visitor {
 
 class render_node: public boost::static_visitor<std::string> {
  public:
@@ -28,21 +27,25 @@ class render_node: public boost::static_visitor<std::string> {
 };
 
 template<>
-inline std::string render_node::operator()<int>(const int& val) const {
-  return std::to_string(val);
+inline std::string render_node::operator()<int>(const int& value) const {
+  return std::to_string(value);
 }
 
-template<> inline
-std::string render_node::operator()<bool>(const bool& val) const {
-  return val?"true":"false";
+template<>
+inline std::string render_node::operator()<bool>(const bool& value) const {
+  return value?"true":"false";
+}
+
+template<>
+inline std::string render_node::operator()<lambda>(const lambda& value) const {
+  return (m_flag == flag::escape_html)?html_escape(value()):value();
 }
 
 template<>
 inline std::string render_node::operator()<std::string>(
-    const std::string& val) const
+    const std::string& value) const
 {
-    return (m_flag == flag::escape_html)?html_escape(val):val;
+    return (m_flag == flag::escape_html)?html_escape(value):value;
 }
 
-}
 }

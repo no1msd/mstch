@@ -6,7 +6,6 @@
 #include "mstch/mstch.hpp"
 
 namespace mstch {
-namespace visitor {
 
 class has_token: public boost::static_visitor<bool> {
  public:
@@ -17,7 +16,8 @@ class has_token: public boost::static_visitor<bool> {
   inline bool operator()(const T& t) const {
     return token == ".";
   }
-private:
+
+ private:
   const std::string& token;
 };
 
@@ -33,5 +33,4 @@ inline bool has_token::operator()<std::shared_ptr<object>>(
   return object->has(token);
 }
 
-}
 }

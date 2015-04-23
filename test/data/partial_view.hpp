@@ -9,7 +9,8 @@ public:
       {"name", &partial_view::name},
       {"value", &partial_view::value},
       {"taxed_value", &partial_view::taxed_value},
-      {"in_ca", &partial_view::in_ca},});
+      {"in_ca", &partial_view::in_ca}
+    });
   }
 
   mstch::node greeting() {

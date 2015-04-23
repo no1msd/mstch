@@ -9,7 +9,8 @@ public:
       {"name", &partial_whitespace::name},
       {"value", &partial_whitespace::value},
       {"taxed_value", &partial_whitespace::taxed_value},
-      {"in_ca", &partial_whitespace::in_ca},});
+      {"in_ca", &partial_whitespace::in_ca}
+    });
   }
 
   mstch::node greeting() {

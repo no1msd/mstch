@@ -30,7 +30,7 @@ class render_context {
   std::string render_partial(const std::string& partial_name);
   template<class T, class... Args>
   void set_state(Args&& ... args) {
-    state.top() = std::unique_ptr<state::render_state>(
+    state.top() = std::unique_ptr<render_state>(
         new T(std::forward<Args>(args)...));
   }
 
@@ -41,7 +41,7 @@ class render_context {
       const std::deque<node>& current_nodes);
   const std::map<std::string, template_type>& partials;
   std::deque<mstch::node> nodes;
-  std::stack<std::unique_ptr<state::render_state>> state;
+  std::stack<std::unique_ptr<render_state>> state;
 };
 
 }

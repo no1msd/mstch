@@ -8,6 +8,12 @@ include_directories(
 set(SRC
   state/in_section.cpp
   state/outside_section.cpp
+  state/render_state.hpp
+  visitor/get_token.hpp
+  visitor/has_token.hpp
+  visitor/is_node_empty.hpp
+  visitor/render_node.hpp
+  visitor/render_section.hpp
   mstch.cpp
   render_context.cpp
   template_type.cpp

@@ -12,8 +12,8 @@ int main() {
   std::string comment_tmp{
       "<div class=\"comments\"><h3>{{header}}</h3><ul>"
       "{{#comments}}<li class=\"comment\"><h5>{{name}}</h5>"
-      "<p>{{body}}</p></li>{{/comments}}</ul></div>"
-  };
+      "<p>{{body}}</p></li>{{/comments}}</ul></div>"};
+
   auto comment_view = mstch::map{
       {"header", std::string{"My Post Comments"}},
       {"comments", mstch::array{
@@ -21,9 +21,7 @@ int main() {
           mstch::map{{"name", std::string{"Sam"}}, {"body", std::string{"Thanks for this post!"}}},
           mstch::map{{"name", std::string{"Heather"}}, {"body", std::string{"Thanks for this post!"}}},
           mstch::map{{"name", std::string{"Kathy"}}, {"body", std::string{"Thanks for this post!"}}},
-          mstch::map{{"name", std::string{"George"}}, {"body", std::string{"Thanks for this post!"}}}
-      }}
-  };
+          mstch::map{{"name", std::string{"George"}}, {"body", std::string{"Thanks for this post!"}}}}}};
 
   std::vector<unsigned long> times;
   for (int j = 0; j < 10; j++) {

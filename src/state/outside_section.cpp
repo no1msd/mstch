@@ -6,9 +6,8 @@
 #include "utils.hpp"
 
 using namespace mstch;
-using namespace mstch::visitor;
 
-std::string state::outside_section::render(
+std::string outside_section::render(
     render_context& ctx, const token& token)
 {
   using flag = render_node::flag;
