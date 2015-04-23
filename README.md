@@ -1,13 +1,13 @@
 # mstch - {{mustache}} templates in C++11 
 
 mstch is a complete implementation of [{{mustache}}](http://mustache.github.io/) templates using modern C++.
+
 [![Build Status](https://travis-ci.org/no1msd/mstch.svg?branch=master)](https://travis-ci.org/no1msd/mstch)
 
 ## Basic usage
 
 ```c++
 #include <iostream>
-
 #include <mstch/mstch.hpp>
 
 int main() {
@@ -30,9 +30,9 @@ int main() {
 The output of this example will be:
 
 ```
-Hi chris!
-Hi mark!
-Hi scott!
+Hi Chris!
+Hi Mark!
+Hi Scott!
 ```
 
 ## Requirements
@@ -41,7 +41,7 @@ Hi scott!
  - Boost 1.54
  - CMake for building
 
-## Building
+## Installing
 
 From the root of the source tree:
 
@@ -50,9 +50,10 @@ From the root of the source tree:
  $ cd build
  $ cmake ..
  $ make
+ $ make install
 ```
 
-Building with unit tests:
+### Running the unit tests
 
 ```bash
  $ mkdir build
@@ -62,6 +63,6 @@ Building with unit tests:
  $ make test
 ```
 
-### Advanced usage
+## Advanced usage
 
 TODO
