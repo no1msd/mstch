@@ -10,7 +10,7 @@ using criter = std::string::const_reverse_iterator;
 
 citer first_not_ws(citer begin, citer end);
 citer first_not_ws(criter begin, criter end);
-std::string html_escape(std::string str);
+std::string html_escape(const std::string& str);
 
 template<class... Args>
 auto visit(Args&&... args) -> decltype(boost::apply_visitor(

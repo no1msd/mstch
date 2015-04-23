@@ -1,7 +1,5 @@
 #include "utils.hpp"
 
-#include <boost/algorithm/string/replace.hpp>
-
 mstch::citer mstch::first_not_ws(mstch::citer begin, mstch::citer end) {
   for (auto it = begin; it != end; ++it)
     if (*it != ' ') return it;
@@ -14,12 +12,22 @@ mstch::citer mstch::first_not_ws(mstch::criter begin, mstch::criter end) {
   return --(end.base());
 }
 
-std::string mstch::html_escape(std::string str) {
-  boost::replace_all(str, "&", "&amp;");
-  boost::replace_all(str, "'", "&#39;");
-  boost::replace_all(str, "\"", "&quot;");
-  boost::replace_all(str, "<", "&lt;");
-  boost::replace_all(str, ">", "&gt;");
-  boost::replace_all(str, "/", "&#x2F;");
-  return str;
+std::string mstch::html_escape(const std::string& str) {
+  std::string out;
+  citer start = str.begin();
+  auto add_escape = [&out, &start](const std::string& escaped, citer& it) {
+    out += std::string{start, it} + escaped;
+    start = it + 1;
+  };
+  for (auto it = str.begin(); it != str.end(); ++it)
+    switch (*it) {
+      case '&': add_escape("&amp;", it); break;
+      case '\'': add_escape("&#39;", it); break;
+      case '"': add_escape("&quot;", it); break;
+      case '<': add_escape("&lt;", it); break;
+      case '>': add_escape("&gt;", it); break;
+      case '/': add_escape("&#x2F;", it); break;
+      default: break;
+    }
+  return out + std::string{start, str.end()};
 }
