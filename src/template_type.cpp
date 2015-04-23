@@ -7,54 +7,39 @@ template_type::template_type(const std::string& str) {
   strip_whitespace();
 }
 
-void template_type::tokenize(const std::string& t) {
-  std::string delim_start{"{{"};
-  std::string delim_end{"}}"};
-  std::string::const_iterator tok_end, tok_start = t.begin();
-  parse_state pstate = parse_state::start;
-  unsigned int del_pos = 0;
-  for (std::string::const_iterator it = t.begin(); it != t.end(); ++it) {
-    if (pstate == parse_state::start) {
-      if (*it == delim_start[0]) {
-        pstate = parse_state::in_del_start;
-        tok_end = it;
-        del_pos = 1;
-      } else if (*it == '\n') {
-        tokens.push_back({{tok_start, it + 1}});
-        tok_start = it + 1;
+void template_type::process_text(citer begin, citer end) {
+  if (begin == end)
+    return;
+  auto start = begin;
+  for (auto it = begin; it != end; ++it)
+    if (*it == '\n' || it == end - 1) {
+      tokens.push_back({{start, it + 1}});
+      start = it + 1;
+    }
+}
+
+void template_type::tokenize(const std::string& tmplt) {
+  std::string open{"{{"}, close{"}}"};
+  citer beg = tmplt.begin();
+  for (unsigned long pos = 0; pos < tmplt.size();) {
+    auto to = tmplt.find(open, pos);
+    auto tc = tmplt.find(close, (to == std::string::npos)?to:(to + 1));
+    if (tc != std::string::npos && to != std::string::npos) {
+      if (*(beg + to + open.size()) == '{' && *(beg + tc + close.size()) == '}')
+        ++tc;
+      process_text(beg + pos, beg + to);
+      pos = tc + close.size();
+      tokens.push_back({{beg + to, beg + tc + close.size()},
+        open.size(), close.size()});
+      if (*(beg + to + open.size()) == '=' && *(beg + tc - 1) == '=') {
+        open = {beg + to + open.size() + 1, beg + tmplt.find(' ', to)};
+        close = {beg + tmplt.find(' ', to) + 1, beg + tc - 1};
       }
-    } else if (pstate == parse_state::in_del_start) {
-      if (*it == delim_start[del_pos] && ++del_pos == delim_start.size())
-        pstate = parse_state::in_del;
-      else
-        pstate = parse_state::start;
-    } else if (pstate == parse_state::in_del) {
-      if (*it == '{')
-        pstate = parse_state::in_esccontent;
-      else if (*it == delim_end[0] && (del_pos = 1))
-        pstate = parse_state::in_del_end;
-      else
-        pstate = parse_state::in_content;
-    } else if (pstate == parse_state::in_esccontent && *it == '}') {
-      pstate = parse_state::in_content;
-    } else if (pstate == parse_state::in_content && *it == delim_end[0]) {
-      pstate = parse_state::in_del_end;
-      del_pos = 1;
-    } else if (pstate == parse_state::in_del_end) {
-      if (*it == delim_end[del_pos] && ++del_pos == delim_end.size()) {
-        pstate = parse_state::start;
-        tokens.push_back({{tok_start, tok_end}});
-        tokens.push_back(
-            {{tok_end, it + 1},
-             delim_start.size(),
-             delim_end.size()});
-        tok_start = it + 1;
-      } else {
-        pstate = parse_state::start;
-      }
+    } else {
+      process_text(beg + pos, tmplt.end());
+      pos = tc;
     }
   }
-  tokens.push_back({{tok_start, t.end()}});
 }
 
 void template_type::strip_whitespace() {

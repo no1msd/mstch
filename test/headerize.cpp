@@ -6,20 +6,10 @@
 #include <boost/program_options/variables_map.hpp>
 #include <boost/program_options/parsers.hpp>
 
-void wrap_code(std::istream& input, std::ostream& output) {
-  std::string line;
-  while (std::getline(input, line)) {
-    output << line;
-    if (!input.eof())
-      output << std::endl;
-  }
-  output << std::endl;
-}
-
 void wrap_string(std::istream& input, std::ostream& output,
     const std::string& variable_name)
 {
-  output << "const std::string " << variable_name << "{" << std::endl;;
+  output << "const std::string " << variable_name << "{\n";
   std::string line;
   while (std::getline(input, line)) {
     boost::replace_all(line, "\\", "\\\\");
@@ -27,9 +17,9 @@ void wrap_string(std::istream& input, std::ostream& output,
     output << "  \"" << line;
     if (!input.eof())
       output << "\\n";
-    output << "\"" << std::endl;
+    output << "\"\n";
   }
-  output << "};" << std::endl;
+  output << "};\n";
 }
 
 int main(int argc, char* argv[]) {
@@ -54,34 +44,32 @@ int main(int argc, char* argv[]) {
   }
 
   if (!vm.count("output")) {
-    std::cout << "Output file not set" << std::endl;
+    std::cerr << "Output file not set" << std::endl;
     return 1;
   }
 
   std::ofstream output(vm["output"].as<std::string>(), std::ios::out);
 
   if (vm.count("namespace"))
-    output << "namespace " << vm["namespace"].as<std::string>() << " {" << std::endl;
+    output << "namespace " << vm["namespace"].as<std::string>() << " {\n";
 
-  if (vm.count("input-string")) {
-    for (auto& string_filename: vm["input-string"].as<std::vector<std::string>>()) {
-      std::ifstream input(string_filename, std::ios::in);
-      wrap_string(input, output,
-          boost::replace_all_copy(string_filename, ".", "_"));
+  if (vm.count("input-string"))
+    for (auto& filename: vm["input-string"].as<std::vector<std::string>>()) {
+      std::ifstream input(filename, std::ios::in);
+      wrap_string(input, output, boost::replace_all_copy(filename, ".", "_"));
       input.close();
     }
-  }
 
-  if (vm.count("input-code")) {
-    for (auto& data_filename: vm["input-code"].as<std::vector<std::string>>()) {
-      std::ifstream input(data_filename, std::ios::in);
-      wrap_code(input, output);
+  if (vm.count("input-code"))
+    for (auto& filename: vm["input-code"].as<std::vector<std::string>>()) {
+      std::ifstream input(filename, std::ios::in);
+      output << std::string{(std::istreambuf_iterator<char>(input)),
+          std::istreambuf_iterator<char>()} << std::endl;
       input.close();
     }
-  }
 
   if (vm.count("namespace"))
-    output << "}" << std::endl;
+    output << "}\n";
 
   output.close();
 

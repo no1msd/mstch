@@ -19,7 +19,9 @@ token::token(const std::string& str, std::size_t left, std::size_t right):
     m_raw(str), m_eol(false), m_ws_only(false)
 {
   if (left != 0 && right != 0) {
-    if (str[left] == '{' && str[str.size() - right - 1] == '}') {
+    if (str[left] == '=' && str[str.size() - right - 1] == '=') {
+      m_type = type::delimiter_change;
+    } else if (str[left] == '{' && str[str.size() - right - 1] == '}') {
       m_type = type::unescaped_variable;
       m_name = {first_not_ws(str.begin() + left + 1, str.end() - right),
           first_not_ws(str.rbegin() + 1 + right, str.rend() - left) + 1};

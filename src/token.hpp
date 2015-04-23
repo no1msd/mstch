@@ -8,7 +8,7 @@ class token {
  public:
   enum class type {
     text, variable, section_open, section_close, inverted_section_open,
-    unescaped_variable, comment, partial
+    unescaped_variable, comment, partial, delimiter_change
   };
   token(const std::string& str, std::size_t left = 0, std::size_t right = 0);
   type token_type() const { return m_type; };

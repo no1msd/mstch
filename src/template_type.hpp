@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "token.hpp"
+#include "utils.hpp"
 
 namespace mstch {
 
@@ -16,12 +17,10 @@ class template_type {
   void operator<<(const token& token) { tokens.push_back(token); }
 
  private:
-  enum class parse_state {
-    start, in_del_start, in_del, in_content, in_esccontent, in_del_end
-  };
-  void tokenize(const std::string& str);
-  void strip_whitespace();
   std::vector<token> tokens;
+  void strip_whitespace();
+  void process_text(citer beg, citer end);
+  void tokenize(const std::string& tmplt);
 };
 
 }
