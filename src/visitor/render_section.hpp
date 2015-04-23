@@ -5,6 +5,7 @@
 
 #include "render_context.hpp"
 #include "mstch/mstch.hpp"
+#include "utils.hpp"
 
 namespace mstch {
 namespace visitor {
@@ -49,8 +50,7 @@ inline std::string render_section::operator()<array>(const array& array) const {
     out += render_context::push(ctx, array).render(section);
   else
     for (auto& item: array)
-      out += boost::apply_visitor(
-        render_section(ctx, section, flag::keep_array), item);
+      out += visit(render_section(ctx, section, flag::keep_array), item);
   return out;
 }
 

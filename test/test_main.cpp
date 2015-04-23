@@ -7,11 +7,11 @@
 using namespace mstchtest;
 
 #define MSTCH_PARTIAL_TEST(x) TEST_CASE(#x) { \
-    REQUIRE(x ## _txt == mstch::render(x ## _mustache, x ## _data, {{"partial", x ## _partial}})); \
+  REQUIRE(x ## _txt == mstch::render(x ## _mustache, x ## _data, {{"partial", x ## _partial}})); \
 }
 
 #define MSTCH_TEST(x) TEST_CASE(#x) { \
-    REQUIRE(x ## _txt == mstch::render(x ## _mustache, x ## _data)); \
+  REQUIRE(x ## _txt == mstch::render(x ## _mustache, x ## _data)); \
 }
 
 MSTCH_TEST(ampersand_escape)

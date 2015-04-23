@@ -2,6 +2,7 @@
 
 #include <boost/variant/static_visitor.hpp>
 #include <boost/blank.hpp>
+
 #include "mstch/mstch.hpp"
 
 namespace mstch {
