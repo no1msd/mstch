@@ -90,7 +90,7 @@ mstch::map context{
 std::cout << mstch::render(view, context, {{"user", user_view}}) << std::endl;
 ```
 
-The output will be:
+Output:
 
 ```html
 <strong>Chris</strong>
@@ -118,7 +118,7 @@ mstch::map context{
 std::cout << mstch::render(view, context) << std::endl;
 ```
 
-The output will be:
+Output:
 
 ```html
 Hello World!
@@ -140,7 +140,7 @@ mstch::map context{
 std::cout << mstch::render(view, context) << std::endl;
 ```
 
-The output will be:
+Output:
 
 ```html
 <b>Yay! :)</b>
@@ -148,7 +148,46 @@ The output will be:
 
 ### Objects
 
-TODO
+Custom objects can also be used as context for rendering templates. The class 
+must inherit from `mstch::object`, and register it's exported methods with
+`register_methods`. Exported methods must have the return type of `mstch::node`.
+Objects must be created as a `std::shared_ptr`.
+
+```c++
+class example: public mstch::object {
+ public:
+  example(): m_value(1) {
+    register_methods(this, {
+      {"count", &example::count},
+      {"names", &example::names}  
+    });
+  }
+  
+  mstch::node count() {
+    return m_value++;
+  }
+  
+  mstch::node names() {
+    return mstch::array{std::string{"Chris"}, std::string{"Mark"}, std::string{"Scott"}};
+  }
+  
+ private:
+  int m_value;
+};
+
+std::string view{"{{#names}}<b>{{count}}</b>: {{.}}\n{{/names}}"};
+const auto context = std::make_shared<example>();
+
+std::cout << mstch::render(view, context) << std::endl;
+```
+
+Output:
+
+```html
+<b>1</b>: Chris
+<b>2</b>: Mark
+<b>3</b>: Scott
+```
 
 ## Requirements
 
