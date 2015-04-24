@@ -1,5 +1,7 @@
 # mstch - {{mustache}} templates in C++11 
 
+![mstch logo](http://i.imgur.com/GM8V88a.png)
+
 mstch is a complete implementation of [{{mustache}}](http://mustache.github.io/) templates using modern C++.
 
 [![Build Status](https://travis-ci.org/no1msd/mstch.svg?branch=master)](https://travis-ci.org/no1msd/mstch)
