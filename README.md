@@ -6,6 +6,17 @@ mstch is a complete implementation of [{{mustache}}](http://mustache.github.io/)
 
 [![Build Status](https://travis-ci.org/no1msd/mstch.svg?branch=master)](https://travis-ci.org/no1msd/mstch)
 
+## Supported features
+
+mstch supports the complete feature set described in the `mustache(5)` [manpage](http://mustache.github.com/mustache.5.html):
+
+ - JSON-like data structure using [Boost.Variant](http://www.boost.org/doc/libs/1_57_0/doc/html/variant.html)
+ - variables, sections, inverted sections
+ - partials
+ - changing the delimiter
+ - C++11 lambdas
+ - C++ objects as view models
+
 ## Basic usage
 
 ```c++
