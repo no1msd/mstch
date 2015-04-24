@@ -64,10 +64,10 @@ class lambda {
 using node = boost::make_recursive_variant<
     boost::blank, std::string, int, bool, lambda,
     std::shared_ptr<internal::object_t<boost::recursive_variant_>>,
-    std::map<const std::string,boost::recursive_variant_>,
+    std::map<const std::string, boost::recursive_variant_>,
     std::vector<boost::recursive_variant_>>::type;
 using object = internal::object_t<node>;
-using map = std::map<const std::string,node>;
+using map = std::map<const std::string, node>;
 using array = std::vector<node>;
 
 std::string render(

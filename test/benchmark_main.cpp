@@ -27,7 +27,7 @@ int main() {
 
   std::vector<unsigned long> times;
   for (int j = 0; j < 10; j++) {
-    unsigned long start = current_msec();
+    auto start = current_msec();
     for (int i = 0; i < 5000; i++)
       mstch::render(comment_tmp, comment_view);
     times.push_back(current_msec() - start);
