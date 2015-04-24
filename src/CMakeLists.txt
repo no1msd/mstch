@@ -21,3 +21,6 @@ set(SRC
   utils.cpp)
 
 add_library(mstch STATIC ${SRC})
+
+install(TARGETS mstch DESTINATION lib)
+install(FILES ${CMAKE_SOURCE_DIR}/include/mstch/mstch.hpp DESTINATION include/mstch)
