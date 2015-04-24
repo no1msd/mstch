@@ -168,7 +168,8 @@ class example: public mstch::object {
   }
   
   mstch::node names() {
-    return mstch::array{std::string{"Chris"}, std::string{"Mark"}, std::string{"Scott"}};
+    return mstch::array{
+      std::string{"Chris"}, std::string{"Mark"}, std::string{"Scott"}};
   }
   
  private:
