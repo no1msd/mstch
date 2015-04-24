@@ -73,7 +73,30 @@ if your compiler supports it.
 
 ### Partials
 
-TODO
+Partials can be passed in a `std::map` as the third parameter of the 
+`mstch::render` function:
+
+```c++
+std::string view{"{{#names}}{{> user}}{{/names}}"};
+std::string user_view{"<strong>{{name}}\n</strong>"};
+mstch::map context{
+  {"names", mstch::array{
+    mstch::map{{"name", std::string{"Chris"}}},
+    mstch::map{{"name", std::string{"Mark"}}},
+    mstch::map{{"name", std::string{"Scott"}}},
+  }}
+};
+  
+std::cout << mstch::render(view, context, {{"user", user_view}}) << std::endl;
+```
+
+The output will be:
+
+```
+<strong>Chris</strong>
+<strong>Mark</strong>
+<strong>Scott</strong>
+```
 
 ### Lambdas
 
