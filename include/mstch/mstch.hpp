@@ -8,6 +8,9 @@
 #include <boost/variant.hpp>
 
 namespace mstch {
+
+using renderer = std::function<std::string(const std::string&)>;
+
 namespace internal {
 
 template<class N>
@@ -34,19 +37,38 @@ class object_t {
   mutable std::map<std::string, N> cache;
 };
 
-}
+template <typename T>
+class is_fun {
+ private:
+  using not_fun = char;
+  using fun_without_args = char[2];
+  using fun_with_args = char[3];
+  template <typename U, U> struct really_has;
+  template <typename C> static fun_without_args& test(
+      really_has<std::string(C::*)() const, &C::operator()>*);
+  template <typename C> static fun_with_args& test(
+      really_has<std::string(C::*)(const std::string&,renderer) const,
+      &C::operator()>*);
+  template <typename> static not_fun& test(...);
 
-using renderer = std::function<std::string(const std::string&)>;
+ public:
+  static bool const no_args = sizeof(test<T>(0)) == sizeof(fun_without_args);
+  static bool const has_args = sizeof(test<T>(0)) == sizeof(fun_with_args);
+};
+
+}
 
 class lambda {
  public:
-  lambda(std::function<std::string()> fun):
-      fun([fun](const std::string&, renderer){return fun();})
+  template<class F>
+  lambda(F f, typename std::enable_if<internal::is_fun<F>::no_args>::type* =0):
+      fun([f](const std::string&,renderer){return f();})
   {
   }
 
-  lambda(std::function<std::string(const std::string&, renderer)> fun):
-      fun(fun)
+  template<class F>
+  lambda(F f, typename std::enable_if<internal::is_fun<F>::has_args>::type* =0):
+      fun(f)
   {
   }
 
