@@ -74,7 +74,7 @@ class lambda {
 
   std::string operator()(
       const std::string& text = "",
-      renderer renderer = renderer()) const
+      renderer renderer = [](const std::string&){ return "";}) const
   {
     return fun(text, renderer);
   }
