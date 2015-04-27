@@ -1,7 +1,6 @@
 #pragma once
 
 #include <boost/variant/static_visitor.hpp>
-#include <boost/blank.hpp>
 
 #include "render_context.hpp"
 #include "mstch/mstch.hpp"
@@ -32,7 +31,7 @@ class render_section: public boost::static_visitor<std::string> {
 };
 
 template<>
-inline std::string render_section::operator()<lambda>(const lambda& fun) const {
+inline std::string render_section::operator()(const lambda& fun) const {
   std::string section_str;
   for(auto& token: section)
     section_str += token.raw();
@@ -42,10 +41,10 @@ inline std::string render_section::operator()<lambda>(const lambda& fun) const {
 }
 
 template<>
-inline std::string render_section::operator()<array>(const array& array) const {
+inline std::string render_section::operator()(const array& array) const {
   std::string out;
   if(m_flag == flag::keep_array)
-    out += render_context::push(ctx, array).render(section);
+    return render_context::push(ctx, array).render(section);
   else
     for (auto& item: array)
       out += visit(render_section(ctx, section, flag::keep_array), item);

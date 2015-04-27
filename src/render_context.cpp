@@ -1,8 +1,6 @@
 #include "render_context.hpp"
-#include "utils.hpp"
 #include "state/outside_section.hpp"
 #include "visitor/get_token.hpp"
-#include "visitor/has_token.hpp"
 
 using namespace mstch;
 

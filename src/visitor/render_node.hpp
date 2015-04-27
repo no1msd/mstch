@@ -1,7 +1,6 @@
 #pragma once
 
 #include <boost/variant/static_visitor.hpp>
-#include <boost/blank.hpp>
 
 #include "mstch/mstch.hpp"
 #include "utils.hpp"
@@ -10,10 +9,7 @@ namespace mstch {
 
 class render_node: public boost::static_visitor<std::string> {
  public:
-  enum class flag {
-    none, escape_html
-  };
-
+  enum class flag { none, escape_html };
   render_node(flag p_flag = flag::none): m_flag(p_flag) {
   }
 
@@ -27,24 +23,22 @@ class render_node: public boost::static_visitor<std::string> {
 };
 
 template<>
-inline std::string render_node::operator()<int>(const int& value) const {
+inline std::string render_node::operator()(const int& value) const {
   return std::to_string(value);
 }
 
 template<>
-inline std::string render_node::operator()<bool>(const bool& value) const {
+inline std::string render_node::operator()(const bool& value) const {
   return value?"true":"false";
 }
 
 template<>
-inline std::string render_node::operator()<lambda>(const lambda& value) const {
+inline std::string render_node::operator()(const lambda& value) const {
   return (m_flag == flag::escape_html)?html_escape(value()):value();
 }
 
 template<>
-inline std::string render_node::operator()<std::string>(
-    const std::string& value) const
-{
+inline std::string render_node::operator()(const std::string& value) const {
     return (m_flag == flag::escape_html)?html_escape(value):value;
 }
 

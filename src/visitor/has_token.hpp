@@ -1,7 +1,6 @@
 #pragma once
 
 #include <boost/variant/static_visitor.hpp>
-#include <boost/blank.hpp>
 
 #include "mstch/mstch.hpp"
 
@@ -22,14 +21,12 @@ class has_token: public boost::static_visitor<bool> {
 };
 
 template<>
-inline bool has_token::operator()<map>(const map& map) const {
+inline bool has_token::operator()(const map& map) const {
   return map.count(token) == 1;
 }
 
 template<>
-inline bool has_token::operator()<std::shared_ptr<object>>(
-        const std::shared_ptr<object>& object) const
-{
+inline bool has_token::operator()(const std::shared_ptr<object>& object) const {
   return object->has(token);
 }
 

@@ -19,21 +19,20 @@ void template_type::process_text(citer begin, citer end) {
 }
 
 void template_type::tokenize(const std::string& tmplt) {
-  std::string open{"{{"}, close{"}}"};
+  std::string o{"{{"}, c{"}}"};
   citer beg = tmplt.begin();
   for (unsigned long pos = 0; pos < tmplt.size();) {
-    auto to = tmplt.find(open, pos);
-    auto tc = tmplt.find(close, (to == std::string::npos)?to:(to + 1));
+    auto to = tmplt.find(o, pos);
+    auto tc = tmplt.find(c, (to == std::string::npos)?to:(to + 1));
     if (tc != std::string::npos && to != std::string::npos) {
-      if (*(beg + to + open.size()) == '{' && *(beg + tc + close.size()) == '}')
+      if (*(beg + to + o.size()) == '{' && *(beg + tc + c.size()) == '}')
         ++tc;
       process_text(beg + pos, beg + to);
-      pos = tc + close.size();
-      tokens.push_back({{beg + to, beg + tc + close.size()},
-        open.size(), close.size()});
-      if (*(beg + to + open.size()) == '=' && *(beg + tc - 1) == '=') {
-        open = {beg + to + open.size() + 1, beg + tmplt.find(' ', to)};
-        close = {beg + tmplt.find(' ', to) + 1, beg + tc - 1};
+      pos = tc + c.size();
+      tokens.push_back({{beg + to, beg + tc + c.size()}, o.size(), c.size()});
+      if (*(beg + to + o.size()) == '=' && *(beg + tc - 1) == '=') {
+        o = {beg + to + o.size() + 1, beg + tmplt.find(' ', to)};
+        c = {beg + tmplt.find(' ', to) + 1, beg + tc - 1};
       }
     } else {
       process_text(beg + pos, tmplt.end());
@@ -43,7 +42,7 @@ void template_type::tokenize(const std::string& tmplt) {
 }
 
 void template_type::strip_whitespace() {
-  auto line_begin = tokens.begin();
+  auto lbegin = tokens.begin();
   bool has_tag = false, non_space = false;
   for (auto it = tokens.begin(); it != tokens.end(); ++it) {
     auto type = (*it).token_type();
@@ -53,17 +52,11 @@ void template_type::strip_whitespace() {
     else if (!(*it).ws_only())
       non_space = true;
     if ((*it).eol()) {
-      if (has_tag && !non_space) {
-        auto line_it = line_begin;
-        for (; !(*line_it).eol(); ++line_it)
-          if ((*line_it).ws_only())
-            line_it = tokens.erase(line_it);
-        if ((*line_it).ws_only())
-          line_it = tokens.erase(line_it);
-        it = line_it - 1;
-      }
+      if (has_tag && !non_space)
+        for (auto c = lbegin; it != c-1; c = (*c).ws_only()?tokens.erase(c):++c)
+          it = (*c).eol()?c-1:it;
       non_space = has_tag = false;
-      line_begin = it + 1;
+      lbegin = it + 1;
     }
   }
 }

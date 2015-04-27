@@ -10,9 +10,7 @@ namespace mstch {
 
 class in_section: public render_state {
  public:
-  enum class type {
-    inverted, normal
-  };
+  enum class type { inverted, normal };
   in_section(type type, const std::string &section_name);
   std::string render(render_context &context, const token &token) override;
 

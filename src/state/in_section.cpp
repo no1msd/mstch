@@ -2,7 +2,6 @@
 #include "outside_section.hpp"
 #include "visitor/is_node_empty.hpp"
 #include "visitor/render_section.hpp"
-#include "utils.hpp"
 
 using namespace mstch;
 

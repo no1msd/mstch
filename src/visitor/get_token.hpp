@@ -1,7 +1,6 @@
 #pragma once
 
 #include <boost/variant/static_visitor.hpp>
-#include <boost/blank.hpp>
 
 #include "mstch/mstch.hpp"
 #include "has_token.hpp"
@@ -26,12 +25,12 @@ class get_token: public boost::static_visitor<const mstch::node&> {
 };
 
 template<>
-inline const mstch::node& get_token::operator()<map>(const map& map) const {
+inline const mstch::node& get_token::operator()(const map& map) const {
   return map.at(token);
 }
 
 template<>
-inline const mstch::node& get_token::operator()<std::shared_ptr<object>>(
+inline const mstch::node& get_token::operator()(
     const std::shared_ptr<object>& object) const
 {
   return object->at(token);

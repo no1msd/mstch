@@ -3,7 +3,6 @@
 #include "visitor/render_node.hpp"
 #include "in_section.hpp"
 #include "render_context.hpp"
-#include "utils.hpp"
 
 using namespace mstch;
 
