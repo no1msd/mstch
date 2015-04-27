@@ -224,3 +224,7 @@ are also required to build them.
  $ make
  $ make test
 ```
+
+## License
+
+mstch is licensed under the [MIT license](https://github.com/no1msd/mstch/blob/master/LICENSE).
