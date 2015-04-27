@@ -15,10 +15,12 @@ mstch::citer mstch::first_not_ws(mstch::criter begin, mstch::criter end) {
 std::string mstch::html_escape(const std::string& str) {
   std::string out;
   citer start = str.begin();
+
   auto add_escape = [&out, &start](const std::string& escaped, citer& it) {
     out += std::string{start, it} + escaped;
     start = it + 1;
   };
+
   for (auto it = str.begin(); it != str.end(); ++it)
     switch (*it) {
       case '&': add_escape("&amp;", it); break;
@@ -29,5 +31,6 @@ std::string mstch::html_escape(const std::string& str) {
       case '/': add_escape("&#x2F;", it); break;
       default: break;
     }
+
   return out + std::string{start, str.end()};
 }

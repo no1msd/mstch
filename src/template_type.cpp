@@ -18,32 +18,43 @@ void template_type::process_text(citer begin, citer end) {
     }
 }
 
-void template_type::tokenize(const std::string& tmplt) {
-  std::string o{"{{"}, c{"}}"};
-  citer beg = tmplt.begin();
-  for (unsigned long pos = 0; pos < tmplt.size();) {
-    auto to = tmplt.find(o, pos);
-    auto tc = tmplt.find(c, (to == std::string::npos)?to:(to + 1));
-    if (tc != std::string::npos && to != std::string::npos) {
-      if (*(beg + to + o.size()) == '{' && *(beg + tc + c.size()) == '}')
-        ++tc;
-      process_text(beg + pos, beg + to);
-      pos = tc + c.size();
-      tokens.push_back({{beg + to, beg + tc + c.size()}, o.size(), c.size()});
-      if (*(beg + to + o.size()) == '=' && *(beg + tc - 1) == '=') {
-        o = {beg + to + o.size() + 1, beg + tmplt.find(' ', to)};
-        c = {beg + tmplt.find(' ', to) + 1, beg + tc - 1};
+void template_type::tokenize(const std::string& tmp) {
+  std::string open{"{{"}, close{"}}"};
+  citer beg = tmp.begin();
+  auto npos = std::string::npos;
+
+  for (unsigned long cur_pos = 0; cur_pos < tmp.size();) {
+    auto open_pos = tmp.find(open, cur_pos);
+    auto close_pos = tmp.find(
+        close, (open_pos == npos) ? open_pos : (open_pos + 1));
+
+    if (close_pos != npos && open_pos != npos) {
+      if (*(beg + open_pos + open.size()) == '{' &&
+          *(beg + close_pos + close.size()) == '}')
+        ++close_pos;
+
+      process_text(beg + cur_pos, beg + open_pos);
+      cur_pos = close_pos + close.size();
+      tokens.push_back({{beg + open_pos, beg + close_pos + close.size()},
+          open.size(), close.size()});
+
+      if (*(beg + open_pos + open.size()) == '=' &&
+          *(beg + close_pos - 1) == '=')
+      {
+        open = {beg + open_pos + open.size() + 1, beg + tmp.find(' ',open_pos)};
+        close = {beg + tmp.find(' ', open_pos) + 1, beg + close_pos - 1};
       }
     } else {
-      process_text(beg + pos, tmplt.end());
-      pos = tc;
+      process_text(beg + cur_pos, tmp.end());
+      cur_pos = close_pos;
     }
   }
 }
 
 void template_type::strip_whitespace() {
-  auto lbegin = tokens.begin();
+  auto line_begin = tokens.begin();
   bool has_tag = false, non_space = false;
+
   for (auto it = tokens.begin(); it != tokens.end(); ++it) {
     auto type = (*it).token_type();
     if (type != token::type::text && type != token::type::variable &&
@@ -51,12 +62,15 @@ void template_type::strip_whitespace() {
       has_tag = true;
     else if (!(*it).ws_only())
       non_space = true;
+
     if ((*it).eol()) {
       if (has_tag && !non_space)
-        for (auto c = lbegin; it != c-1; c = (*c).ws_only()?tokens.erase(c):++c)
-          it = (*c).eol()?c-1:it;
+        for (auto cur = line_begin; it != cur - 1;
+            cur = (*cur).ws_only() ? tokens.erase(cur) : ++cur)
+          it = (*cur).eol() ? cur - 1 : it;
+
       non_space = has_tag = false;
-      lbegin = it + 1;
+      line_begin = it + 1;
     }
   }
 }

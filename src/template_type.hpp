@@ -20,7 +20,7 @@ class template_type {
   std::vector<token> tokens;
   void strip_whitespace();
   void process_text(citer beg, citer end);
-  void tokenize(const std::string& tmplt);
+  void tokenize(const std::string& tmp);
 };
 
 }

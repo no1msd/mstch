@@ -56,5 +56,5 @@ std::string render_context::render(const template_type& templt) {
 }
 
 std::string render_context::render_partial(const std::string& partial_name) {
-  return (partials.count(partial_name))?render(partials.at(partial_name)):"";
+  return (partials.count(partial_name)) ? render(partials.at(partial_name)) :"";
 }

@@ -35,6 +35,7 @@ inline std::string render_section::operator()(const lambda& fun) const {
   std::string section_str;
   for(auto& token: section)
     section_str += token.raw();
+
   return fun(section_str, [this](const std::string& str) {
     return render_context::push(ctx).render(template_type{str});
   });

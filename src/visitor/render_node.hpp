@@ -34,12 +34,12 @@ inline std::string render_node::operator()(const bool& value) const {
 
 template<>
 inline std::string render_node::operator()(const lambda& value) const {
-  return (m_flag == flag::escape_html)?html_escape(value()):value();
+  return (m_flag == flag::escape_html) ? html_escape(value()) : value();
 }
 
 template<>
 inline std::string render_node::operator()(const std::string& value) const {
-    return (m_flag == flag::escape_html)?html_escape(value):value;
+    return (m_flag == flag::escape_html) ? html_escape(value) : value;
 }
 
 }
