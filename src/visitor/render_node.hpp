@@ -19,35 +19,30 @@ class render_node: public boost::static_visitor<std::string> {
     return "";
   }
 
+  std::string operator()(const int& value) const {
+    return std::to_string(value);
+  }
+
+  std::string operator()(const double& value) const {
+    std::stringstream ss;
+    ss << value;
+    return ss.str();
+  }
+
+  std::string operator()(const bool& value) const {
+    return value ? "true" : "false";
+  }
+
+  std::string operator()(const lambda& value) const {
+    return (m_flag == flag::escape_html) ? html_escape(value()) : value();
+  }
+
+  std::string operator()(const std::string& value) const {
+    return (m_flag == flag::escape_html) ? html_escape(value) : value;
+  }
+
  private:
   flag m_flag;
 };
-
-template<>
-inline std::string render_node::operator()(const int& value) const {
-  return std::to_string(value);
-}
-
-template<>
-inline std::string render_node::operator()(const double& value) const {
-  std::stringstream ss;
-  ss << value;
-  return ss.str();
-}
-
-template<>
-inline std::string render_node::operator()(const bool& value) const {
-  return value?"true":"false";
-}
-
-template<>
-inline std::string render_node::operator()(const lambda& value) const {
-  return (m_flag == flag::escape_html) ? html_escape(value()) : value();
-}
-
-template<>
-inline std::string render_node::operator()(const std::string& value) const {
-    return (m_flag == flag::escape_html) ? html_escape(value) : value;
-}
 
 }

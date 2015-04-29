@@ -16,18 +16,16 @@ class has_token: public boost::static_visitor<bool> {
     return token == ".";
   }
 
+  bool operator()(const map& map) const {
+    return map.count(token) == 1;
+  }
+
+  bool operator()(const std::shared_ptr<object>& object) const {
+    return object->has(token);
+  }
+
  private:
   const std::string& token;
 };
-
-template<>
-inline bool has_token::operator()(const map& map) const {
-  return map.count(token) == 1;
-}
-
-template<>
-inline bool has_token::operator()(const std::shared_ptr<object>& object) const {
-  return object->has(token);
-}
 
 }

@@ -12,36 +12,30 @@ class is_node_empty: public boost::static_visitor<bool> {
   inline bool operator()(const T& t) const {
     return false;
   }
+
+  bool operator()(const std::nullptr_t& nul) const {
+    return true;
+  }
+
+  bool operator()(const int& value) const {
+    return value == 0;
+  }
+
+  bool operator()(const double& value) const {
+    return value == 0;
+  }
+
+  bool operator()(const bool& value) const {
+    return !value;
+  }
+
+  bool operator()(const std::string& value) const {
+    return value == "";
+  }
+
+  bool operator()(const array& array) const {
+    return array.size() == 0;
+  }
 };
-
-template<>
-inline bool is_node_empty::operator()(const std::nullptr_t& nul) const {
-  return true;
-}
-
-template<>
-inline bool is_node_empty::operator()(const int& value) const {
-  return value == 0;
-}
-
-template<>
-inline bool is_node_empty::operator()(const double& value) const {
-  return value == 0;
-}
-
-template<>
-inline bool is_node_empty::operator()(const bool& value) const {
-  return !value;
-}
-
-template<>
-inline bool is_node_empty::operator()(const std::string& value) const {
-  return value == "";
-}
-
-template<>
-inline bool is_node_empty::operator()(const array& array) const {
-  return array.size() == 0;
-}
 
 }

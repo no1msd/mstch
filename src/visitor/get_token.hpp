@@ -15,25 +15,21 @@ class get_token: public boost::static_visitor<const mstch::node&> {
   }
 
   template<class T>
-  inline const mstch::node& operator()(const T& t) const {
+  const mstch::node& operator()(const T& t) const {
     return node;
+  }
+
+  const mstch::node& operator()(const map& map) const {
+    return map.at(token);
+  }
+
+  const mstch::node& operator()(const std::shared_ptr<object>& object) const {
+    return object->at(token);
   }
 
  private:
   const std::string& token;
   const mstch::node& node;
 };
-
-template<>
-inline const mstch::node& get_token::operator()(const map& map) const {
-  return map.at(token);
-}
-
-template<>
-inline const mstch::node& get_token::operator()(
-    const std::shared_ptr<object>& object) const
-{
-  return object->at(token);
-}
 
 }
