@@ -17,7 +17,7 @@ public:
   }
 
   mstch::node vat() {
-    return static_cast<int>(m_value * 0.2);
+    return m_value * 0.2;
   }
 
   mstch::node currency() {

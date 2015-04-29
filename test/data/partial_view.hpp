@@ -1,6 +1,7 @@
 class partial_view: public mstch::object {
 private:
   int m_value;
+
 public:
     partial_view(): m_value{10000} {
     register_methods(this, {
@@ -30,7 +31,7 @@ public:
   }
 
   mstch::node taxed_value() {
-    return static_cast<int>(m_value - (m_value * 0.4));
+    return m_value - (m_value * 0.4);
   }
 
   mstch::node in_ca() {

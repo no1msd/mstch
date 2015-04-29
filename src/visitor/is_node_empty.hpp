@@ -25,6 +25,11 @@ inline bool is_node_empty::operator()(const int& value) const {
 }
 
 template<>
+inline bool is_node_empty::operator()(const double& value) const {
+  return value == 0;
+}
+
+template<>
 inline bool is_node_empty::operator()(const bool& value) const {
   return !value;
 }

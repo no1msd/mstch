@@ -1,5 +1,6 @@
 #pragma once
 
+#include <sstream>
 #include <boost/variant/static_visitor.hpp>
 
 #include "mstch/mstch.hpp"
@@ -25,6 +26,13 @@ class render_node: public boost::static_visitor<std::string> {
 template<>
 inline std::string render_node::operator()(const int& value) const {
   return std::to_string(value);
+}
+
+template<>
+inline std::string render_node::operator()(const double& value) const {
+  std::stringstream ss;
+  ss << value;
+  return ss.str();
 }
 
 template<>
