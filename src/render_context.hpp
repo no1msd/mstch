@@ -26,8 +26,10 @@ class render_context {
       const mstch::node& node,
       const std::map<std::string, template_type>& partials);
   const mstch::node& get_node(const std::string& token);
-  std::string render(const template_type& templt);
-  std::string render_partial(const std::string& partial_name);
+  std::string render(
+      const template_type& templt, const std::string& prefix = "");
+  std::string render_partial(
+      const std::string& partial_name, const std::string& prefix);
   template<class T, class... Args>
   void set_state(Args&& ... args) {
     state.top() = std::unique_ptr<render_state>(

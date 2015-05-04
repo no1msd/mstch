@@ -37,9 +37,10 @@ void template_type::tokenize(const std::string& tmp) {
       cur_pos = close_pos + close.size();
       tokens.push_back({{beg + open_pos, beg + close_pos + close.size()},
           open.size(), close.size()});
+
       if(cur_pos == tmp.size()) {
         tokens.push_back({{""}});
-        tokens.back().set_eol(true);
+        tokens.back().eol(true);
       }
 
       if (*(beg + open_pos + open.size()) == '=' &&
@@ -72,10 +73,16 @@ void template_type::strip_whitespace() {
       non_space = true;
 
     if ((*it).eol()) {
-      if (has_tag && !non_space)
+      if (has_tag && !non_space) {
+        for (auto cur = line_begin; !(*cur).eol(); ++cur)
+          if ((*cur).token_type() == token::type::partial &&
+              cur != line_begin && (*(cur - 1)).ws_only())
+            (*cur).partial_prefix((*(cur - 1)).raw());
+
         for (auto cur = line_begin; it != cur - 1;
              cur = (*cur).ws_only() ? tokens.erase(cur) : cur + 1)
           it = (*cur).eol() ? cur - 1 : it;
+      }
 
       non_space = has_tag = false;
       line_begin = it + 1;

@@ -48,13 +48,23 @@ const mstch::node& render_context::get_node(const std::string& token) {
   return find_node(token, nodes);
 }
 
-std::string render_context::render(const template_type& templt) {
+std::string render_context::render(
+    const template_type& templt, const std::string& prefix)
+{
   std::string output;
-  for (auto& token: templt)
+  bool prev_eol = true;
+  for (auto& token: templt) {
+    if (prev_eol && prefix.length() != 0)
+      output += state.top()->render(*this, {prefix});
     output += state.top()->render(*this, token);
+    prev_eol = token.eol();
+  }
   return output;
 }
 
-std::string render_context::render_partial(const std::string& partial_name) {
-  return partials.count(partial_name) ? render(partials.at(partial_name)) : "";
+std::string render_context::render_partial(
+    const std::string& partial_name, const std::string& prefix)
+{
+  return partials.count(partial_name) ?
+      render(partials.at(partial_name), prefix) : "";
 }

@@ -14,14 +14,19 @@ class token {
   type token_type() const { return m_type; };
   const std::string& raw() const { return m_raw; };
   const std::string& name() const { return m_name; };
+  const std::string& partial_prefix() const { return m_partial_prefix; };
+  void partial_prefix(const std::string& p_partial_prefix) {
+    m_partial_prefix = p_partial_prefix;
+  };
   bool eol() const { return m_eol; }
+  void eol(bool eol) { m_eol = eol; }
   bool ws_only() const { return m_ws_only; }
-  void set_eol(bool eol) { m_eol = eol; }
 
  private:
   type m_type;
   std::string m_name;
   std::string m_raw;
+  std::string m_partial_prefix;
   bool m_eol;
   bool m_ws_only;
   type token_info(char c);

@@ -24,7 +24,7 @@ std::string outside_section::render(
     case token::type::text:
       return token.raw();
     case token::type::partial:
-      return ctx.render_partial(token.name());
+      return ctx.render_partial(token.name(), token.partial_prefix());
     default:
       break;
   }
