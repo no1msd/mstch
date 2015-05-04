@@ -56,7 +56,9 @@ int main(int argc, char* argv[]) {
   if (vm.count("input-string"))
     for (auto& filename: vm["input-string"].as<std::vector<std::string>>()) {
       std::ifstream input(filename, std::ios::in);
-      wrap_string(input, output, boost::replace_all_copy(filename, ".", "_"));
+      std::string variable_name = boost::replace_all_copy(filename, ".", "_");
+      boost::replace_all(variable_name, "~", "");
+      wrap_string(input, output, variable_name);
       input.close();
     }
 

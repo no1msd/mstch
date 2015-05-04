@@ -5,6 +5,7 @@
 #include "mstch/mstch.hpp"
 #include "test_data.hpp"
 #include "specs_data.hpp"
+#include "specs_lambdas.hpp"
 
 using namespace mstchtest;
 
@@ -25,6 +26,9 @@ using namespace mstchtest;
     if(test.count("partials")) \
       for(auto& partial_item: get<mstch::map>(test["partials"])) \
         partials.insert(std::make_pair(partial_item.first, get<std::string>(partial_item.second))); \
+    for(auto& data_item: get<mstch::map>(test["data"])) \
+      if(data_item.first == "lambda") \
+        data_item.second = mstch::lambda{specs_lambdas[get<std::string>(test["name"])]}; \
     SECTION(get<std::string>(test["name"])) \
       REQUIRE(mstch::render( \
           get<std::string>(test["template"]), \
@@ -98,3 +102,4 @@ SPECS_TEST(interpolation)
 SPECS_TEST(inverted)
 SPECS_TEST(partials)
 SPECS_TEST(sections)
+SPECS_TEST(lambdas)

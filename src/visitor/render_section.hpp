@@ -29,9 +29,7 @@ class render_section: public boost::static_visitor<std::string> {
     for(auto& token: section)
       section_str += token.raw();
 
-    return fun(section_str, [this](const std::string& str) {
-      return render_context::push(ctx).render(template_type{str});
-    });
+    return render_context::push(ctx).render(template_type{fun(section_str)});
   }
 
   std::string operator()(const array& array) const {

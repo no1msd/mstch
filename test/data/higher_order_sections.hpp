@@ -19,8 +19,8 @@ class higher_order_sections: public mstch::object {
   }
 
   mstch::node bolder() {
-    return mstch::lambda{[this](const std::string& text, mstch::renderer render) {
-      return text + " => <b>" + render(text) + "</b> " + m_helper;
+    return mstch::lambda{[this](const std::string& text) {
+      return "<b>" + text + "</b> " + m_helper;
     }};
   }
 };

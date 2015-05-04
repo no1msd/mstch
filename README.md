@@ -4,7 +4,7 @@
 
 mstch is a complete implementation of [{{mustache}}](http://mustache.github.io/) 
 templates using modern C++. It's compliant with [specifications](https://github.com/mustache/spec)
-v1.1.2.
+v1.1.2, including the lambda module.
 
 [![Build Status](https://travis-ci.org/no1msd/mstch.svg?branch=master)](https://travis-ci.org/no1msd/mstch)
 
@@ -125,16 +125,15 @@ Output:
 Hello World!
 ```
 
-Or it accepts a `const std::string&` and a `mstch::renderer`. The first one is 
-passed the unrendered literal block, the second is a `std::function` that can be 
-called to render it:
+Or it accepts a `const std::string&` that gets the unrendered literal block.
+The returned string will be parsed in both cases:
 
 ```c++
 std::string view{"{{#bold}}{{yay}} :){{/bold}}"};
 mstch::map context{
   {"yay", std::string{"Yay!"}},
-  {"bold", mstch::lambda{[](const std::string& text, mstch::renderer render) {
-    return "<b>" + render(text) + "</b>";
+  {"bold", mstch::lambda{[](const std::string& text) {
+    return "<b>" + text + "</b>";
   }}}
 };
 

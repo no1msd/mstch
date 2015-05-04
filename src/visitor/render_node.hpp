@@ -3,6 +3,7 @@
 #include <sstream>
 #include <boost/variant/static_visitor.hpp>
 
+#include "render_context.hpp"
 #include "mstch/mstch.hpp"
 #include "utils.hpp"
 
@@ -11,7 +12,9 @@ namespace mstch {
 class render_node: public boost::static_visitor<std::string> {
  public:
   enum class flag { none, escape_html };
-  render_node(flag p_flag = flag::none): m_flag(p_flag) {
+  render_node(render_context& ctx, flag p_flag = flag::none):
+      ctx(ctx), m_flag(p_flag)
+  {
   }
 
   template<class T>
@@ -34,7 +37,8 @@ class render_node: public boost::static_visitor<std::string> {
   }
 
   std::string operator()(const lambda& value) const {
-    return (m_flag == flag::escape_html) ? html_escape(value()) : value();
+    auto rendered = render_context::push(ctx).render(template_type{value()});
+    return (m_flag == flag::escape_html) ? html_escape(rendered) : rendered;
   }
 
   std::string operator()(const std::string& value) const {
@@ -42,6 +46,7 @@ class render_node: public boost::static_visitor<std::string> {
   }
 
  private:
+  render_context& ctx;
   flag m_flag;
 };
 

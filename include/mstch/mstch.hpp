@@ -9,8 +9,6 @@
 
 namespace mstch {
 
-using renderer = std::function<std::string(const std::string&)>;
-
 namespace internal {
 
 template<class N>
@@ -47,7 +45,7 @@ class is_fun {
   template <typename C> static fun_without_args& test(
       really_has<std::string(C::*)() const, &C::operator()>*);
   template <typename C> static fun_with_args& test(
-      really_has<std::string(C::*)(const std::string&,renderer) const,
+      really_has<std::string(C::*)(const std::string&) const,
       &C::operator()>*);
   template <typename> static not_fun& test(...);
 
@@ -62,7 +60,7 @@ class lambda {
  public:
   template<class F>
   lambda(F f, typename std::enable_if<internal::is_fun<F>::no_args>::type* =0):
-      fun([f](const std::string&,renderer){return f();})
+      fun([f](const std::string&){return f();})
   {
   }
 
@@ -72,15 +70,12 @@ class lambda {
   {
   }
 
-  std::string operator()(
-      const std::string& text = "",
-      renderer renderer = [](const std::string&){ return "";}) const
-  {
-    return fun(text, renderer);
+  std::string operator()(const std::string& text = "") const {
+    return fun(text);
   }
 
  private:
-  std::function<std::string(const std::string&, renderer)> fun;
+  std::function<std::string(const std::string&)> fun;
 };
 
 using node = boost::make_recursive_variant<
