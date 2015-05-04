@@ -1,8 +1,10 @@
 #define CATCH_CONFIG_MAIN
 
 #include "catch.hpp"
+#include "json.hpp"
 #include "mstch/mstch.hpp"
 #include "test_data.hpp"
+#include "specs_data.hpp"
 
 using namespace mstchtest;
 
@@ -12,6 +14,23 @@ using namespace mstchtest;
 
 #define MSTCH_TEST(x) TEST_CASE(#x) { \
   REQUIRE(x ## _txt == mstch::render(x ## _mustache, x ## _data)); \
+}
+
+#define SPECS_TEST(x) TEST_CASE("specs_" #x) { \
+  using boost::get; \
+  auto data = json::parse<mstch::node,mstch::map,mstch::array>(x ## _json); \
+  for(auto& test_item: get<mstch::array>(get<mstch::map>(data)["tests"])) {\
+    auto test = get<mstch::map>(test_item); \
+    std::map<std::string,std::string> partials; \
+    if(test.count("partials")) \
+      for(auto& partial_item: get<mstch::map>(test["partials"])) \
+        partials.insert(std::make_pair(partial_item.first, get<std::string>(partial_item.second))); \
+    SECTION(get<std::string>(test["name"])) \
+      REQUIRE(mstch::render( \
+          get<std::string>(test["template"]), \
+          test["data"], partials) == \
+          get<std::string>(test["expected"])); \
+  } \
 }
 
 MSTCH_TEST(ampersand_escape)
@@ -72,3 +91,10 @@ MSTCH_TEST(two_sections)
 MSTCH_TEST(unescaped)
 MSTCH_TEST(whitespace)
 MSTCH_TEST(zero_view)
+
+SPECS_TEST(comments)
+SPECS_TEST(delimiters)
+SPECS_TEST(interpolation)
+SPECS_TEST(inverted)
+SPECS_TEST(partials)
+SPECS_TEST(sections)

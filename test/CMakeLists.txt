@@ -41,9 +41,27 @@ add_custom_command(
 set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/test_data.hpp PROPERTIES GENERATED TRUE)
 add_custom_target(test_data_hpp DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/test_data.hpp)
 
+file(GLOB specs_files RELATIVE
+  "${CMAKE_SOURCE_DIR}/test/specs"
+  "${CMAKE_SOURCE_DIR}/test/specs/*.json")
+
+foreach(specs_file ${specs_files})
+  list(APPEND specsargs "-S${specs_file}")
+  string(REGEX REPLACE "\\.json" "" test_name "${specs_file}")
+  list(APPEND tests "specs_${test_name}")
+endforeach(specs_file)
+
+add_custom_command(
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/specs_data.hpp
+  COMMAND ${headerize_exe} --output ${CMAKE_CURRENT_BINARY_DIR}/specs_data.hpp --namespace mstchtest ${specsargs}
+  DEPENDS ${headerize_exe}
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/test/specs/)
+set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/specs_data.hpp PROPERTIES GENERATED TRUE)
+add_custom_target(specs_data_hpp DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/specs_data.hpp)
+
 add_executable(mstch_test test_main.cpp)
 target_link_libraries(mstch_test mstch)
-add_dependencies(mstch_test test_data_hpp)
+add_dependencies(mstch_test test_data_hpp specs_data_hpp)
 
 foreach(test ${tests})
   add_test(NAME ${test} COMMAND mstch_test ${test})
