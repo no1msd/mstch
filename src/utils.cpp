@@ -12,6 +12,10 @@ mstch::citer mstch::first_not_ws(mstch::criter begin, mstch::criter end) {
   return --(end.base());
 }
 
+mstch::criter mstch::reverse(mstch::citer it) {
+  return std::reverse_iterator<mstch::citer>(it);
+}
+
 std::string mstch::html_escape(const std::string& str) {
   std::string out;
   citer start = str.begin();

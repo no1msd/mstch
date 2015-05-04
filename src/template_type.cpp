@@ -18,6 +18,8 @@ void template_type::process_text(citer begin, citer end) {
     }
 }
 
+#include <iostream>
+
 void template_type::tokenize(const std::string& tmp) {
   std::string open{"{{"}, close{"}}"};
   citer beg = tmp.begin();
@@ -41,8 +43,12 @@ void template_type::tokenize(const std::string& tmp) {
       if (*(beg + open_pos + open.size()) == '=' &&
           *(beg + close_pos - 1) == '=')
       {
-        open = {beg + open_pos + open.size() + 1, beg + tmp.find(' ',open_pos)};
-        close = {beg + tmp.find(' ', open_pos) + 1, beg + close_pos - 1};
+        auto tok_beg = beg + open_pos + open.size() + 1;
+        auto tok_end = beg + close_pos - 1;
+        auto front_skip = first_not_ws(tok_beg, tok_end);
+        auto back_skip = first_not_ws(reverse(tok_end), reverse(tok_beg));
+        open = {front_skip, beg + tmp.find(' ', front_skip - beg)};
+        close = {beg + tmp.rfind(' ', back_skip - beg) + 1, back_skip + 1};
       }
     } else {
       process_text(beg + cur_pos, tmp.end());
