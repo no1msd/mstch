@@ -18,8 +18,6 @@ void template_type::process_text(citer begin, citer end) {
     }
 }
 
-#include <iostream>
-
 void template_type::tokenize(const std::string& tmp) {
   std::string open{"{{"}, close{"}}"};
   citer beg = tmp.begin();
