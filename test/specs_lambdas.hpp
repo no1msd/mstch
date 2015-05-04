@@ -5,9 +5,6 @@ std::map<std::string,std::function<std::string(const std::string&)>> specs_lambd
     {"Interpolation - Expansion", [](const std::string&) {
       return "{{planet}}";
     }},
-    {"Interpolation - Alternate Delimiters", [](const std::string&) {
-      return "|planet| => {{planet}}";
-    }},
     {"Interpolation - Multiple Calls", [](const std::string&) {
       static int calls = 0; return std::to_string(++calls);
     }},
@@ -19,9 +16,6 @@ std::map<std::string,std::function<std::string(const std::string&)>> specs_lambd
     }},
     {"Section - Expansion", [](const std::string& txt) {
       return txt + "{{planet}}" + txt;
-    }},
-    {"Section - Alternate Delimiters", [](const std::string& txt) {
-      return txt + "{{planet}} => |planet|" + txt;
     }},
     {"Section - Multiple Calls", [](const std::string& txt) {
       return "__" + txt + "__";
