@@ -3,7 +3,8 @@
 ![mstch logo](http://i.imgur.com/MRyStO5.png)
 
 mstch is a complete implementation of [{{mustache}}](http://mustache.github.io/) 
-templates using modern C++.
+templates using modern C++. It's compliant with [specifications](https://github.com/mustache/spec)
+v1.1.2.
 
 [![Build Status](https://travis-ci.org/no1msd/mstch.svg?branch=master)](https://travis-ci.org/no1msd/mstch)
 
@@ -11,7 +12,7 @@ templates using modern C++.
 
 mstch supports the complete feature set described in the `mustache(5)` [manpage](http://mustache.github.com/mustache.5.html):
 
- - JSON-like data structure using [Boost.Variant](http://www.boost.org/doc/libs/1_57_0/doc/html/variant.html)
+ - JSON-like data structure using [Boost.Variant](http://www.boost.org/libs/variant)
  - variables, sections, inverted sections
  - partials
  - changing the delimiter
@@ -195,7 +196,7 @@ Output:
  - A C++ compiler with decent C++11 support. Currently tested with:
    - GCC 4.7, 4.8, 4.9
    - clang 3.4.2, 3.5
- - Boost 1.54+ for [Boost.Variant](http://www.boost.org/doc/libs/1_57_0/doc/html/variant.html)
+ - Boost 1.54+ for [Boost.Variant](http://www.boost.org/libs/variant)
  - CMake 2.8+ for building
 
 ## Installing
@@ -213,8 +214,8 @@ From the root of the source tree:
 ## Running the unit tests
 
 Unit tests are using the [Catch](https://github.com/philsquared/Catch) framework, 
-included in the repository. [Boost.Program_Options](http://www.boost.org/doc/libs/1_58_0/doc/html/program_options.html) 
-and [The Boost Algorithm Library](http://www.boost.org/doc/libs/1_57_0/libs/algorithm/doc/html/index.html)
+included in the repository. [Boost.Program_Options](http://www.boost.org/libs/program_options) 
+[Boost.Spirit](http://www.boost.org/libs/spirit), and [The Boost Algorithm Library](http://www.boost.org/libs/algorithm)
 are also required to build them.
 
 ```bash
