@@ -16,6 +16,7 @@ class token {
   const std::string& name() const { return m_name; };
   bool eol() const { return m_eol; }
   bool ws_only() const { return m_ws_only; }
+  void set_eol(bool eol) { m_eol = eol; }
 
  private:
   type m_type;
