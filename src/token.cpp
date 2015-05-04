@@ -35,6 +35,6 @@ token::token(const std::string& str, std::size_t left, std::size_t right):
   } else {
     m_type = type::text;
     m_eol = (str.size() > 0 && str[str.size() - 1] == '\n');
-    m_ws_only = (str.find_first_not_of(" \n\t") == std::string::npos);
+    m_ws_only = (str.find_first_not_of(" \r\n\t") == std::string::npos);
   }
 }
