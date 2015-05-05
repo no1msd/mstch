@@ -6,6 +6,8 @@ mstch is a complete implementation of [{{mustache}}](http://mustache.github.io/)
 templates using modern C++. It's compliant with [specifications](https://github.com/mustache/spec)
 v1.1.2, including the lambda module.
 
+It works great with [json.hpp](https://github.com/no1msd/json.hpp).
+
 [![Build Status](https://travis-ci.org/no1msd/mstch.svg?branch=master)](https://travis-ci.org/no1msd/mstch)
 
 ## Supported features
