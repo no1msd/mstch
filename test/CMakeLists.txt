@@ -42,8 +42,8 @@ set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/test_data.hpp PROPERTIES
 add_custom_target(test_data_hpp DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/test_data.hpp)
 
 file(GLOB specs_files RELATIVE
-  "${CMAKE_SOURCE_DIR}/test/specs"
-  "${CMAKE_SOURCE_DIR}/test/specs/*.json")
+  "${CMAKE_SOURCE_DIR}/vendor/spec/specs"
+  "${CMAKE_SOURCE_DIR}/vendor/spec/specs/*.json")
 
 foreach(specs_file ${specs_files})
   list(APPEND specsargs "-S${specs_file}")
@@ -55,7 +55,7 @@ add_custom_command(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/specs_data.hpp
   COMMAND ${headerize_exe} --output ${CMAKE_CURRENT_BINARY_DIR}/specs_data.hpp --namespace mstchtest ${specsargs}
   DEPENDS ${headerize_exe}
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/test/specs/)
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/vendor/spec/specs/)
 set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/specs_data.hpp PROPERTIES GENERATED TRUE)
 add_custom_target(specs_data_hpp DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/specs_data.hpp)
 

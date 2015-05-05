@@ -5,5 +5,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O3")
 add_subdirectory(src)
 if(WITH_UNIT_TESTS)
   enable_testing()
+  include_directories(
+    vendor/Catch/single_include
+    vendor/json.hpp/include)
   add_subdirectory(test)
 endif()
