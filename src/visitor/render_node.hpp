@@ -37,7 +37,10 @@ class render_node: public boost::static_visitor<std::string> {
   }
 
   std::string operator()(const lambda& value) const {
-    auto rendered = render_context::push(ctx).render(template_type{value()});
+    template_type interpreted{value([this](const mstch::node& n) {
+      return visit(render_node(ctx), n);
+    })};
+    auto rendered = render_context::push(ctx).render(interpreted);
     return (m_flag == flag::escape_html) ? html_escape(rendered) : rendered;
   }
 

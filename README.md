@@ -103,15 +103,17 @@ Output:
 
 C++11 lambda expressions can be used to add logic to your templates. Like a
 `const char*` literal, lambdas can be implicitly converted to `bool`, so they
-must be wrapped in a `mstch::lambda` object when used in a `mstch::node`.
+must be wrapped in a `mstch::lambda` object when used in a `mstch::node`. The 
+lambda expression passed to `mstch::lambda` must itself return a `mstch::node`.
+The returned node will be rendered to a string, then it will be parsed as a
+template.
 
-The lambda expression passed to `mstch::lambda` returns a `std::string` and 
-accepts either no parameters:
+The lambda expression accepts either no parameters:
 
 ```c++
 std::string view{"Hello {{lambda}}!"};
 mstch::map context{
-  {"lambda", mstch::lambda{[]() {
+  {"lambda", mstch::lambda{[]() -> mstch::node {
     return std::string{"World"};
   }}}
 };
@@ -125,14 +127,13 @@ Output:
 Hello World!
 ```
 
-Or it accepts a `const std::string&` that gets the unrendered literal block.
-The returned string will be parsed in both cases:
+Or it accepts a `const std::string&` that gets the unrendered literal block:
 
 ```c++
 std::string view{"{{#bold}}{{yay}} :){{/bold}}"};
 mstch::map context{
   {"yay", std::string{"Yay!"}},
-  {"bold", mstch::lambda{[](const std::string& text) {
+  {"bold", mstch::lambda{[](const std::string& text) -> mstch::node {
     return "<b>" + text + "</b>";
   }}}
 };

@@ -5,6 +5,7 @@
 #include "render_context.hpp"
 #include "mstch/mstch.hpp"
 #include "utils.hpp"
+#include "render_node.hpp"
 
 namespace mstch {
 
@@ -28,8 +29,10 @@ class render_section: public boost::static_visitor<std::string> {
     std::string section_str;
     for(auto& token: section)
       section_str += token.raw();
-
-    return render_context::push(ctx).render(template_type{fun(section_str)});
+    template_type interpreted{fun([this](const mstch::node& n) {
+      return visit(render_node(ctx), n);
+    }, section_str)};
+    return render_context::push(ctx).render(interpreted);
   }
 
   std::string operator()(const array& array) const {

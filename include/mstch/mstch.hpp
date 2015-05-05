@@ -35,7 +35,7 @@ class object_t {
   mutable std::map<std::string, N> cache;
 };
 
-template <typename T>
+template<class T, class N>
 class is_fun {
  private:
   using not_fun = char;
@@ -43,9 +43,9 @@ class is_fun {
   using fun_with_args = char[3];
   template <typename U, U> struct really_has;
   template <typename C> static fun_without_args& test(
-      really_has<std::string(C::*)() const, &C::operator()>*);
+      really_has<N(C::*)() const, &C::operator()>*);
   template <typename C> static fun_with_args& test(
-      really_has<std::string(C::*)(const std::string&) const,
+      really_has<N(C::*)(const std::string&) const,
       &C::operator()>*);
   template <typename> static not_fun& test(...);
 
@@ -54,36 +54,48 @@ class is_fun {
   static bool const has_args = sizeof(test<T>(0)) == sizeof(fun_with_args);
 };
 
-}
+template<class N>
+using node_renderer = std::function<std::string(const N& n)>;
 
-class lambda {
+template<class N>
+class lambda_t {
  public:
   template<class F>
-  lambda(F f, typename std::enable_if<internal::is_fun<F>::no_args>::type* =0):
-      fun([f](const std::string&){return f();})
+  lambda_t(F f, typename std::enable_if<is_fun<F, N>::no_args>::type* = 0):
+      fun([f](node_renderer<N> renderer, const std::string&) {
+        return renderer(f());
+      })
   {
   }
 
   template<class F>
-  lambda(F f, typename std::enable_if<internal::is_fun<F>::has_args>::type* =0):
-      fun(f)
+  lambda_t(F f, typename std::enable_if<is_fun<F, N>::has_args>::type* = 0):
+      fun([f](node_renderer<N> renderer, const std::string& text) {
+        return renderer(f(text));
+      })
   {
   }
 
-  std::string operator()(const std::string& text = "") const {
-    return fun(text);
+  std::string operator()(node_renderer<N> renderer,
+      const std::string& text = "") const
+  {
+    return fun(renderer, text);
   }
 
  private:
-  std::function<std::string(const std::string&)> fun;
+  std::function<std::string(node_renderer<N> renderer, const std::string&)> fun;
 };
 
+}
+
 using node = boost::make_recursive_variant<
-    std::nullptr_t, std::string, int, double, bool, lambda,
+    std::nullptr_t, std::string, int, double, bool,
+    internal::lambda_t<boost::recursive_variant_>,
     std::shared_ptr<internal::object_t<boost::recursive_variant_>>,
     std::map<const std::string, boost::recursive_variant_>,
     std::vector<boost::recursive_variant_>>::type;
 using object = internal::object_t<node>;
+using lambda = internal::lambda_t<node>;
 using map = std::map<const std::string, node>;
 using array = std::vector<node>;
 
