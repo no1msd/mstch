@@ -217,6 +217,15 @@ included in the repository. [Boost.Program_Options](http://www.boost.org/libs/pr
 [Boost.Spirit](http://www.boost.org/libs/spirit), and [The Boost Algorithm Library](http://www.boost.org/libs/algorithm)
 are also required to build them.
 
+Don't forget to initialize submodules:
+
+```bash
+ $ git submodule init
+ $ git submodule update
+```
+
+To build and run the unit tests:
+
 ```bash
  $ mkdir build
  $ cd build
