@@ -1,0 +1,3 @@
+[submodule "vendor/json.hpp"]
+	path = vendor/json.hpp
+	url = https://github.com/no1msd/json.hpp.git
