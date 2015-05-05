@@ -4,3 +4,6 @@
 [submodule "vendor/Catch"]
 	path = vendor/Catch
 	url = https://github.com/philsquared/Catch.git
+[submodule "vendor/spec"]
+	path = vendor/spec
+	url = https://github.com/mustache/spec.git
