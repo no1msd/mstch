@@ -216,7 +216,7 @@ From the root of the source tree:
 ## Running the unit tests
 
 Unit tests are using the [Catch](https://github.com/philsquared/Catch) framework, 
-included in the repository. [Boost.Program_Options](http://www.boost.org/libs/program_options) 
+included in the repository. [Boost.Program_Options](http://www.boost.org/libs/program_options), 
 [Boost.Spirit](http://www.boost.org/libs/spirit), and [The Boost Algorithm Library](http://www.boost.org/libs/algorithm)
 are also required to build them.
 
