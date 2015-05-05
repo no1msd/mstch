@@ -20,7 +20,7 @@ class render_section: public boost::static_visitor<std::string> {
   }
 
   template<class T>
-  inline std::string operator()(const T& t) const {
+  std::string operator()(const T& t) const {
     return render_context::push(ctx, t).render(section);
   }
 

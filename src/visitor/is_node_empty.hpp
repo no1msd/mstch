@@ -9,7 +9,7 @@ namespace mstch {
 class is_node_empty: public boost::static_visitor<bool> {
  public:
   template<class T>
-  inline bool operator()(const T& t) const {
+  bool operator()(const T& t) const {
     return false;
   }
 

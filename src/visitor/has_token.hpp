@@ -12,7 +12,7 @@ class has_token: public boost::static_visitor<bool> {
   }
 
   template<class T>
-  inline bool operator()(const T& t) const {
+  bool operator()(const T& t) const {
     return token == ".";
   }
 

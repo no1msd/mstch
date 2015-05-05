@@ -21,6 +21,7 @@ class template_type {
   void strip_whitespace();
   void process_text(citer beg, citer end);
   void tokenize(const std::string& tmp);
+  void store_prefixes(std::vector<token>::iterator beg);
 };
 
 }

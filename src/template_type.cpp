@@ -74,10 +74,7 @@ void template_type::strip_whitespace() {
 
     if ((*it).eol()) {
       if (has_tag && !non_space) {
-        for (auto cur = line_begin; !(*cur).eol(); ++cur)
-          if ((*cur).token_type() == token::type::partial &&
-              cur != line_begin && (*(cur - 1)).ws_only())
-            (*cur).partial_prefix((*(cur - 1)).raw());
+        store_prefixes(line_begin);
 
         for (auto cur = line_begin; it != cur - 1;
              cur = (*cur).ws_only() ? tokens.erase(cur) : cur + 1)
@@ -88,4 +85,11 @@ void template_type::strip_whitespace() {
       line_begin = it + 1;
     }
   }
+}
+
+void template_type::store_prefixes(std::vector<token>::iterator beg) {
+  for (auto cur = beg; !(*cur).eol(); ++cur)
+    if ((*cur).token_type() == token::type::partial &&
+        cur != beg && (*(cur - 1)).ws_only())
+      (*cur).partial_prefix((*(cur - 1)).raw());
 }
