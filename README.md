@@ -8,6 +8,7 @@ v1.1.2, including the lambda module.
 
 It works great with [json.hpp](https://github.com/no1msd/json.hpp).
 
+[![GitHub version](https://badge.fury.io/gh/no1msd%2Fmstch.svg)](http://badge.fury.io/gh/no1msd%2Fmstch)
 [![Build Status](https://travis-ci.org/no1msd/mstch.svg?branch=master)](https://travis-ci.org/no1msd/mstch)
 
 ## Supported features
