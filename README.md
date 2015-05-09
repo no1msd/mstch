@@ -63,7 +63,7 @@ using map = std::map<const std::string, node>;
 using array = std::vector<node>;
 ```
 
-`mstch::node` is a `boost::variant` that can hold a `std::string`, `int`, 
+`mstch::node` is a `boost::variant` that can hold a `std::string`, `int`, `double`,
 `bool`, lambda expression or a `std::shared_ptr` to a `mstch::object` 
 (see below), also a map or an array recursively. Essentially it works just like 
 a JSON object.
