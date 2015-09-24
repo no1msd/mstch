@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 project(mstch)
 option (WITH_UNIT_TESTS "enable building unit test executable" OFF)
 
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_BUILD_TYPE Release)
 
 if(NOT MSVC)

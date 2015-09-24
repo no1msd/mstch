@@ -1,9 +1,7 @@
 find_package(Boost 1.54 COMPONENTS program_options REQUIRED)
 
 include_directories(
-  ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_SOURCE_DIR}/include
-  ${CMAKE_CURRENT_SOURCE_DIR}
   ${Boost_INCLUDE_DIR})
 
 add_executable(benchmark benchmark_main.cpp)
