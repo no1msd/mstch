@@ -3,9 +3,9 @@
 #include <chrono>
 #include <iostream>
 
-unsigned long current_msec() {
-  return std::chrono::system_clock::now().time_since_epoch() /
-      std::chrono::milliseconds(1);
+unsigned long long current_msec() {
+  return std::chrono::time_point_cast<std::chrono::milliseconds>(
+      std::chrono::system_clock::now()).time_since_epoch().count();
 }
 
 int main() {
@@ -25,7 +25,7 @@ int main() {
       }}
   };
 
-  std::vector<unsigned long> times;
+  std::vector<unsigned long long> times;
   for (int j = 0; j < 10; j++) {
     auto start = current_msec();
     for (int i = 0; i < 5000; i++)

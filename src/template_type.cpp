@@ -23,7 +23,7 @@ void template_type::tokenize(const std::string& tmp) {
   citer beg = tmp.begin();
   auto npos = std::string::npos;
 
-  for (unsigned long cur_pos = 0; cur_pos < tmp.size();) {
+  for (unsigned long long cur_pos = 0; cur_pos < tmp.size();) {
     auto open_pos = tmp.find(open, cur_pos);
     auto close_pos = tmp.find(
         close, open_pos == npos ? open_pos : open_pos + 1);

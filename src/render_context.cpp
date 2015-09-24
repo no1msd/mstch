@@ -25,7 +25,7 @@ std::string render_context::push::render(const template_type& templt) {
 render_context::render_context(
     const mstch::node& node,
     const std::map<std::string, template_type>& partials):
-    partials{partials}, nodes{node}
+    partials(partials), nodes(1, node)
 {
   state.push(std::unique_ptr<render_state>(new outside_section));
 }

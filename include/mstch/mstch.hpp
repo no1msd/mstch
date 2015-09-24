@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include <memory>
+#include <functional>
 
 #include <boost/variant.hpp>
 
@@ -20,7 +21,7 @@ class object_t {
   }
 
   bool has(const std::string name) const {
-    return methods.count(name);
+    return methods.count(name) != 0;
   }
 
  protected:
