@@ -17,6 +17,7 @@ before_install:
  - ./configure
  - make
  - sudo make install
+ - cd ..
 
 before_script:
  - export CXX=${COMPILER}
