@@ -201,7 +201,7 @@ Output:
    - clang 3.4.2, 3.5
    - MSVC 2013
  - Boost 1.54+ for [Boost.Variant](http://www.boost.org/libs/variant)
- - CMake 2.8+ for building
+ - CMake 3.0+ for building
 
 ## Installing
 
