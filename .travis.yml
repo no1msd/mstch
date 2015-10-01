@@ -3,14 +3,30 @@ language: cpp
 env:
   matrix:
     - COMPILER=g++-4.9
+      COMPILER_PACKAGE=g++-4.9
+
     - COMPILER=g++-4.8
+      COMPILER_PACKAGE=g++-4.9
+
     - COMPILER=g++-4.7
+      COMPILER_PACKAGE=g++-4.9
+
+    - COMPILER=clang++-3.4
+      COMPILER_PACKAGE=clang-3.4
+
+    - COMPILER=clang++-3.5
+      COMPILER_PACKAGE=clang-3.5
+
+    - COMPILER=clang++-3.6
+      COMPILER_PACKAGE=clang-3.6
 
 before_install:
  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
  - sudo add-apt-repository ppa:boost-latest/ppa -y
+ - sudo add-apt-repository ppa:h-rayflood/llvm -y
  - sudo apt-get update -qq
- - sudo apt-get install -qq libboost1.54-dev libboost-program-options1.54-dev build-essential ${COMPILER}
+ - sudo apt-get install -qq libboost1.54-dev libboost-program-options1.54-dev build-essential ${COMPILER_PACKAGE}
+ - ${COMPILER} --version
  - wget http://www.cmake.org/files/v3.2/cmake-3.2.2.tar.gz
  - tar xf cmake-3.2.2.tar.gz
  - cd cmake-3.2.2
