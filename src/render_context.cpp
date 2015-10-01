@@ -32,20 +32,23 @@ render_context::render_context(
 
 const mstch::node& render_context::find_node(
     const std::string& token,
-    const std::deque<node>& current_nodes)
+    std::deque<node const*> current_nodes)
 {
   if (token != "." && token.find('.') != std::string::npos)
     return find_node(token.substr(token.rfind('.') + 1),
-        {find_node(token.substr(0, token.rfind('.')), current_nodes)});
+        {&find_node(token.substr(0, token.rfind('.')), current_nodes)});
   else
     for (auto& node: current_nodes)
-      if (visit(has_token(token), node))
-        return visit(get_token(token, node), node);
+      if (visit(has_token(token), *node))
+        return visit(get_token(token, *node), *node);
   return null_node;
 }
 
 const mstch::node& render_context::get_node(const std::string& token) {
-  return find_node(token, nodes);
+    std::deque<node const*> current_nodes;
+    for (auto& node: nodes)
+        current_nodes.push_back(&node);
+    return find_node(token, current_nodes);
 }
 
 std::string render_context::render(
