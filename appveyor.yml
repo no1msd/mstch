@@ -1,0 +1,10 @@
+environment:
+  matrix:
+    - GENERATOR: "Visual Studio 12"
+      CONFIG: Debug
+
+build_script:
+  - mkdir build
+  - cd build
+  - cmake "-G%GENERATOR%" ..
+  - cmake --build . --config "%CONFIG%"
