@@ -3,9 +3,9 @@ private:
   int m_value;
 public:
   simple():
-    m_value{10000}
+    m_value(10000)
   {
-    register_methods(this, {
+    register_methods(this, std::map<std::string,mstch::node(simple::*)()>{
       {"name", &simple::name},
       {"value", &simple::value},
       {"taxed_value", &simple::taxed_value},

@@ -2,8 +2,8 @@ class partial_whitespace: public mstch::object {
 private:
   int m_value;
 public:
-  partial_whitespace(): m_value{10000} {
-    register_methods(this, {
+  partial_whitespace(): m_value(10000) {
+    register_methods(this, std::map<std::string,mstch::node(partial_whitespace::*)()>{
       {"greeting", &partial_whitespace::greeting},
       {"farewell", &partial_whitespace::farewell},
       {"name", &partial_whitespace::name},

@@ -3,8 +3,8 @@ private:
   int m_value;
 
 public:
-    partial_view(): m_value{10000} {
-    register_methods(this, {
+    partial_view(): m_value(10000) {
+    register_methods(this, std::map<std::string,mstch::node(partial_view::*)()>{
       {"greeting", &partial_view::greeting},
       {"farewell", &partial_view::farewell},
       {"name", &partial_view::name},

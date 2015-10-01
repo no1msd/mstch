@@ -5,9 +5,9 @@ private:
   std::string m_url;
 public:
   complex_item(const std::string& name, bool current, const std::string& url):
-      m_name{name}, m_current{current}, m_url{url}
+      m_name(name), m_current(current), m_url(url)
   {
-    register_methods(this, {
+    register_methods(this, std::map<std::string,mstch::node(complex_item::*)()>{
       {"name", &complex_item::name}, {"current", &complex_item::current},
       {"url", &complex_item::url},   {"link", &complex_item::link}
     });
@@ -36,14 +36,14 @@ private:
   mstch::array m_item;
 public:
   complex():
-      m_header{"Colors"},
-      m_item{
+      m_header("Colors"),
+      m_item(mstch::array{
         std::make_shared<complex_item>("red", true, "#Red"),
         std::make_shared<complex_item>("green", false, "#Green"),
         std::make_shared<complex_item>("blue", false, "#Blue")
-      }
+      })
   {
-    register_methods(this, {
+    register_methods(this, std::map<std::string,mstch::node(complex::*)()>{
       {"header", &complex::header}, {"item", &complex::item},
       {"list", &complex::list}, {"empty", &complex::empty}
     });

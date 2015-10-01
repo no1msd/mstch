@@ -2,8 +2,8 @@ class higher_order_sections: public mstch::object {
  private:
   std::string m_helper;
  public:
-  higher_order_sections(): m_helper{"To tinker?"} {
-    register_methods(this, {
+  higher_order_sections(): m_helper("To tinker?") {
+    register_methods(this, std::map<std::string,mstch::node(higher_order_sections::*)()>{
         {"name", &higher_order_sections::name},
         {"helper", &higher_order_sections::helper},
         {"bolder", &higher_order_sections::bolder}
