@@ -1,10 +1,14 @@
 environment:
   matrix:
-    - GENERATOR: "Visual Studio 12 2013"
-      CONFIG: Release
+    #- GENERATOR: "Visual Studio 12 2013"
+    #  CONFIG: Release
+    #  BOOST_ROOT: "C:\Libraries\boost"
+    #  BOOST_LIBRARYDIR: "c:\Libraries\boost\stage\lib"
 
     - GENERATOR: "Visual Studio 14 2015"
       CONFIG: Release
+      BOOST_ROOT: "C:\Libraries\boost_1_59_0"
+      BOOST_LIBRARYDIR: "c:\Libraries\boost_1_59_0\stage\lib"
 
 install:
   - git submodule init
@@ -13,7 +17,7 @@ install:
 build_script:
   - mkdir build
   - cd build
-  - cmake "-G%GENERATOR%" -DBOOST_ROOT="C:\Libraries\boost" -DBOOST_LIBRARYDIR="c:\Libraries\boost\stage\lib" -DBoost_USE_STATIC_LIBS=ON -DWITH_UNIT_TESTS=ON ..
+  - cmake "-G%GENERATOR%" -DBOOST_ROOT="%BOOST_ROOT%" -DBOOST_LIBRARYDIR="%BOOST_LIBRARYDIR%" -DBoost_USE_STATIC_LIBS=ON -DWITH_UNIT_TESTS=ON ..
   - cmake --build . --config "%CONFIG%"
 
 test_script:
