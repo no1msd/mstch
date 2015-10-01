@@ -1,10 +1,5 @@
 environment:
   matrix:
-    #- GENERATOR: "Visual Studio 12 2013"
-    #  CONFIG: Release
-    #  BOOST_ROOT: "C:\Libraries\boost"
-    #  BOOST_LIBRARYDIR: "c:\Libraries\boost\stage\lib"
-
     - GENERATOR: "Visual Studio 14 2015"
       CONFIG: Release
       BOOST_ROOT: "C:\Libraries\boost_1_59_0"
