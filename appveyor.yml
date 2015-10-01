@@ -12,3 +12,6 @@ build_script:
   - cd build
   - cmake "-G%GENERATOR%" -DBOOST_ROOT="C:\Libraries\boost" -DBOOST_LIBRARYDIR="c:\Libraries\boost\stage\lib" -DBoost_USE_STATIC_LIBS=ON -DWITH_UNIT_TESTS=ON ..
   - cmake --build . --config "%CONFIG%"
+
+test_script:
+  - ctest
