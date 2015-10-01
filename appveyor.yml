@@ -1,7 +1,7 @@
 environment:
   matrix:
     - GENERATOR: "Visual Studio 12"
-      CONFIG: Debug
+      CONFIG: Release
 
 install:
   - git submodule init
