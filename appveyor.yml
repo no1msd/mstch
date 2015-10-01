@@ -2,8 +2,8 @@ environment:
   matrix:
     - GENERATOR: "Visual Studio 14 2015"
       CONFIG: Release
-      BOOST_ROOT: "C:\Libraries\boost_1_59_0"
-      BOOST_LIBRARYDIR: "C:\Libraries\boost_1_59_0\stage\lib"
+      BOOST_ROOT: "C:\\Libraries\\boost_1_59_0"
+      BOOST_LIBRARYDIR: "C:\\Libraries\\boost_1_59_0\\stage\\lib"
 
 install:
   - git submodule init
