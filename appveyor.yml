@@ -6,5 +6,5 @@ environment:
 build_script:
   - mkdir build
   - cd build
-  - cmake "-G%GENERATOR%" -DBOOST_ROOT="C:\Libraries\boost" -DBOOST_LIBRARYDIR="C:\Libraries\boost\lib64-msvc-12.0" -DWITH_UNIT_TESTS=ON ..
+  - cmake "-G%GENERATOR%" -DBOOST_ROOT="C:\Libraries\boost" -DBOOST_LIBRARYDIR="c:\Libraries\boost\stage\lib" -DWITH_UNIT_TESTS=ON ..
   - cmake --build . --config "%CONFIG%"
