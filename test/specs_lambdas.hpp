@@ -1,26 +1,26 @@
-std::map<std::string,std::function<mstch::node(const std::string&)>> specs_lambdas {
-    {"Interpolation", [](const std::string&) {
+std::map<std::string,mstch::node> specs_lambdas {
+    {"Interpolation", mstch::lambda{[](const std::string&) -> mstch::node {
       return std::string{"world"};
-    }},
-    {"Interpolation - Expansion", [](const std::string&) {
+    }}},
+    {"Interpolation - Expansion", mstch::lambda{[](const std::string&) -> mstch::node {
       return std::string{"{{planet}}"};
-    }},
-    {"Interpolation - Multiple Calls", [](const std::string&) {
+    }}},
+    {"Interpolation - Multiple Calls", mstch::lambda{[](const std::string&) -> mstch::node {
       static int calls = 0; return ++calls;
-    }},
-    {"Escaping", [](const std::string&) {
+    }}},
+    {"Escaping", mstch::lambda{[](const std::string&) -> mstch::node {
       return std::string{">"};
-    }},
-    {"Section", [](const std::string& txt) {
+    }}},
+    {"Section", mstch::lambda{[](const std::string& txt) -> mstch::node {
       return std::string{(txt == "{{x}}") ? "yes" : "no"};
-    }},
-    {"Section - Expansion", [](const std::string& txt) {
+    }}},
+    {"Section - Expansion", mstch::lambda{[](const std::string& txt) -> mstch::node {
       return txt + std::string{"{{planet}}"} + txt;
-    }},
-    {"Section - Multiple Calls", [](const std::string& txt) {
+    }}},
+    {"Section - Multiple Calls", mstch::lambda{[](const std::string& txt) -> mstch::node {
       return "__" + txt + "__";
-    }},
-    {"Inverted Section", [](const std::string& txt) {
+    }}},
+    {"Inverted Section", mstch::lambda{[](const std::string& txt) -> mstch::node {
       return false;
-    }}
+    }}}
 };
