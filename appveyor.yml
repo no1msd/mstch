@@ -6,5 +6,5 @@ environment:
 build_script:
   - mkdir build
   - cd build
-  - cmake "-G%GENERATOR%" ..
+  - cmake "-G%GENERATOR%" -DBOOST_ROOT="C:\Libraries\boost_1_59_0" ..
   - cmake --build . --config "%CONFIG%"
