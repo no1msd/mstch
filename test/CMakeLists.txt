@@ -9,7 +9,6 @@ target_link_libraries(benchmark mstch)
 
 add_executable(headerize headerize.cpp)
 target_link_libraries(headerize ${Boost_PROGRAM_OPTIONS_LIBRARY})
-set(headerize_exe ${CMAKE_CURRENT_BINARY_DIR}/headerize${CMAKE_EXECUTABLE_SUFFIX})
 
 file(GLOB data_files RELATIVE
   "${CMAKE_SOURCE_DIR}/test/data"
@@ -33,8 +32,7 @@ endforeach(string_file)
 
 add_custom_command(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/test_data.hpp
-  COMMAND ${headerize_exe} --output ${CMAKE_CURRENT_BINARY_DIR}/test_data.hpp --namespace mstchtest ${genargs}
-  DEPENDS ${headerize_exe}
+  COMMAND headerize --output ${CMAKE_CURRENT_BINARY_DIR}/test_data.hpp --namespace mstchtest ${genargs}
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/test/data/)
 set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/test_data.hpp PROPERTIES GENERATED TRUE)
 add_custom_target(test_data_hpp DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/test_data.hpp)
@@ -51,8 +49,7 @@ endforeach(specs_file)
 
 add_custom_command(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/specs_data.hpp
-  COMMAND ${headerize_exe} --output ${CMAKE_CURRENT_BINARY_DIR}/specs_data.hpp --namespace mstchtest ${specsargs}
-  DEPENDS ${headerize_exe}
+  COMMAND headerize --output ${CMAKE_CURRENT_BINARY_DIR}/specs_data.hpp --namespace mstchtest ${specsargs}
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/vendor/spec/specs/)
 set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/specs_data.hpp PROPERTIES GENERATED TRUE)
 add_custom_target(specs_data_hpp DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/specs_data.hpp)
