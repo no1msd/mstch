@@ -14,4 +14,4 @@ build_script:
   - cmake --build . --config "%CONFIG%"
 
 test_script:
-  - ctest
+  - ctest --build-config "%CONFIG%"
