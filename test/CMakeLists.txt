@@ -44,6 +44,7 @@ file(GLOB specs_files RELATIVE
 foreach(specs_file ${specs_files})
   list(APPEND specsargs "-S${specs_file}")
   string(REGEX REPLACE "\\.json" "" test_name "${specs_file}")
+  string(REGEX REPLACE "~" "" test_name "${test_name}")
   list(APPEND tests "specs_${test_name}")
 endforeach(specs_file)
 
