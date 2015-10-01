@@ -3,6 +3,10 @@ environment:
     - GENERATOR: "Visual Studio 12"
       CONFIG: Debug
 
+install:
+  - git submodule init
+  - git submodule update
+
 build_script:
   - mkdir build
   - cd build
