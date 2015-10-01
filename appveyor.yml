@@ -1,10 +1,10 @@
 environment:
   matrix:
-    - GENERATOR: "Visual Studio 12"
+    - GENERATOR: "Visual Studio 12 Win64"
       CONFIG: Debug
 
 build_script:
   - mkdir build
   - cd build
-  - cmake "-G%GENERATOR%" -DBOOST_ROOT="C:\Libraries\boost_1_59_0" -DBOOST_LIBRARYDIR="c:\Libraries\boost_1_59_0\stage\lib" -DWITH_UNIT_TESTS=ON ..
+  - cmake "-G%GENERATOR%" -DBOOST_ROOT="C:\Libraries\boost" -DBOOST_LIBRARYDIR="C:\Libraries\boost\lib64-msvc-12.0" -DWITH_UNIT_TESTS=ON ..
   - cmake --build . --config "%CONFIG%"
