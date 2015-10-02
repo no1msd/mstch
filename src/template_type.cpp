@@ -76,9 +76,10 @@ void template_type::strip_whitespace() {
       if (has_tag && !non_space) {
         store_prefixes(line_begin);
 
-        for (auto cur = line_begin; it != cur - 1;
-             cur = (*cur).ws_only() ? tokens.erase(cur) : cur + 1)
-          it = (*cur).eol() ? cur - 1 : it;
+        auto c = line_begin;
+        for (bool end = false; !end; c = (*c).ws_only() ? tokens.erase(c) : ++c)
+          if ((end = (*c).eol()))
+            it = c - 1;
       }
 
       non_space = has_tag = false;
