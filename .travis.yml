@@ -1,6 +1,8 @@
 language: cpp
 
 env:
+  global:
+    - secure: "RGQHmyTeJyT08JV6w9k9QJQSt+EtHGH1i56vwdU6+QrnkUPXqUMYYHvyKjOHYOu1dEKBryqHEl4fQSJwl0VNDKI52ehgzP5ilM6JoWg/zTKic5XjXSIveWG0mnVfc4d4s8Fv3gkPnnqcGbDN3kIkAeiRockpfLWZI3zCPZduDH4="
   matrix:
     - COMPILER=g++-4.9
       COMPILER_PACKAGE=g++-4.9
@@ -41,3 +43,13 @@ before_script:
 script: make
 
 after_script: make test
+
+addons:
+  coverity_scan:
+    project:
+      name: "no1msd/mstch"
+      description: "Build submitted via Travis CI"
+    notification_email: no1msd@gmail.com
+    build_command_prepend: "cmake -DWITH_UNIT_TESTS=ON ."
+    build_command:   "make -j 4"
+    branch_pattern: coverity_scan
