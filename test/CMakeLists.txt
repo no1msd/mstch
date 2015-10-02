@@ -4,8 +4,8 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/include
   ${Boost_INCLUDE_DIR})
 
-add_executable(benchmark benchmark_main.cpp)
-target_link_libraries(benchmark mstch)
+add_executable(mstch_benchmark benchmark_main.cpp)
+target_link_libraries(mstch_benchmark mstch benchmark)
 
 add_executable(headerize headerize.cpp)
 target_link_libraries(headerize ${Boost_PROGRAM_OPTIONS_LIBRARY})

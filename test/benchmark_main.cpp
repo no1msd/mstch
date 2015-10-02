@@ -1,10 +1,8 @@
-#define BENCHPRESS_CONFIG_MAIN
-
-#include <benchpress.hpp>
+#include <benchmark/benchmark.h>
 
 #include "mstch/mstch.hpp"
 
-benchpress::auto_register basic_usage("basic usage", [](benchpress::context* ctx) {
+static void basic_usage(benchmark::State& state) {
     std::string comment_tmp{
         "<div class=\"comments\"><h3>{{header}}</h3><ul>"
         "{{#comments}}<li class=\"comment\"><h5>{{name}}</h5>"
@@ -19,8 +17,10 @@ benchpress::auto_register basic_usage("basic usage", [](benchpress::context* ctx
                 mstch::map{{"name", std::string{"Kathy"}}, {"body", std::string{"Thanks for this post!"}}},
                 mstch::map{{"name", std::string{"George"}}, {"body", std::string{"Thanks for this post!"}}}}}};
 
-    ctx->reset_timer();
-
-    for (size_t i = 0; i < ctx->num_iterations(); ++i)
+    while (state.KeepRunning())
         mstch::render(comment_tmp, comment_view);
-});
+}
+
+BENCHMARK(basic_usage);
+
+BENCHMARK_MAIN();

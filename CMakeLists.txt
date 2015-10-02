@@ -19,6 +19,7 @@ if(WITH_UNIT_TESTS)
   include_directories(
       vendor/Catch/single_include
       vendor/json.hpp/include
-      vendor/benchpress/src/benchpress)
+      vendor/benchmark/include)
+  add_subdirectory(vendor/benchmark)
   add_subdirectory(test)
 endif()
