@@ -1,0 +1,2 @@
+add_executable(mstch_benchmark benchmark_main.cpp)
+target_link_libraries(mstch_benchmark mstch benchmark)

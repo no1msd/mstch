@@ -18,8 +18,13 @@ if(WITH_UNIT_TESTS)
   enable_testing()
   include_directories(
       vendor/Catch/single_include
-      vendor/json.hpp/include
+      vendor/json.hpp/include)
+  add_subdirectory(test)
+endif()
+
+if(WITH_BENCHMARK)
+  include_directories(
       vendor/benchmark/include)
   add_subdirectory(vendor/benchmark)
-  add_subdirectory(test)
+  add_subdirectory(benchmark)
 endif()
