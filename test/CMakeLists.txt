@@ -4,9 +4,6 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/include
   ${Boost_INCLUDE_DIR})
 
-add_executable(mstch_benchmark benchmark_main.cpp)
-target_link_libraries(mstch_benchmark mstch benchmark)
-
 add_executable(headerize headerize.cpp)
 target_link_libraries(headerize ${Boost_PROGRAM_OPTIONS_LIBRARY})
 
@@ -15,7 +12,6 @@ file(GLOB data_files RELATIVE
   "${CMAKE_SOURCE_DIR}/test/data/*.hpp")
 
 foreach(data_file ${data_files})
-  list(APPEND genargs "-C${data_file}")
   string(REGEX REPLACE "\\.hpp" "" test_name "${data_file}")
   list(APPEND tests "${test_name}")
 endforeach(data_file)

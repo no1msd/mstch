@@ -3,6 +3,7 @@
 #include "catch.hpp"
 #include "json.hpp"
 #include "mstch/mstch.hpp"
+#include "test_context.hpp"
 #include "test_data.hpp"
 #include "specs_data.hpp"
 #include "specs_lambdas.hpp"

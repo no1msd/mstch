@@ -31,9 +31,7 @@ int main(int argc, char* argv[]) {
       ("output", po::value<std::string>(), "output file")
       ("namespace", po::value<std::string>(), "namespace to use")
       ("input-string,S", po::value<std::vector<std::string>>(),
-          "files to parse as strings")
-      ("input-code,C", po::value<std::vector<std::string>>(),
-          "files to parse as code");
+          "files to parse as strings");
   po::variables_map vm;
   po::store(po::parse_command_line(argc, argv, desc), vm);
   po::notify(vm);
@@ -59,14 +57,6 @@ int main(int argc, char* argv[]) {
       std::string variable_name = boost::replace_all_copy(filename, ".", "_");
       boost::replace_all(variable_name, "~", "");
       wrap_string(input, output, variable_name);
-      input.close();
-    }
-
-  if (vm.count("input-code"))
-    for (auto& filename: vm["input-code"].as<std::vector<std::string>>()) {
-      std::ifstream input(filename, std::ios::in);
-      output << std::string{(std::istreambuf_iterator<char>(input)),
-          std::istreambuf_iterator<char>()} << std::endl;
       input.close();
     }
 
