@@ -77,7 +77,7 @@ void template_type::strip_whitespace() {
         store_prefixes(line_begin);
 
         auto c = line_begin;
-        for (bool end = false; !end; c = (*c).ws_only() ? tokens.erase(c) : ++c)
+        for (bool end = false; !end; (*c).ws_only() ? c = tokens.erase(c) : ++c)
           if ((end = (*c).eol()))
             it = c - 1;
       }
