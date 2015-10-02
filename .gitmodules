@@ -7,3 +7,6 @@
 [submodule "vendor/spec"]
 	path = vendor/spec
 	url = https://github.com/mustache/spec.git
+[submodule "vendor/benchpress"]
+	path = vendor/benchpress
+	url = https://github.com/bigdatadev/benchpress.git
