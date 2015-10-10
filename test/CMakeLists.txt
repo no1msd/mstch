@@ -2,6 +2,8 @@ find_package(Boost 1.54 COMPONENTS program_options REQUIRED)
 
 include_directories(
   ${CMAKE_SOURCE_DIR}/include
+  ${CMAKE_SOURCE_DIR}/vendor/Catch/single_include
+  ${CMAKE_SOURCE_DIR}/vendor/json.hpp/include
   ${Boost_INCLUDE_DIR})
 
 add_executable(headerize headerize.cpp)

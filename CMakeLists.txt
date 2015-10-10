@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(mstch)
-option (WITH_UNIT_TESTS "enable building unit test executable" OFF)
+
+option(WITH_UNIT_TESTS "enable building unit test executable" OFF)
+option(WITH_BENCHMARK "enable building benchmark executable" OFF)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE ON)
@@ -16,15 +18,10 @@ add_subdirectory(src)
 
 if(WITH_UNIT_TESTS)
   enable_testing()
-  include_directories(
-      vendor/Catch/single_include
-      vendor/json.hpp/include)
   add_subdirectory(test)
 endif()
 
 if(WITH_BENCHMARK)
-  include_directories(
-      vendor/benchmark/include)
   add_subdirectory(vendor/benchmark)
   add_subdirectory(benchmark)
 endif()
