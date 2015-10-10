@@ -15,7 +15,7 @@ class get_token: public boost::static_visitor<const mstch::node&> {
   }
 
   template<class T>
-  const mstch::node& operator()(const T& t) const {
+  const mstch::node& operator()(const T&) const {
     return node;
   }
 

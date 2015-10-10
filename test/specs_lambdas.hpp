@@ -20,7 +20,7 @@ std::map<std::string,mstch::node> specs_lambdas {
     {"Section - Multiple Calls", mstch::lambda{[](const std::string& txt) -> mstch::node {
       return "__" + txt + "__";
     }}},
-    {"Inverted Section", mstch::lambda{[](const std::string& txt) -> mstch::node {
+    {"Inverted Section", mstch::lambda{[](const std::string&) -> mstch::node {
       return false;
     }}}
 };

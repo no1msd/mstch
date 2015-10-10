@@ -18,7 +18,7 @@ class render_node: public boost::static_visitor<std::string> {
   }
 
   template<class T>
-  std::string operator()(const T& t) const {
+  std::string operator()(const T&) const {
     return "";
   }
 
