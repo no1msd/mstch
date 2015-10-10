@@ -1,6 +1,7 @@
 #pragma once
 
 #include <deque>
+#include <list>
 #include <sstream>
 #include <string>
 #include <stack>
@@ -40,9 +41,10 @@ class render_context {
   static const mstch::node null_node;
   const mstch::node& find_node(
       const std::string& token,
-      std::deque<node const*> current_nodes);
+      std::list<node const*> current_nodes);
   std::map<std::string, template_type> partials;
   std::deque<mstch::node> nodes;
+  std::list<const mstch::node*> node_ptrs;
   std::stack<std::unique_ptr<render_state>> state;
 };
 

@@ -10,11 +10,13 @@ render_context::push::push(render_context& context, const mstch::node& node):
     context(context)
 {
   context.nodes.emplace_front(node);
+  context.node_ptrs.emplace_front(&node);
   context.state.push(std::unique_ptr<render_state>(new outside_section));
 }
 
 render_context::push::~push() {
   context.nodes.pop_front();
+  context.node_ptrs.pop_front();
   context.state.pop();
 }
 
@@ -25,14 +27,14 @@ std::string render_context::push::render(const template_type& templt) {
 render_context::render_context(
     const mstch::node& node,
     const std::map<std::string, template_type>& partials):
-    partials(partials), nodes(1, node)
+    partials(partials), nodes(1, node), node_ptrs(1, &node)
 {
   state.push(std::unique_ptr<render_state>(new outside_section));
 }
 
 const mstch::node& render_context::find_node(
     const std::string& token,
-    std::deque<node const*> current_nodes)
+    std::list<node const*> current_nodes)
 {
   if (token != "." && token.find('.') != std::string::npos)
     return find_node(token.substr(token.rfind('.') + 1),
@@ -45,10 +47,7 @@ const mstch::node& render_context::find_node(
 }
 
 const mstch::node& render_context::get_node(const std::string& token) {
-    std::deque<node const*> current_nodes;
-    for (auto& node: nodes)
-        current_nodes.push_back(&node);
-    return find_node(token, current_nodes);
+    return find_node(token, node_ptrs);
 }
 
 std::string render_context::render(
