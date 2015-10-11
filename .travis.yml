@@ -25,6 +25,7 @@ addons:
      - clang-3.5
      - build-essential
      - cmake
+     - cmake-data
      - libboost1.55-dev
      - libboost-regex1.55-dev
      - libboost-program-options1.55-dev
