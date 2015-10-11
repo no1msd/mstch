@@ -10,3 +10,6 @@
 [submodule "vendor/benchmark"]
 	path = vendor/benchmark
 	url = https://github.com/google/benchmark.git
+[submodule "vendor/headerize"]
+	path = vendor/headerize
+	url = https://github.com/no1msd/headerize.git

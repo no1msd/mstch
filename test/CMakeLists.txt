@@ -1,13 +1,7 @@
-find_package(Boost 1.54 COMPONENTS program_options REQUIRED)
-
 include_directories(
   ${CMAKE_SOURCE_DIR}/include
   ${CMAKE_SOURCE_DIR}/vendor/Catch/single_include
-  ${CMAKE_SOURCE_DIR}/vendor/json.hpp/include
-  ${Boost_INCLUDE_DIR})
-
-add_executable(headerize headerize.cpp)
-target_link_libraries(headerize ${Boost_PROGRAM_OPTIONS_LIBRARY})
+  ${CMAKE_SOURCE_DIR}/vendor/json.hpp/include)
 
 file(GLOB data_files RELATIVE
   "${CMAKE_SOURCE_DIR}/test/data"
@@ -25,7 +19,7 @@ file(GLOB string_files RELATIVE
   "${CMAKE_SOURCE_DIR}/test/data/*.partial")
 
 foreach(string_file ${string_files})
-  list(APPEND genargs "-S${string_file}")
+  list(APPEND genargs "-i${string_file}")
 endforeach(string_file)
 
 add_custom_command(
@@ -40,7 +34,7 @@ file(GLOB specs_files RELATIVE
   "${CMAKE_SOURCE_DIR}/vendor/spec/specs/*.json")
 
 foreach(specs_file ${specs_files})
-  list(APPEND specsargs "-S${specs_file}")
+  list(APPEND specsargs "-i${specs_file}")
   string(REGEX REPLACE "\\.json" "" test_name "${specs_file}")
   string(REGEX REPLACE "~" "" test_name "${test_name}")
   list(APPEND tests "specs_${test_name}")

@@ -18,6 +18,7 @@ add_subdirectory(src)
 
 if(WITH_UNIT_TESTS)
   enable_testing()
+  add_subdirectory(vendor/headerize)
   add_subdirectory(test)
 endif()
 
