@@ -22,7 +22,7 @@ before_install:
  - sudo add-apt-repository ppa:boost-latest/ppa -y
  - sudo add-apt-repository ppa:h-rayflood/llvm-upper -y
  - sudo apt-get update -qq
- - sudo apt-get install -qq libboost1.54-dev libboost-program-options1.54-dev build-essential ${COMPILER_PACKAGE}
+ - sudo apt-get install -qq libboost1.54-dev libboost-regex1.54-dev libboost-program-options1.54-dev build-essential ${COMPILER_PACKAGE}
  - ${COMPILER} --version
  - wget http://www.cmake.org/files/v3.2/cmake-3.2.2.tar.gz
  - tar xf cmake-3.2.2.tar.gz
