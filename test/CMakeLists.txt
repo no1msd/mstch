@@ -1,7 +1,10 @@
+find_package(Boost 1.54 REQUIRED)
+
 include_directories(
   ${CMAKE_SOURCE_DIR}/include
   ${CMAKE_SOURCE_DIR}/vendor/Catch/single_include
-  ${CMAKE_SOURCE_DIR}/vendor/json.hpp/include)
+  ${CMAKE_SOURCE_DIR}/vendor/json.hpp/include
+  ${Boost_INCLUDE_DIR})
 
 file(GLOB data_files RELATIVE
   "${CMAKE_SOURCE_DIR}/test/data"
