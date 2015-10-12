@@ -1,13 +1,21 @@
 language: cpp
 
-sudo: false
-
 env:
   matrix:
     - COMPILER=g++-4.9
+      COMPILER_PACKAGE=g++-4.9
+
     - COMPILER=g++-4.8
+      COMPILER_PACKAGE=g++-4.8
+
     - COMPILER=g++-4.7
+      COMPILER_PACKAGE=g++-4.7
+
     - COMPILER=clang++-3.5
+      COMPILER_PACKAGE=clang-3.5
+
+    - COMPILER=clang++-3.6
+      COMPILER_PACKAGE=clang-3.6
 
 addons:
   apt:
@@ -19,10 +27,7 @@ addons:
      - llvm-toolchain-precise-3.7
      - george-edison55-precise-backports
     packages:
-     - g++-4.7
-     - g++-4.8
-     - g++-4.9
-     - clang-3.5
+     - ${COMPILER_PACKAGE}
      - build-essential
      - cmake
      - cmake-data
