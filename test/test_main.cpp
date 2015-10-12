@@ -27,7 +27,7 @@ using namespace mstchtest;
     if(test.count("partials")) \
       for(auto& partial_item: get<mstch::map>(test["partials"])) \
         partials.insert(std::make_pair(partial_item.first, get<std::string>(partial_item.second))); \
-    for(auto& data_item: get<mstch::map>(test["data"])) \
+    for(std::pair<const std::string,mstch::node>& data_item: get<mstch::map>(test["data"])) \
       if(data_item.first == "lambda") \
         data_item.second = specs_lambdas[get<std::string>(test["name"])]; \
     SECTION(get<std::string>(test["name"])) \
