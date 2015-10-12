@@ -90,7 +90,6 @@ matrix:
       os: osx
 
 before_script:
- - if [[ "${TRAVIS_OS_NAME}" == 'osx' ]]; then brew install boost cmake; fi
  - export CXX=${COMPILER}
  - ${COMPILER} --version
  - mkdir build
