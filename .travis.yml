@@ -100,7 +100,7 @@ before_script:
  - ${COMPILER} --version
  - mkdir build
  - cd build
- - cmake ..
+ - cmake -DWITH_UNIT_TESTS=${WITH_UNIT_TESTS} ..
 
 script: make
 
