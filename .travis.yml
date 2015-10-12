@@ -18,6 +18,7 @@ matrix:
             - libboost1.55-dev
             - libboost-regex1.55-dev
             - libboost-program-options1.55-dev
+      os: linux
     - env:
         - COMPILER=g++-4.8
       addons:
@@ -33,6 +34,7 @@ matrix:
             - libboost1.55-dev
             - libboost-regex1.55-dev
             - libboost-program-options1.55-dev
+      os: linux
     - env:
         - COMPILER=g++-4.7
       addons:
@@ -48,6 +50,7 @@ matrix:
             - libboost1.55-dev
             - libboost-regex1.55-dev
             - libboost-program-options1.55-dev
+      os: linux
     - env:
         - COMPILER=clang++-3.5
       addons:
@@ -64,6 +67,7 @@ matrix:
             - libboost1.55-dev
             - libboost-regex1.55-dev
             - libboost-program-options1.55-dev
+      os: linux
     - env:
         - COMPILER=clang++-3.6
       addons:
@@ -80,9 +84,15 @@ matrix:
             - libboost1.55-dev
             - libboost-regex1.55-dev
             - libboost-program-options1.55-dev
+      os: linux
+    - env:
+        - COMPILER=clang++
+      os: osx
 
 before_script:
+ - if [[ "${TRAVIS_OS_NAME}" == 'osx' ]]; then brew install boost cmake; fi
  - export CXX=${COMPILER}
+ - ${COMPILER} --version
  - mkdir build
  - cd build
  - cmake -DWITH_UNIT_TESTS=ON ..
