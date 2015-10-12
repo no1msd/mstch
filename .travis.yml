@@ -3,53 +3,81 @@ sudo: false
 
 matrix:
   include:
-    - env: COMPILER=g++-4.9
+    - env:
+        - COMPILER=g++-4.9
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
+            - boost-latest
+            - george-edison55-precise-backports
           packages:
             - g++-4.9
-    - env: COMPILER=g++-4.8
+            - cmake
+            - cmake-data
+            - libboost1.55-dev
+            - libboost-regex1.55-dev
+            - libboost-program-options1.55-dev
+    - env:
+        - COMPILER=g++-4.8
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
+            - boost-latest
+            - george-edison55-precise-backports
           packages:
             - g++-4.8
-    - env: COMPILER=g++-4.7
+            - cmake
+            - cmake-data
+            - libboost1.55-dev
+            - libboost-regex1.55-dev
+            - libboost-program-options1.55-dev
+    - env:
+        - COMPILER=g++-4.7
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
+            - boost-latest
+            - george-edison55-precise-backports
           packages:
             - g++-4.7
-    - env: COMPILER=clang++-3.5
+            - cmake
+            - cmake-data
+            - libboost1.55-dev
+            - libboost-regex1.55-dev
+            - libboost-program-options1.55-dev
+    - env:
+        - COMPILER=clang++-3.5
       addons:
         apt:
           sources:
             - llvm-toolchain-precise-3.5
+            - boost-latest
+            - george-edison55-precise-backports
           packages:
             - clang-3.5
-    - env: COMPILER=clang++-3.6
+            - cmake
+            - cmake-data
+            - libboost1.55-dev
+            - libboost-regex1.55-dev
+            - libboost-program-options1.55-dev
+    - env:
+        - COMPILER=clang++-3.6
       addons:
         apt:
           sources:
             - llvm-toolchain-precise-3.6
+            - boost-latest
+            - george-edison55-precise-backports
           packages:
             - clang-3.6
-
-addons:
-  apt:
-    sources:
-     - boost-latest
-     - george-edison55-precise-backports
-    packages:
-     - cmake
-     - cmake-data
-     - libboost1.55-dev
-     - libboost-regex1.55-dev
-     - libboost-program-options1.55-dev
+            - cmake
+            - cmake-data
+            - libboost1.55-dev
+            - libboost-regex1.55-dev
+            - libboost-program-options1.55-dev
 
 before_script:
  - export CXX=${COMPILER}
