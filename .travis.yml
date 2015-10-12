@@ -5,6 +5,7 @@ matrix:
   include:
     - env:
         - COMPILER=g++-4.9
+        - WITH_UNIT_TESTS=ON
       addons:
         apt:
           sources:
@@ -21,6 +22,7 @@ matrix:
       os: linux
     - env:
         - COMPILER=g++-4.8
+        - WITH_UNIT_TESTS=ON
       addons:
         apt:
           sources:
@@ -37,6 +39,7 @@ matrix:
       os: linux
     - env:
         - COMPILER=g++-4.7
+        - WITH_UNIT_TESTS=ON
       addons:
         apt:
           sources:
@@ -53,6 +56,7 @@ matrix:
       os: linux
     - env:
         - COMPILER=clang++-3.5
+        - WITH_UNIT_TESTS=ON
       addons:
         apt:
           sources:
@@ -70,6 +74,7 @@ matrix:
       os: linux
     - env:
         - COMPILER=clang++-3.6
+        - WITH_UNIT_TESTS=ON
       addons:
         apt:
           sources:
@@ -87,6 +92,7 @@ matrix:
       os: linux
     - env:
         - COMPILER=clang++
+        - WITH_UNIT_TESTS=OFF
       os: osx
 
 before_script:
@@ -94,7 +100,7 @@ before_script:
  - ${COMPILER} --version
  - mkdir build
  - cd build
- - cmake -DWITH_UNIT_TESTS=ON ..
+ - cmake ..
 
 script: make
 
