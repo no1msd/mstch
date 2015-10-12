@@ -20,7 +20,7 @@ using namespace mstchtest;
 
 #define SPECS_TEST(x) TEST_CASE("specs_" #x) { \
   using boost::get; \
-  mstch::node data = json::parse<mstch::node,mstch::map,mstch::array>(x ## _json); \
+  mstch::node data{json::parse<mstch::node,mstch::map,mstch::array>(x ## _json)}; \
   for (auto& test_item: get<mstch::array>(get<mstch::map>(data)["tests"])) {\
     auto test = get<mstch::map>(test_item); \
     std::map<std::string,std::string> partials; \
