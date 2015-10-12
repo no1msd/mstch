@@ -20,22 +20,20 @@ using namespace mstchtest;
 
 #define SPECS_TEST(x) TEST_CASE("specs_" #x) { \
   using boost::get; \
-  mstch::node data{json::parse<mstch::node,mstch::map,mstch::array>(x ## _json)}; \
-  for (auto& test_item: get<mstch::array>(get<mstch::map>(data)["tests"])) {\
+  auto data = json::parse<mstch::node,mstch::map,mstch::array>(x ## _json); \
+  for(auto& test_item: get<mstch::array>(get<mstch::map>(data)["tests"])) {\
     auto test = get<mstch::map>(test_item); \
     std::map<std::string,std::string> partials; \
-    if (test.count("partials")) \
-      for (auto& partial_item: get<mstch::map>(test["partials"])) \
+    if(test.count("partials")) \
+      for(auto& partial_item: get<mstch::map>(test["partials"])) \
         partials.insert(std::make_pair(partial_item.first, get<std::string>(partial_item.second))); \
-    mstch::map test_data; \
-    for (auto& data_item: get<mstch::map>(test["data"])) \
-      if (data_item.first == "lambda") \
-        test_data.insert(std::make_pair("lambda", specs_lambdas[get<std::string>(test["name"])])); \
-      else \
-        test_data.insert(data_item); \
+    for(auto& data_item: get<mstch::map>(test["data"])) \
+      if(data_item.first == "lambda") \
+        data_item.second = specs_lambdas[get<std::string>(test["name"])]; \
     SECTION(get<std::string>(test["name"])) \
-      REQUIRE( \
-          mstch::render(get<std::string>(test["template"]), test_data, partials) == \
+      REQUIRE(mstch::render( \
+          get<std::string>(test["template"]), \
+          test["data"], partials) == \
           get<std::string>(test["expected"])); \
   } \
 }
