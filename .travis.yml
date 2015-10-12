@@ -54,6 +54,7 @@ matrix:
         apt:
           sources:
             - llvm-toolchain-precise-3.5
+            - ubuntu-toolchain-r-test
             - boost-latest
             - george-edison55-precise-backports
           packages:
@@ -69,6 +70,7 @@ matrix:
         apt:
           sources:
             - llvm-toolchain-precise-3.6
+            - ubuntu-toolchain-r-test
             - boost-latest
             - george-edison55-precise-backports
           packages:
