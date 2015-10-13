@@ -1,7 +1,7 @@
 find_package(Boost 1.54 REQUIRED)
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}/include
+    ${PROJECT_SOURCE_DIR}/include
     ${Boost_INCLUDE_DIR})
 
 set(SRC
@@ -29,7 +29,7 @@ install(
     ARCHIVE DESTINATION lib)
 
 install(
-    FILES "${CMAKE_SOURCE_DIR}/include/mstch/mstch.hpp"
+    FILES "${PROJECT_SOURCE_DIR}/include/mstch/mstch.hpp"
     DESTINATION include/mstch
     COMPONENT Devel)
 
@@ -45,7 +45,7 @@ export(
     NAMESPACE mstch::)
 
 configure_file(
-    "${CMAKE_SOURCE_DIR}/cmake/mstch-config.cmake"
+    "${PROJECT_SOURCE_DIR}/cmake/mstch-config.cmake"
     "${CMAKE_CURRENT_BINARY_DIR}/mstch/mstch-config.cmake")
 
 install(
@@ -55,7 +55,7 @@ install(
     DESTINATION lib/cmake/mstch)
 
 install(FILES
-    "${CMAKE_SOURCE_DIR}/cmake/mstch-config.cmake"
+    "${PROJECT_SOURCE_DIR}/cmake/mstch-config.cmake"
     "${CMAKE_CURRENT_BINARY_DIR}/mstch/mstch-config-version.cmake"
     DESTINATION lib/cmake/mstch
     COMPONENT Devel)
