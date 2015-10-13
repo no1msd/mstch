@@ -96,7 +96,7 @@ matrix:
       os: osx
     - env:
         - COMPILER=clang++
-        - WITH_UNIT_TESTS=OFF
+        - WITH_UNIT_TESTS=ON
       os: osx
 
 before_script:

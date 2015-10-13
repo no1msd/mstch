@@ -40,7 +40,9 @@ foreach(specs_file ${specs_files})
   list(APPEND specsargs "-i${specs_file}")
   string(REGEX REPLACE "\\.json" "" test_name "${specs_file}")
   string(REGEX REPLACE "~" "" test_name "${test_name}")
-  list(APPEND tests "specs_${test_name}")
+  if(NOT APPLE)
+    list(APPEND tests "specs_${test_name}")
+  endif()
 endforeach(specs_file)
 
 add_custom_command(

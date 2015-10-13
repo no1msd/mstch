@@ -97,6 +97,7 @@ MSTCH_TEST(unescaped)
 MSTCH_TEST(whitespace)
 MSTCH_TEST(zero_view)
 
+#infdef __APPLE__
 SPECS_TEST(comments)
 SPECS_TEST(delimiters)
 SPECS_TEST(interpolation)
@@ -104,3 +105,4 @@ SPECS_TEST(inverted)
 SPECS_TEST(partials)
 SPECS_TEST(sections)
 SPECS_TEST(lambdas)
+#endif
