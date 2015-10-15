@@ -1,7 +1,10 @@
 find_package(Boost 1.54 REQUIRED)
 
+set(mstch_INCLUDE_DIR
+    ${PROJECT_SOURCE_DIR}/include CACHE STRING "mstch include directory")
+
 include_directories(
-    ${PROJECT_SOURCE_DIR}/include
+    ${mstch_INCLUDE_DIR}
     ${Boost_INCLUDE_DIR})
 
 set(SRC

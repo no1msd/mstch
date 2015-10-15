@@ -204,9 +204,23 @@ Output:
  - Boost 1.54+ for [Boost.Variant](http://www.boost.org/libs/variant)
  - CMake 3.0+ for building
 
-## Installing
+## Using mstch in your project
 
-From the root of the source tree:
+If you are using CMake, the easiest way to include mstch in your project is to 
+copy the whole directory to your source tree, and use `add_subdirectory` in your 
+CMakeLists.txt. This will set a variable named `mstch_INCLUDE_DIR` that contains 
+its include path, and add a static library target named mstch. For example:
+
+```cmake
+add_subdirectory(external/mstch)
+
+include_directories(${mstch_INCLUDE_DIR})
+
+target_link_libraries(your_project mstch)
+```
+
+If you prefer to install the library globally, you can simply do the following 
+from the root of the source tree:
 
 ```bash
  $ mkdir build
@@ -214,6 +228,15 @@ From the root of the source tree:
  $ cmake ..
  $ make
  $ make install
+```
+
+The install command may require root privileges. This will also install CMake 
+config files, so you can use use `find_package` in your CMakeLists.txt:
+
+```cmake
+find_package(mstch)
+
+target_link_libraries(your_project mstch::mstch)
 ```
 
 ## Running the unit tests
