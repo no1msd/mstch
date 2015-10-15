@@ -213,9 +213,7 @@ its include path, and add a static library target named mstch. For example:
 
 ```cmake
 add_subdirectory(external/mstch)
-
 include_directories(${mstch_INCLUDE_DIR})
-
 target_link_libraries(your_project mstch)
 ```
 
@@ -235,7 +233,6 @@ config files, so you can use use `find_package` in your CMakeLists.txt:
 
 ```cmake
 find_package(mstch)
-
 target_link_libraries(your_project mstch::mstch)
 ```
 
