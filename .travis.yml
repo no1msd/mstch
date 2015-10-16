@@ -91,10 +91,6 @@ matrix:
             - libboost-program-options1.55-dev
       os: linux
     - env:
-        - COMPILER=g++-4.8
-        - WITH_UNIT_TESTS=OFF
-      os: osx
-    - env:
         - COMPILER=clang++
         - WITH_UNIT_TESTS=ON
       os: osx
