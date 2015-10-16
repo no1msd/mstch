@@ -6,8 +6,6 @@ mstch is a complete implementation of [{{mustache}}](http://mustache.github.io/)
 templates using modern C++. It's compliant with [specifications](https://github.com/mustache/spec)
 v1.1.2, including the lambda module.
 
-It works great with [json.hpp](https://github.com/no1msd/json.hpp).
-
 [![GitHub version](https://badge.fury.io/gh/no1msd%2Fmstch.svg)](http://badge.fury.io/gh/no1msd%2Fmstch)
 [![Build Status](https://travis-ci.org/no1msd/mstch.svg?branch=master)](https://travis-ci.org/no1msd/mstch)
 [![Build status](https://ci.appveyor.com/api/projects/status/d6mxp0uba5646x16?svg=true)](https://ci.appveyor.com/project/no1msd/mstch)
@@ -199,7 +197,7 @@ Output:
 
  - A C++ compiler with decent C++11 support. Currently tested with:
    - GCC 4.7, 4.8, 4.9
-   - clang 3.5, 3.6
+   - clang 3.5, 3.6 (both libstdc++ and libc++ are supported)
    - MSVC 2013, 2015
  - Boost 1.54+ for [Boost.Variant](http://www.boost.org/libs/variant)
  - CMake 3.0+ for building
@@ -238,9 +236,10 @@ target_link_libraries(your_project mstch::mstch)
 
 ## Running the unit tests
 
-Unit tests are using the [Catch](https://github.com/philsquared/Catch) framework, 
-included in the repository. [Boost.Program_Options](http://www.boost.org/libs/program_options), 
-[Boost.Spirit](http://www.boost.org/libs/spirit), and [The Boost Algorithm Library](http://www.boost.org/libs/algorithm)
+Unit tests are using the [Catch](https://github.com/philsquared/Catch) framework
+and [rapidjson](http://rapidjson.org/) to parse the
+[Mustache specifications](https://github.com/mustache/spec), all included in the
+repository as git submodules. Various [Boost](http://www.boost.org/) libraries
 are also required to build them.
 
 Don't forget to initialize submodules:
