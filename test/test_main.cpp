@@ -73,13 +73,16 @@ mstch::node parse_with_rapidjson(const std::string& str) {
     if (test.count("partials")) \
       for (auto& partial_item: get<mstch::map>(test["partials"])) \
         partials.insert(std::make_pair(partial_item.first, get<std::string>(partial_item.second))); \
+    mstch::map context; \
     for (auto& data_item: get<mstch::map>(test["data"])) \
       if (data_item.first == "lambda") \
-        data_item.second = specs_lambdas[get<std::string>(test["name"])]; \
+        context.insert(std::make_pair(data_item.first, specs_lambdas[get<std::string>(test["name"])])); \
+      else \
+        context.insert(data_item); \
     SECTION(get<std::string>(test["name"])) \
       REQUIRE(mstch::render( \
           get<std::string>(test["template"]), \
-          test["data"], partials) == \
+          context, partials) == \
           get<std::string>(test["expected"])); \
   } \
 }
