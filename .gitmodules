@@ -1,6 +1,3 @@
-[submodule "vendor/json.hpp"]
-	path = vendor/json.hpp
-	url = https://github.com/no1msd/json.hpp.git
 [submodule "vendor/Catch"]
 	path = vendor/Catch
 	url = https://github.com/philsquared/Catch.git
@@ -13,3 +10,6 @@
 [submodule "vendor/headerize"]
 	path = vendor/headerize
 	url = https://github.com/no1msd/headerize.git
+[submodule "vendor/rapidjson"]
+	path = vendor/rapidjson
+	url = https://github.com/miloyip/rapidjson.git

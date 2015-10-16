@@ -3,7 +3,7 @@ find_package(Boost 1.54 REQUIRED)
 include_directories(
   ${CMAKE_SOURCE_DIR}/include
   ${CMAKE_SOURCE_DIR}/vendor/Catch/single_include
-  ${CMAKE_SOURCE_DIR}/vendor/json.hpp/include
+  ${CMAKE_SOURCE_DIR}/vendor/rapidjson/include
   ${Boost_INCLUDE_DIR})
 
 file(GLOB data_files RELATIVE
@@ -40,9 +40,7 @@ foreach(specs_file ${specs_files})
   list(APPEND specsargs "-i${specs_file}")
   string(REGEX REPLACE "\\.json" "" test_name "${specs_file}")
   string(REGEX REPLACE "~" "" test_name "${test_name}")
-  if(NOT APPLE)
-    list(APPEND tests "specs_${test_name}")
-  endif()
+  list(APPEND tests "specs_${test_name}")
 endforeach(specs_file)
 
 add_custom_command(

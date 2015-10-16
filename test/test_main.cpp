@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 
 #include "catch.hpp"
-#include "json.hpp"
+#include "rapidjson/document.h"
 #include "mstch/mstch.hpp"
 #include "test_context.hpp"
 #include "test_data.hpp"
@@ -9,6 +9,52 @@
 #include "specs_lambdas.hpp"
 
 using namespace mstchtest;
+
+mstch::node to_value(const rapidjson::Value& val) {
+  if (val.IsString())
+    return std::string{val.GetString()};
+  if (val.IsBool())
+    return val.GetBool();
+  if (val.IsDouble())
+    return val.GetDouble();
+  if (val.IsInt())
+    return val.GetInt();
+  return mstch::node{};
+}
+
+mstch::array to_array(const rapidjson::Value& val);
+
+mstch::map to_object(const rapidjson::Value& val) {
+  mstch::map ret;
+  for (auto i = val.MemberBegin(); i != val.MemberEnd(); ++i) {
+    if (i->value.IsArray())
+      ret.insert(std::make_pair(i->name.GetString(), to_array(i->value)));
+    else if (i->value.IsObject())
+      ret.insert(std::make_pair(i->name.GetString(), to_object(i->value)));
+    else
+      ret.insert(std::make_pair(i->name.GetString(), to_value(i->value)));
+  }
+  return ret;
+}
+
+mstch::array to_array(const rapidjson::Value& val) {
+  mstch::array ret;
+  for (auto i = val.Begin(); i != val.End(); ++i) {
+    if (i->IsArray())
+      ret.push_back(to_array(*i));
+    else if (i->IsObject())
+      ret.push_back(to_object(*i));
+    else
+      ret.push_back(to_value(*i));
+  }
+  return ret;
+}
+
+mstch::node parse_with_rapidjson(const std::string& str) {
+  rapidjson::Document doc;
+  doc.Parse(str.c_str());
+  return to_object(doc);
+}
 
 #define MSTCH_PARTIAL_TEST(x) TEST_CASE(#x) { \
   REQUIRE(x ## _txt == mstch::render(x ## _mustache, x ## _data, {{"partial", x ## _partial}})); \
@@ -20,15 +66,15 @@ using namespace mstchtest;
 
 #define SPECS_TEST(x) TEST_CASE("specs_" #x) { \
   using boost::get; \
-  auto data = json::parse<mstch::node,mstch::map,mstch::array>(x ## _json); \
-  for(auto& test_item: get<mstch::array>(get<mstch::map>(data)["tests"])) {\
+  auto data = parse_with_rapidjson(x ## _json); \
+  for (auto& test_item: get<mstch::array>(get<mstch::map>(data)["tests"])) {\
     auto test = get<mstch::map>(test_item); \
     std::map<std::string,std::string> partials; \
-    if(test.count("partials")) \
-      for(auto& partial_item: get<mstch::map>(test["partials"])) \
+    if (test.count("partials")) \
+      for (auto& partial_item: get<mstch::map>(test["partials"])) \
         partials.insert(std::make_pair(partial_item.first, get<std::string>(partial_item.second))); \
-    for(auto& data_item: get<mstch::map>(test["data"])) \
-      if(data_item.first == "lambda") \
+    for (auto& data_item: get<mstch::map>(test["data"])) \
+      if (data_item.first == "lambda") \
         data_item.second = specs_lambdas[get<std::string>(test["name"])]; \
     SECTION(get<std::string>(test["name"])) \
       REQUIRE(mstch::render( \
@@ -97,7 +143,6 @@ MSTCH_TEST(unescaped)
 MSTCH_TEST(whitespace)
 MSTCH_TEST(zero_view)
 
-#ifndef __APPLE__
 SPECS_TEST(comments)
 SPECS_TEST(delimiters)
 SPECS_TEST(interpolation)
@@ -105,4 +150,3 @@ SPECS_TEST(inverted)
 SPECS_TEST(partials)
 SPECS_TEST(sections)
 SPECS_TEST(lambdas)
-#endif
