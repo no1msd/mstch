@@ -207,7 +207,7 @@ Output:
 If you are using CMake, the easiest way to include mstch in your project is to 
 copy the whole directory to your source tree, and use `add_subdirectory` in your 
 CMakeLists.txt. This will set a variable named `mstch_INCLUDE_DIR` that contains 
-its include path, and add a static library target named mstch. For example:
+its include path, and add a static library target named `mstch`. For example:
 
 ```cmake
 add_subdirectory(external/mstch)
@@ -238,9 +238,9 @@ target_link_libraries(your_project mstch::mstch)
 
 Unit tests are using the [Catch](https://github.com/philsquared/Catch) framework
 and [rapidjson](http://rapidjson.org/) to parse the
-[Mustache specifications](https://github.com/mustache/spec), all included in the
-repository as git submodules. Various [Boost](http://www.boost.org/) libraries
-are also required to build them.
+[Mustache specifications](https://github.com/mustache/spec), all of which are 
+included in the repository as git submodules. Various 
+[Boost](http://www.boost.org/) libraries are also required to build them.
 
 Don't forget to initialize submodules:
 
