@@ -196,8 +196,8 @@ Output:
 ## Requirements
 
  - A C++ compiler with decent C++11 support. Currently tested with:
-   - GCC 4.7, 4.8, 4.9
-   - clang 3.5, 3.6 (both libstdc++ and libc++ are supported)
+   - GCC 4.7, 4.8, 4.9, 5.1
+   - clang 3.5, 3.6, 3.7 (both libstdc++ and libc++ are supported)
    - MSVC 2013, 2015
  - Boost 1.54+ for [Boost.Variant](http://www.boost.org/libs/variant)
  - CMake 3.0+ for building
