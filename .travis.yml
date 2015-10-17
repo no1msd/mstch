@@ -4,6 +4,23 @@ sudo: false
 matrix:
   include:
     - env:
+        - COMPILER=g++-5
+        - WITH_UNIT_TESTS=ON
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - boost-latest
+            - george-edison55-precise-backports
+          packages:
+            - g++-5
+            - cmake
+            - cmake-data
+            - libboost1.55-dev
+            - libboost-regex1.55-dev
+            - libboost-program-options1.55-dev
+      os: linux
+    - env:
         - COMPILER=g++-4.9
         - WITH_UNIT_TESTS=ON
       addons:
@@ -84,6 +101,24 @@ matrix:
             - george-edison55-precise-backports
           packages:
             - clang-3.6
+            - cmake
+            - cmake-data
+            - libboost1.55-dev
+            - libboost-regex1.55-dev
+            - libboost-program-options1.55-dev
+      os: linux
+    - env:
+        - COMPILER=clang++-3.7
+        - WITH_UNIT_TESTS=ON
+      addons:
+        apt:
+          sources:
+            - llvm-toolchain-precise-3.7
+            - ubuntu-toolchain-r-test
+            - boost-latest
+            - george-edison55-precise-backports
+          packages:
+            - clang-3.7
             - cmake
             - cmake-data
             - libboost1.55-dev
