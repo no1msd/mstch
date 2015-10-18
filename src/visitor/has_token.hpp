@@ -8,24 +8,24 @@ namespace mstch {
 
 class has_token: public boost::static_visitor<bool> {
  public:
-  has_token(const std::string& token): token(token) {
+  has_token(const std::string& token): m_token(token) {
   }
 
   template<class T>
   bool operator()(const T&) const {
-    return token == ".";
+    return m_token == ".";
   }
 
   bool operator()(const map& map) const {
-    return map.count(token) == 1;
+    return map.count(m_token) == 1;
   }
 
   bool operator()(const std::shared_ptr<object>& object) const {
-    return object->has(token);
+    return object->has(m_token);
   }
 
  private:
-  const std::string& token;
+  const std::string& m_token;
 };
 
 }

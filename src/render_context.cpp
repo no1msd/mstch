@@ -7,29 +7,29 @@ using namespace mstch;
 const mstch::node render_context::null_node;
 
 render_context::push::push(render_context& context, const mstch::node& node):
-    context(context)
+    m_context(context)
 {
-  context.nodes.emplace_front(node);
-  context.node_ptrs.emplace_front(&node);
-  context.state.push(std::unique_ptr<render_state>(new outside_section));
+  context.m_nodes.emplace_front(node);
+  context.m_node_ptrs.emplace_front(&node);
+  context.m_state.push(std::unique_ptr<render_state>(new outside_section));
 }
 
 render_context::push::~push() {
-  context.nodes.pop_front();
-  context.node_ptrs.pop_front();
-  context.state.pop();
+  m_context.m_nodes.pop_front();
+  m_context.m_node_ptrs.pop_front();
+  m_context.m_state.pop();
 }
 
 std::string render_context::push::render(const template_type& templt) {
-  return context.render(templt);
+  return m_context.render(templt);
 }
 
 render_context::render_context(
     const mstch::node& node,
     const std::map<std::string, template_type>& partials):
-    partials(partials), nodes(1, node), node_ptrs(1, &node)
+    m_partials(partials), m_nodes(1, node), m_node_ptrs(1, &node)
 {
-  state.push(std::unique_ptr<render_state>(new outside_section));
+  m_state.push(std::unique_ptr<render_state>(new outside_section));
 }
 
 const mstch::node& render_context::find_node(
@@ -47,7 +47,7 @@ const mstch::node& render_context::find_node(
 }
 
 const mstch::node& render_context::get_node(const std::string& token) {
-    return find_node(token, node_ptrs);
+    return find_node(token, m_node_ptrs);
 }
 
 std::string render_context::render(
@@ -57,8 +57,8 @@ std::string render_context::render(
   bool prev_eol = true;
   for (auto& token: templt) {
     if (prev_eol && prefix.length() != 0)
-      output += state.top()->render(*this, {prefix});
-    output += state.top()->render(*this, token);
+      output += m_state.top()->render(*this, {prefix});
+    output += m_state.top()->render(*this, token);
     prev_eol = token.eol();
   }
   return output;
@@ -67,6 +67,6 @@ std::string render_context::render(
 std::string render_context::render_partial(
     const std::string& partial_name, const std::string& prefix)
 {
-  return partials.count(partial_name) ?
-      render(partials.at(partial_name), prefix) : "";
+  return m_partials.count(partial_name) ?
+      render(m_partials.at(partial_name), prefix) : "";
 }

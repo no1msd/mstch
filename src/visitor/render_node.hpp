@@ -13,7 +13,7 @@ class render_node: public boost::static_visitor<std::string> {
  public:
   enum class flag { none, escape_html };
   render_node(render_context& ctx, flag p_flag = flag::none):
-      ctx(ctx), m_flag(p_flag)
+      m_ctx(ctx), m_flag(p_flag)
   {
   }
 
@@ -38,9 +38,9 @@ class render_node: public boost::static_visitor<std::string> {
 
   std::string operator()(const lambda& value) const {
     template_type interpreted{value([this](const mstch::node& n) {
-      return visit(render_node(ctx), n);
+      return visit(render_node(m_ctx), n);
     })};
-    auto rendered = render_context::push(ctx).render(interpreted);
+    auto rendered = render_context::push(m_ctx).render(interpreted);
     return (m_flag == flag::escape_html) ? html_escape(rendered) : rendered;
   }
 
@@ -49,7 +49,7 @@ class render_node: public boost::static_visitor<std::string> {
   }
 
  private:
-  render_context& ctx;
+  render_context& m_ctx;
   flag m_flag;
 };
 

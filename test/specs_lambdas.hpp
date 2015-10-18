@@ -5,6 +5,9 @@ std::map<std::string,mstch::node> specs_lambdas {
     {"Interpolation - Expansion", mstch::lambda{[](const std::string&) -> mstch::node {
       return std::string{"{{planet}}"};
     }}},
+    {"Interpolation - Alternate Delimiters", mstch::lambda{[](const std::string&) -> mstch::node {
+      return std::string{"|planet| => {{planet}}"};
+    }}},
     {"Interpolation - Multiple Calls", mstch::lambda{[](const std::string&) -> mstch::node {
       static int calls = 0; return ++calls;
     }}},
@@ -16,6 +19,9 @@ std::map<std::string,mstch::node> specs_lambdas {
     }}},
     {"Section - Expansion", mstch::lambda{[](const std::string& txt) -> mstch::node {
       return txt + std::string{"{{planet}}"} + txt;
+    }}},
+    {"Section - Alternate Delimiters", mstch::lambda{[](const std::string& txt) -> mstch::node {
+      return txt + std::string{"{{planet}} => |planet|"} + txt;
     }}},
     {"Section - Multiple Calls", mstch::lambda{[](const std::string& txt) -> mstch::node {
       return "__" + txt + "__";

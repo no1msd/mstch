@@ -12,10 +12,10 @@ std::string outside_section::render(
   using flag = render_node::flag;
   switch (token.token_type()) {
     case token::type::section_open:
-      ctx.set_state<in_section>(in_section::type::normal, token.name());
+      ctx.set_state<in_section>(in_section::type::normal, token);
       break;
     case token::type::inverted_section_open:
-      ctx.set_state<in_section>(in_section::type::inverted, token.name());
+      ctx.set_state<in_section>(in_section::type::inverted, token);
       break;
     case token::type::variable:
       return visit(render_node(ctx, flag::escape_html), ctx.get_node(token.name()));

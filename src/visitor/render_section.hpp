@@ -15,39 +15,42 @@ class render_section: public boost::static_visitor<std::string> {
   render_section(
       render_context& ctx,
       const template_type& section,
+      const delim_type& delims,
       flag p_flag = flag::none):
-      ctx(ctx), section(section), m_flag(p_flag)
+      m_ctx(ctx), m_section(section), m_delims(delims), m_flag(p_flag)
   {
   }
 
   template<class T>
   std::string operator()(const T& t) const {
-    return render_context::push(ctx, t).render(section);
+    return render_context::push(m_ctx, t).render(m_section);
   }
 
   std::string operator()(const lambda& fun) const {
     std::string section_str;
-    for(auto& token: section)
+    for (auto& token: m_section)
       section_str += token.raw();
     template_type interpreted{fun([this](const mstch::node& n) {
-      return visit(render_node(ctx), n);
-    }, section_str)};
-    return render_context::push(ctx).render(interpreted);
+      return visit(render_node(m_ctx), n);
+    }, section_str), m_delims};
+    return render_context::push(m_ctx).render(interpreted);
   }
 
   std::string operator()(const array& array) const {
     std::string out;
-    if(m_flag == flag::keep_array)
-      return render_context::push(ctx, array).render(section);
+    if (m_flag == flag::keep_array)
+      return render_context::push(m_ctx, array).render(m_section);
     else
       for (auto& item: array)
-        out += visit(render_section(ctx, section, flag::keep_array), item);
+        out += visit(render_section(
+            m_ctx, m_section, m_delims, flag::keep_array), item);
     return out;
   }
 
  private:
-  render_context& ctx;
-  const template_type& section;
+  render_context& m_ctx;
+  const template_type& m_section;
+  const delim_type& m_delims;
   flag m_flag;
 };
 

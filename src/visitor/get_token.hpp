@@ -10,26 +10,26 @@ namespace mstch {
 class get_token: public boost::static_visitor<const mstch::node&> {
  public:
   get_token(const std::string& token, const mstch::node& node):
-      token(token), node(node)
+      m_token(token), m_node(node)
   {
   }
 
   template<class T>
   const mstch::node& operator()(const T&) const {
-    return node;
+    return m_node;
   }
 
   const mstch::node& operator()(const map& map) const {
-    return map.at(token);
+    return map.at(m_token);
   }
 
   const mstch::node& operator()(const std::shared_ptr<object>& object) const {
-    return object->at(token);
+    return object->at(m_token);
   }
 
  private:
-  const std::string& token;
-  const mstch::node& node;
+  const std::string& m_token;
+  const mstch::node& m_node;
 };
 
 }

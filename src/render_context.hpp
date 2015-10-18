@@ -20,7 +20,7 @@ class render_context {
     ~push();
     std::string render(const template_type& templt);
    private:
-    render_context& context;
+    render_context& m_context;
   };
 
   render_context(
@@ -33,7 +33,7 @@ class render_context {
       const std::string& partial_name, const std::string& prefix);
   template<class T, class... Args>
   void set_state(Args&& ... args) {
-    state.top() = std::unique_ptr<render_state>(
+    m_state.top() = std::unique_ptr<render_state>(
         new T(std::forward<Args>(args)...));
   }
 
@@ -42,10 +42,10 @@ class render_context {
   const mstch::node& find_node(
       const std::string& token,
       std::list<node const*> current_nodes);
-  std::map<std::string, template_type> partials;
-  std::deque<mstch::node> nodes;
-  std::list<const mstch::node*> node_ptrs;
-  std::stack<std::unique_ptr<render_state>> state;
+  std::map<std::string, template_type> m_partials;
+  std::deque<mstch::node> m_nodes;
+  std::list<const mstch::node*> m_node_ptrs;
+  std::stack<std::unique_ptr<render_state>> m_state;
 };
 
 }
