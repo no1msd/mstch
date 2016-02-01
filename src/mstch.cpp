@@ -5,6 +5,8 @@
 
 using namespace mstch;
 
+std::function<std::string(const std::string&)> mstch::config::escape;
+
 std::string mstch::render(
     const std::string& tmplt,
     const node& root,

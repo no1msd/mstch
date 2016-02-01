@@ -1,4 +1,5 @@
 #include "utils.hpp"
+#include "mstch/mstch.hpp"
 
 mstch::citer mstch::first_not_ws(mstch::citer begin, mstch::citer end) {
   for (auto it = begin; it != end; ++it)
@@ -17,6 +18,9 @@ mstch::criter mstch::reverse(mstch::citer it) {
 }
 
 std::string mstch::html_escape(const std::string& str) {
+  if (mstch::config::escape)
+    return mstch::config::escape(str);
+  
   std::string out;
   citer start = str.begin();
 

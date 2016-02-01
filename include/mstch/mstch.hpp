@@ -10,6 +10,10 @@
 
 namespace mstch {
 
+struct config {
+  static std::function<std::string(const std::string&)> escape;
+};
+
 namespace internal {
 
 template<class N>
