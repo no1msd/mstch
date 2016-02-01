@@ -193,6 +193,22 @@ Output:
 <b>3</b>: Scott
 ```
 
+### Custom escape function
+
+By default, mstch uses HTML escaping on the output, as per specification. This
+is not useful if your output is not HTML, so mstch provides a way to supply
+your own escape implementation. Just assign any callable object to the static
+`mstch::config::escape`, which is an initially empty
+`std::function<std::string(const std::string&)>`. 
+
+For example you can turn off escaping entirely with a lambda:
+
+```c++
+mstch::config::escape = [](const std::string& str) -> std::string {
+  return str;
+};
+```
+
 ## Requirements
 
  - A C++ compiler with decent C++11 support. Currently tested with:
