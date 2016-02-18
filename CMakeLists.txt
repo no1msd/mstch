@@ -6,9 +6,18 @@ option(WITH_BENCHMARK "enable building benchmark executable" OFF)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE ON)
+set(CMAKE_DISABLE_SOURCE_CHANGES ON)
+set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 set(CMAKE_BUILD_TYPE Release)
 
-set(mstch_VERSION 1.0.1)
+set(mstch_VERSION 1.0.2)
+
+string(REGEX MATCH "([0-9]+)\\.([0-9]+)\\.([0-9]+)" mstch_VERSION_MATCH "${mstch_VERSION}")
+set(mstch_VERSION_MAJOR "${CMAKE_MATCH_1}")
+set(mstch_VERSION_MINOR "${CMAKE_MATCH_2}")
+set(mstch_VERSION_PATCH "${CMAKE_MATCH_3}")
+set(mstch_SOVERSION "${mstch_VERSION_MAJOR}.${mstch_VERSION_MINOR}")
+unset(mstch_VERSION_MATCH)
 
 if(NOT MSVC)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -O3")

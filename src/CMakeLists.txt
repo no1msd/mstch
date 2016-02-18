@@ -22,9 +22,10 @@ set(SRC
     token.cpp
     utils.cpp)
 
-add_library(mstch STATIC ${SRC})
+add_library(mstch ${SRC})
 
 set_property(TARGET mstch PROPERTY VERSION ${mstch_VERSION})
+set_property(TARGET mstch PROPERTY SOVERSION ${mstch_SOVERSION})
 
 install(
     TARGETS mstch EXPORT mstchTargets
