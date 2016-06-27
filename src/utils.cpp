@@ -9,8 +9,12 @@ mstch::citer mstch::first_not_ws(mstch::citer begin, mstch::citer end) {
 
 mstch::citer mstch::first_not_ws(mstch::criter begin, mstch::criter end) {
   for (auto rit = begin; rit != end; ++rit)
-    if (*rit != ' ') return --(rit.base());
-  return --(end.base());
+    if (*rit != ' ') {
+      auto tmp = rit.base();
+      return --tmp;
+    }
+  auto tmp = end.base();
+  return --tmp;
 }
 
 mstch::criter mstch::reverse(mstch::citer it) {
