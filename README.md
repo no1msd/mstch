@@ -243,7 +243,11 @@ from the root of the source tree:
  $ make install
 ```
 
-The install command may require root privileges. This will also install CMake 
+You can specify the
+[build type](https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html) (Release, Debug...)
+by adding -DCMAKE\_BUILD\_TYPE=BuildType to the `cmake` command.
+
+The install command may require root privileges. This will also install CMake
 config files, so you can use use `find_package` in your CMakeLists.txt:
 
 ```cmake
