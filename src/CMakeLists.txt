@@ -26,6 +26,8 @@ add_library(mstch STATIC ${SRC})
 
 set_property(TARGET mstch PROPERTY VERSION ${mstch_VERSION})
 
+target_include_directories(mstch PUBLIC ${Boost_INCLUDE_DIR})
+
 install(
     TARGETS mstch EXPORT mstchTargets
     LIBRARY DESTINATION lib
