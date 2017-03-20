@@ -94,7 +94,7 @@ class lambda_t {
 }
 
 using node = boost::make_recursive_variant<
-    std::nullptr_t, std::string, int, double, bool,
+    std::nullptr_t, std::string, int, unsigned int, double, bool,
     internal::lambda_t<boost::recursive_variant_>,
     std::shared_ptr<internal::object_t<boost::recursive_variant_>>,
     std::map<const std::string, boost::recursive_variant_>,
