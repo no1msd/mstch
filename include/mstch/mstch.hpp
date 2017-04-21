@@ -6,6 +6,7 @@
 #include <memory>
 #include <functional>
 
+#include <boost/optional.hpp>
 #include <boost/variant.hpp>
 
 namespace mstch {
@@ -110,4 +111,8 @@ std::string render(
     const std::map<std::string,std::string>& partials =
         std::map<std::string,std::string>());
 
+std::string render(
+    const std::string& tmplt,
+    const node& root,
+	std::function<boost::optional<std::string>(const std::string&)> partial_loader);
 }

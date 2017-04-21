@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <stack>
+#include <functional>
 
 #include "mstch/mstch.hpp"
 #include "state/render_state.hpp"
@@ -25,7 +26,7 @@ class render_context {
 
   render_context(
       const mstch::node& node,
-      const std::map<std::string, template_type>& partials);
+      const std::function<boost::optional<std::string>(const std::string&)> partials);
   const mstch::node& get_node(const std::string& token);
   std::string render(
       const template_type& templt, const std::string& prefix = "");
@@ -42,7 +43,7 @@ class render_context {
   const mstch::node& find_node(
       const std::string& token,
       std::list<node const*> current_nodes);
-  std::map<std::string, template_type> m_partials;
+  std::function<boost::optional<std::string>(const std::string&)> m_partial_resolv;
   std::deque<mstch::node> m_nodes;
   std::list<const mstch::node*> m_node_ptrs;
   std::stack<std::unique_ptr<render_state>> m_state;

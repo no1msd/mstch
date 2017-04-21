@@ -26,8 +26,8 @@ std::string render_context::push::render(const template_type& templt) {
 
 render_context::render_context(
     const mstch::node& node,
-    const std::map<std::string, template_type>& partials):
-    m_partials(partials), m_nodes(1, node), m_node_ptrs(1, &node)
+    const std::function<boost::optional<std::string>(const std::string&)> partials):
+    m_partial_resolv(partials), m_nodes(1, node), m_node_ptrs(1, &node)
 {
   m_state.push(std::unique_ptr<render_state>(new outside_section));
 }
@@ -67,6 +67,9 @@ std::string render_context::render(
 std::string render_context::render_partial(
     const std::string& partial_name, const std::string& prefix)
 {
-  return m_partials.count(partial_name) ?
-      render(m_partials.at(partial_name), prefix) : "";
+  auto value = m_partial_resolv(partial_name);
+  if (value)
+    return render(template_type{*value}, prefix);
+  else
+    return "";
 }
