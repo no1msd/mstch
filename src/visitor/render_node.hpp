@@ -36,6 +36,10 @@ class render_node: public boost::static_visitor<std::string> {
     return value ? "true" : "false";
   }
 
+  std::string operator()(const boost::string_view& value) const {
+    return std::string(value);
+  }
+
   std::string operator()(const lambda& value) const {
     template_type interpreted{value([this](const mstch::node& n) {
       return visit(render_node(m_ctx), n);
