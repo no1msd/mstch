@@ -8,6 +8,7 @@
 
 #include <boost/optional.hpp>
 #include <boost/variant.hpp>
+#include <boost/utility/string_view.hpp>
 
 namespace mstch {
 
@@ -99,7 +100,7 @@ using node = boost::make_recursive_variant<
     internal::lambda_t<boost::recursive_variant_>,
     std::shared_ptr<internal::object_t<boost::recursive_variant_>>,
     std::map<const std::string, boost::recursive_variant_>,
-    std::vector<boost::recursive_variant_>>::type;
+    std::vector<boost::recursive_variant_>, boost::string_view>::type;
 using object = internal::object_t<node>;
 using lambda = internal::lambda_t<node>;
 using map = std::map<const std::string, node>;

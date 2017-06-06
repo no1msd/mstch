@@ -30,7 +30,11 @@ class is_node_empty: public boost::static_visitor<bool> {
   }
 
   bool operator()(const std::string& value) const {
-    return value == "";
+    return value.empty();
+  }
+
+  bool operator()(const boost::string_view& value) const {
+    return value.empty();
   }
 
   bool operator()(const array& array) const {
