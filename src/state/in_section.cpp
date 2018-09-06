@@ -16,9 +16,9 @@ std::string in_section::render(render_context& ctx, const token& token) {
       auto& node = ctx.get_node(m_start_token.name());
       std::string out;
 
-      if (m_type == type::normal && !visit(is_node_empty(), node))
-        out = visit(render_section(ctx, m_section, m_start_token.delims()), node);
-      else if (m_type == type::inverted && visit(is_node_empty(), node))
+      if (m_type == type::normal && !mstch::visit(is_node_empty(), node))
+        out = mstch::visit(render_section(ctx, m_section, m_start_token.delims()), node);
+      else if (m_type == type::inverted && mstch::visit(is_node_empty(), node))
         out = render_context::push(ctx).render(m_section);
 
       ctx.set_state<outside_section>();
