@@ -97,11 +97,11 @@ using node = boost::make_recursive_variant<
     std::nullptr_t, std::string, int, double, bool,
     internal::lambda_t<boost::recursive_variant_>,
     std::shared_ptr<internal::object_t<boost::recursive_variant_>>,
-    std::map<const std::string, boost::recursive_variant_>,
+    std::map<std::string, boost::recursive_variant_>,
     std::vector<boost::recursive_variant_>>::type;
 using object = internal::object_t<node>;
 using lambda = internal::lambda_t<node>;
-using map = std::map<const std::string, node>;
+using map = std::map<std::string, node>;
 using array = std::vector<node>;
 
 std::string render(
