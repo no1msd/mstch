@@ -153,3 +153,9 @@ SPECS_TEST(inverted)
 SPECS_TEST(partials)
 SPECS_TEST(sections)
 SPECS_TEST(lambdas)
+
+TEST_CASE("missing_key_is_ignored") {
+  const std::string view{"{{a-non-existing-key}}"};
+  mstch::map context{{"an-existing-key", std::string{"a value"}}};
+  REQUIRE_NOTHROW(mstch::render(view, context));
+}
