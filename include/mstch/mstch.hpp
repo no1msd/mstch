@@ -5,13 +5,31 @@
 #include <string>
 #include <memory>
 #include <functional>
+#include <exception>
 
 #include <boost/variant.hpp>
 
 namespace mstch {
 
+class key_not_found : public std::exception {
+ public:
+  key_not_found(const std::string& name):
+    description(std::string{"The key '"} + name + "' is missing")
+  {
+  }
+
+  const char* what() const noexcept override
+  {
+    return description.c_str();
+  }
+
+private:
+  const std::string description;
+};
+
 struct config {
   static std::function<std::string(const std::string&)> escape;
+  static bool throw_on_missing_key;
 };
 
 namespace internal {

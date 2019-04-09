@@ -155,7 +155,15 @@ SPECS_TEST(sections)
 SPECS_TEST(lambdas)
 
 TEST_CASE("missing_key_is_ignored") {
+  mstch::config::throw_on_missing_key = false;
   const std::string view{"{{a-non-existing-key}}"};
   mstch::map context{{"an-existing-key", std::string{"a value"}}};
   REQUIRE_NOTHROW(mstch::render(view, context));
+}
+
+TEST_CASE("missing_key_is_reported") {
+  mstch::config::throw_on_missing_key = true;
+  const std::string view{"{{a-missing-key}}"};
+  mstch::map context{{"an-existing-key", std::string{"a value"}}};
+  REQUIRE_THROWS_AS(mstch::render(view, context), mstch::key_not_found);
 }
