@@ -210,6 +210,32 @@ mstch::config::escape = [](const std::string& str) -> std::string {
 };
 ```
 
+
+### Handling missing keys
+
+By default, mstch does not consider missing keys a problem but simply ignores
+them. If the client expects all keys referenced by a template to exist, mstch
+can be configured to throw an exception if a key is not found:
+
+```c++
+#include <iostream>
+#include <mstch/mstch.hpp>
+#include <string>
+
+int main() {
+  mstch::config::throw_on_missing_key = true;
+  const std::string view{"{{a-missing-key}}"};
+  mstch::map context{{"an-existing-key", std::string{"a value"}}};
+  try {
+    std::cout << mstch::render(view, context) << std::endl;
+  } catch (const mstch::key_not_found& e) {
+    std::cout << "Failed to render the template: " << e.what() << std::endl;
+  }
+  return 0;
+}
+```
+
+
 ## Requirements
 
  - A C++ compiler with decent C++11 support. Currently tested with:

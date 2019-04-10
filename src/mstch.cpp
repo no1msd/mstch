@@ -6,6 +6,7 @@
 using namespace mstch;
 
 std::function<std::string(const std::string&)> mstch::config::escape;
+bool mstch::config::throw_on_missing_key = false;
 
 std::string mstch::render(
     const std::string& tmplt,
