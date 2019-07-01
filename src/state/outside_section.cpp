@@ -18,9 +18,9 @@ std::string outside_section::render(
       ctx.set_state<in_section>(in_section::type::inverted, token);
       break;
     case token::type::variable:
-      return visit(render_node(ctx, flag::escape_html), ctx.get_node(token.name()));
+      return mstch::visit(render_node(ctx, flag::escape_html), ctx.get_node(token.name()));
     case token::type::unescaped_variable:
-      return visit(render_node(ctx, flag::none), ctx.get_node(token.name()));
+      return mstch::visit(render_node(ctx, flag::none), ctx.get_node(token.name()));
     case token::type::text:
       return token.raw();
     case token::type::partial:
