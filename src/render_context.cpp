@@ -24,10 +24,9 @@ std::string render_context::push::render(const template_type& templt) {
   return m_context.render(templt);
 }
 
-render_context::render_context(
-    const mstch::node& node,
-    const std::map<std::string, template_type>& partials):
-    m_partials(partials), m_nodes(1, node), m_node_ptrs(1, &node)
+render_context::render_context(const mstch::node& node,
+    const std::map<std::string, template_type>& partials, const partial_callback partial_cb):
+    m_partials(partials), m_nodes(1, node), m_node_ptrs(1, &node), m_partial_cb(partial_cb)
 {
   m_state.push(std::unique_ptr<render_state>(new outside_section));
 }
@@ -67,6 +66,11 @@ std::string render_context::render(
 std::string render_context::render_partial(
     const std::string& partial_name, const std::string& prefix)
 {
-  return m_partials.count(partial_name) ?
-      render(m_partials.at(partial_name), prefix) : "";
+  if(m_partials.count(partial_name)) {
+      return render(m_partials.at(partial_name), prefix);
+  } else if (m_partial_cb) {
+      return render({m_partial_cb(partial_name)}, prefix);
+  } else {
+      return "";
+  }
 }

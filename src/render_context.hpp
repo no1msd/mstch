@@ -25,7 +25,8 @@ class render_context {
 
   render_context(
       const mstch::node& node,
-      const std::map<std::string, template_type>& partials);
+      const std::map<std::string, template_type>& partials,
+      const partial_callback partial_cb);
   const mstch::node& get_node(const std::string& token);
   std::string render(
       const template_type& templt, const std::string& prefix = "");
@@ -46,6 +47,7 @@ class render_context {
   std::deque<mstch::node> m_nodes;
   std::list<const mstch::node*> m_node_ptrs;
   std::stack<std::unique_ptr<render_state>> m_state;
+  partial_callback m_partial_cb;
 };
 
 }
