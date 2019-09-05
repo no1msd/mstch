@@ -103,11 +103,13 @@ using object = internal::object_t<node>;
 using lambda = internal::lambda_t<node>;
 using map = std::map<const std::string, node>;
 using array = std::vector<node>;
+using partial_callback = std::function<std::string(std::string partial_name)>;
 
 std::string render(
     const std::string& tmplt,
     const node& root,
     const std::map<std::string,std::string>& partials =
-        std::map<std::string,std::string>());
+        std::map<std::string,std::string>(),
+    partial_callback partial_cb = partial_callback());
 
 }
