@@ -23,6 +23,7 @@ set(SRC
     utils.cpp)
 
 add_library(mstch STATIC ${SRC})
+set_property(TARGET mstch PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 set_property(TARGET mstch PROPERTY VERSION ${mstch_VERSION})
 
