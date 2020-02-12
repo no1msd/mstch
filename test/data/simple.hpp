@@ -29,4 +29,4 @@ public:
   }
 };
 
-const auto simple_data = std::make_shared<simple>();
+const mstch::node simple_data = mstch::object_wrapper{std::make_shared<simple>()};

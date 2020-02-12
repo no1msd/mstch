@@ -1,6 +1,4 @@
-const auto null_string_data = mstch::map{
-  {"name", std::string{"Elise"}},
-  {"glytch", true},
-  {"binary", false},
-  {"value", mstch::node{}}
-};
+const mstch::node null_string_data = mstch::map_wrapper{{{"name", std::string{"Elise"}},
+                                                         {"glytch", true},
+                                                         {"binary", false},
+                                                         {"value", mstch::node{}}}};

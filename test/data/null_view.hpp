@@ -1,4 +1,2 @@
-const auto null_view_data = mstch::map{
-  {"name", std::string{"Joe"}},
-  {"friends", mstch::node{}}
-};
+const mstch::node null_view_data =
+        mstch::map_wrapper{{{"name", std::string{"Joe"}}, {"friends", mstch::node{}}}};

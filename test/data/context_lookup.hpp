@@ -1,8 +1,3 @@
-const auto context_lookup_data = mstch::map{
-  {"outer", mstch::map{
-    {"id", 1},
-    {"second", mstch::map{
-      {"nothing", 2}
-    }}
-  }}
-};
+const mstch::node context_lookup_data = mstch::map_wrapper{
+        {{"outer",
+          mstch::map_wrapper{{{"id", 1}, {"second", mstch::map_wrapper{{{"nothing", 2}}}}}}}}};

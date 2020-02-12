@@ -1,3 +1,2 @@
-const auto included_tag_data = mstch::map{
-  {"html", std::string{"I like {{mustache}}"}}
-};
+const mstch::node included_tag_data =
+        mstch::map_wrapper{{{"html", std::string{"I like {{mustache}}"}}}};

@@ -1,11 +1,11 @@
 #pragma once
 
 #include <string>
-#include <boost/variant/apply_visitor.hpp>
+#include <variant>
 
 namespace mstch {
 
-using citer = std::string::const_iterator;
+using citer  = std::string::const_iterator;
 using criter = std::string::const_reverse_iterator;
 
 citer first_not_ws(citer begin, citer end);
@@ -14,10 +14,8 @@ std::string html_escape(const std::string& str);
 criter reverse(citer it);
 
 template<class... Args>
-auto visit(Args&&... args) -> decltype(boost::apply_visitor(
-    std::forward<Args>(args)...))
-{
-  return boost::apply_visitor(std::forward<Args>(args)...);
+auto visit(Args&&... args) -> decltype(std::visit(std::forward<Args>(args)...)) {
+    return std::visit(std::forward<Args>(args)...);
 }
 
-}
+}  // namespace mstch

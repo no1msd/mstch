@@ -1,8 +1,7 @@
-const auto falsy_array_data = mstch::map{
-  {"list", mstch::array{
-  	mstch::array{std::string{""}, std::string{"emptyString"}},
-  	mstch::array{mstch::array{}, std::string{"emptyArray"}},
-  	mstch::array{0, std::string{"zero"}},
-  	mstch::array{mstch::node{}, std::string{"null"}}}
-	}
-};
+const auto falsy_array_data = mstch::map_wrapper{
+        {{"list",
+          mstch::array_wrapper{
+                  {mstch::array_wrapper{{std::string{""}, std::string{"emptyString"}}},
+                   mstch::array_wrapper{{mstch::array_wrapper{}, std::string{"emptyArray"}}},
+                   mstch::array_wrapper{{0, std::string{"zero"}}},
+                   mstch::array_wrapper{{mstch::node{}, std::string{"null"}}}}}}}};

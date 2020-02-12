@@ -1,3 +1,2 @@
-const auto ampersand_escape_data = mstch::map{
-  {"message", std::string{"Some <code>"}}
-};
+const mstch::node ampersand_escape_data =
+        mstch::map_wrapper{{{"message", std::string{"Some <code>"}}}};

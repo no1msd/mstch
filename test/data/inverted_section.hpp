@@ -1,3 +1,1 @@
-const auto inverted_section_data = mstch::map{
-  {"repos", mstch::array{}}
-};
+const auto inverted_section_data = mstch::map_wrapper{{{"repos", mstch::array_wrapper{}}}};

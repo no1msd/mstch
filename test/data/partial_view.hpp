@@ -39,4 +39,4 @@ public:
   }
 };
 
-const auto partial_view_data = std::make_shared<partial_view>();
+const mstch::node partial_view_data = mstch::object_wrapper{std::make_shared<partial_view>()};

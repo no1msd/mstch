@@ -1,5 +1,2 @@
-const auto keys_with_questionmarks_data = mstch::map{
-  {"person?", mstch::map{
-    {"name", std::string{"Jon"}}
-  }}
-};
+const auto keys_with_questionmarks_data =
+        mstch::map_wrapper{{{"person?", mstch::map_wrapper{{{"name", std::string{"Jon"}}}}}}};

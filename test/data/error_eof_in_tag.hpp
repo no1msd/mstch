@@ -1,1 +1,1 @@
-const auto error_eof_in_tag_data = mstch::map{{"hello", std::string{"world"}}};
+const mstch::node error_eof_in_tag_data = mstch::map_wrapper{{{"hello", std::string{"world"}}}};

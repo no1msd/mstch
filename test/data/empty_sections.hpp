@@ -1,1 +1,1 @@
-const auto empty_sections_data = mstch::map{};
+const mstch::node empty_sections_data = mstch::map_wrapper{{}};

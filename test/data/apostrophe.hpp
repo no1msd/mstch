@@ -1,4 +1,2 @@
-const auto apostrophe_data = mstch::map{
-  {"apos", std::string{"'"}},
-  {"control", std::string{"X"}}
-};
+const mstch::node apostrophe_data =
+        mstch::map_wrapper{{{"apos", std::string{"'"}}, {"control", std::string{"X"}}}};

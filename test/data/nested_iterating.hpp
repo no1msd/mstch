@@ -1,8 +1,7 @@
-const auto nested_iterating_data = mstch::map{
-  {"inner", mstch::array{mstch::map{
-    {"foo", std::string{"foo"}},
-    {"inner", mstch::array{mstch::map{
-      {"bar", std::string{"bar"}}
-    }}}
-  }}}
-};
+const mstch::node nested_iterating_data = mstch::map_wrapper{
+        {{"inner",
+          mstch::array_wrapper{
+                  {mstch::map_wrapper{{{"foo", std::string{"foo"}},
+                                       {"inner",
+                                        mstch::array_wrapper{{mstch::map_wrapper{
+                                                {{"bar", std::string{"bar"}}}}}}}}}}}}}};

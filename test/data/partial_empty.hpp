@@ -1,3 +1,1 @@
-const auto partial_empty_data = mstch::map{
-  {"foo", 1}
-};
+const mstch::node partial_empty_data = mstch::map_wrapper{{{"foo", 1}}};

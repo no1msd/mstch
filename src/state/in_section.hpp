@@ -8,17 +8,17 @@
 
 namespace mstch {
 
-class in_section: public render_state {
- public:
-  enum class type { inverted, normal };
-  in_section(type type, const token& start_token);
-  std::string render(render_context& context, const token& token) override;
+class in_section : public render_state {
+public:
+    enum class type { inverted, normal };
+    in_section(type type, const token& start_token);
+    std::string render(render_context& context, const token& token) override;
 
- private:
-  const type m_type;
-  const token& m_start_token;
-  template_type m_section;
-  int m_skipped_openings;
+private:
+    const type m_type;
+    const token& m_start_token;
+    template_type m_section;
+    int m_skipped_openings;
 };
 
-}
+}  // namespace mstch

@@ -1,1 +1,1 @@
-const auto empty_template_data = mstch::map{};
+const mstch::node empty_template_data = mstch::map_wrapper{{}};
