@@ -90,13 +90,6 @@ struct map_wrapper;
 struct array_wrapper;
 struct lambda_wrapper;
 
-template<typename T>
-struct recursive_wrapper {
-    recursive_wrapper(T t_) { t.emplace_back(std::move(t_)); }
-    operator const T&() const { return t.front(); }
-    std::vector<T> t;
-};
-
 using node = std::variant<std::nullptr_t,
                           std::string,
                           int,
