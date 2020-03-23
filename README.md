@@ -194,6 +194,28 @@ Output:
 <b>3</b>: Scott
 ```
 
+Alternatively, methods convertable to std::function<mstch::node()> can be registered
+(in which case `this` is not required):
+
+```c++
+class example : public mstch::object {
+ public:
+  example() : m_value(1) {
+    register_methods({
+        {"count", [this]() { return m_value++; }},
+        {"names",
+         []() {
+           return mstch::array{std::string{"Chris"}, std::string{"Mark"},
+                               std::string{"Scott"}};
+         }},
+    });
+  }
+
+ private:
+  int m_value;
+};
+```
+
 ### Custom escape function
 
 By default, mstch uses HTML escaping on the output, as per specification. This

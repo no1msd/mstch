@@ -29,14 +29,18 @@ class object_t {
   }
 
  protected:
+  using method = std::function<N()>;
   template<class S>
   void register_methods(S* s, std::map<std::string,N(S::*)()> methods) {
     for(auto& item: methods)
       this->methods.insert({item.first, std::bind(item.second, s)});
   }
+  void register_methods(std::map<std::string,method> methods) {
+    this->methods.insert(methods.begin(), methods.end());
+  }
 
  private:
-  std::map<std::string, std::function<N()>> methods;
+  std::map<std::string, method> methods;
   mutable std::map<std::string, N> cache;
 };
 

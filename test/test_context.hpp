@@ -56,3 +56,4 @@
 #include "data/empty_template.hpp"
 #include "data/partial_array.hpp"
 #include "data/bug_length_property.hpp"
+#include "data/method.hpp"
