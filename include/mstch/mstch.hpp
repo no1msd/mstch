@@ -107,18 +107,26 @@ using array  = std::vector<node>;
 
 struct array_wrapper {
     array values;
+	
+	array_wrapper(const array &values) : values(values) {}
 };
 
 struct map_wrapper {
     map values;
+	
+	map_wrapper(const map &values) : values(values) {}
 };
 
 struct object_wrapper {
     std::shared_ptr<object> values;
+	
+	object_wrapper(const std::shared_ptr<object> &values) : values(values) {}
 };
 
 struct lambda_wrapper {
     lambda values;
+	
+	lambda_wrapper(const lambda &values) : values(values) {}
 };
 
 std::string render(const std::string& tmplt,
