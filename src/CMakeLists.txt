@@ -1,11 +1,9 @@
 find_package(Boost 1.54 REQUIRED)
 
-set(mstch_INCLUDE_DIR
-    ${PROJECT_SOURCE_DIR}/include CACHE STRING "mstch include directory")
-
-include_directories(
-    ${mstch_INCLUDE_DIR}
-    ${Boost_INCLUDE_DIR})
+# Define headers for this library. PUBLIC headers are used for compiling
+# the library, and will be added to consumers' build paths.
+set(BUILD_INCLUDE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
+set(INSTALL_INCLUDE $<INSTALL_INTERFACE:include>)
 
 set(SRC
     state/in_section.cpp
@@ -25,6 +23,11 @@ set(SRC
 add_library(mstch STATIC ${SRC})
 
 set_property(TARGET mstch PROPERTY VERSION ${mstch_VERSION})
+target_include_directories(mstch PUBLIC
+    ${BUILD_INCLUDE}
+    ${INSTALL_INCLUDE}
+    PRIVATE .)
+target_link_libraries(mstch Boost::boost)
 
 install(
     TARGETS mstch EXPORT mstchTargets
